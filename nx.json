@@ -1,10 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -39,7 +36,12 @@
         "targetName": "test"
       },
       "exclude": [
-        "apps/gateway-e2e/**/*"
+        "apps/gateway-e2e/**/*",
+        "apps/user-accounts--dry-run-e2e/**/*",
+        "apps/user-accounts-e2e/**/*",
+        "apps/authentication-e2e/**/*",
+        "apps/profile-e2e/**/*",
+        "apps/social-e2e/**/*"
       ]
     }
   ]

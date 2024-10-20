@@ -1,0 +1,9 @@
+{
+  "name": "auth-tooling",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/auth-tooling/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project auth-tooling --web",
+  "targets": {}
+}

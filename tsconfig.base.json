@@ -4,17 +4,21 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "ESNext",
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@optomistic-tanuki/auth-tooling": ["libs/auth-tooling/src/index.ts"],
+      "@optomistic-tanuki/database": ["libs/database/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
