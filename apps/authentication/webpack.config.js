@@ -1,5 +1,6 @@
 const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
 const { join } = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   output: {
@@ -15,6 +16,11 @@ module.exports = {
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: true,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: join(__dirname, 'config.yaml'), to: join(__dirname, '../../dist/apps/authentication/config.yaml') },
+      ],
     }),
   ],
 };

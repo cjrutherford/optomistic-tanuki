@@ -12,7 +12,7 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/yci.yml"]
   },
   "nxCloudId": "6715332d4f834810fc20ae0d",
   "plugins": [

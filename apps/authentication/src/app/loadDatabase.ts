@@ -6,14 +6,15 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 const loadDatabase = (config: ConfigService) => {
     const database = config.get('database');
+    console.log("🚀 ~ loadDatabase ~ database:", database)
     const entities = [KeyDatum, UserEntity, TokenEntity];
     const ormConfig: PostgresConnectionOptions = {
         type: 'postgres',
         host: database.host,
         port: database.port,
-        username: database.username,
+        username: database.user,
         password: database.password,
-        database: database.name,
+        database: database.database,
         entities
     };
     return ormConfig;

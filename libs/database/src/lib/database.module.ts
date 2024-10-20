@@ -1,6 +1,5 @@
 import { DynamicModule, Module, Provider, Type } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { DataSource, DataSourceOptions, EntitySchema } from 'typeorm';
 
 @Module({
@@ -21,14 +20,15 @@ export class DatabaseModule implements DynamicModule {
           await ds.initialize();
 
           // Detect entities and initialize them against the connection
-          const entities = (connectionOptions.entities || []) as EntitySchema<unknown>[];
-          for (const entity of entities) {
-            repositories.push({
-              provide: `${name.toUpperCase()}_${entity.options.name}_REPOSITORY`,
-              useFactory: (dataSource: DataSource) => dataSource.getRepository(entity),
-              inject: [connectionName],
-            });
-          }
+          // const entities = (connectionOptions.entities || []) as EntitySchema<any>[];
+          // for (const entity of entities) {
+          //   console.dir(entity);
+          //   repositories.push({
+          //     provide: `${name.toUpperCase()}_${entity.options.name}_REPOSITORY`,
+          //     useFactory: (dataSource: DataSource) => dataSource.getRepository(entity),
+          //     inject: [connectionName],
+          //   });
+          // }
 
           return ds;
         },
