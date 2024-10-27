@@ -4,3 +4,27 @@ database:
   user: postgres
   password: postgres
   database: ot_authentication
+auth:
+  jwt_secret: |
+    K7SQve/Adki6m3Qsd84oMFVGze6++br1BJSatri+LocM4ZyRdca5plMqCnOjXnlG
+    feyr5tipxuUzYaCfUBuZDm4R1WczdmVItVDGG8uzfJfGCKKa6G3PVLtO3GLzJ582
+    5AVLHk32vu18kHqSxshJqVbQsvukJ70fP4Hb1H9fTSv8oWTfWKrXFvVLULqzIkjP
+    z+SmIC9Eo+mImeSHdGlSY1vYl6jD3hLX+FlRyN/l/z1nFH+1S6qom2iagYB2Mfzo
+    vpFoBwcgPvodKBWcFjHh5tqTo3MrwzQFUlFDxQBlo3xN00zFms/IS5PbsiyREbKh
+    o/4Sg0QfeJfVFWShJ0BGxqIgLuebWuFH+fE/T/oRzrZQ5hMW3I/LV5ZG8BTi4nXw
+    NziQoC813eebzU+f/K7ND/fh1nX0/RzhKe4GKPDDlUnFhqLM5CwwudIu8vQ9pKkJ
+    X3vKKocWPdtZbDvO6BBKBcWnI4GSAMC7P35lDP2gVSOTnPtbr0wBTOx/TStahvTt
+    J0jsRHzWNiI9wCOp+33CMtxZjcFyB+ArTcpQffRoLHmbL8n5IPDgcdKXAWVA3fC8
+    nmsVWwS7PbtRU3b4x5mus1HuXVPB/i4RkCLfh76dt5Z03gzu9Uyty/I40f6MsGbF
+    +/13+SzTnmThdnoFK4p2sJViGdZ7iKWhI5yDE3vczc2JYeQl/bFY0JkYthjpZaf+
+    qEAhpi+BvjFjkJ6hx+hCJ0eTDLqZDZPaKnVSVv+fq3Dd/UI83uPkoSzfn9FwRXVl
+    2QNs3rwnVp1HPnxJK88CC8a61ZwUHw7xljEmL92dUdRXseC1YK+fs+ds2bv7dbl3
+    pU+TAYdhcHfrp5VeQb2PaRYguJYHIVacgNpT2/EPMj4Du16qcRhpfhoMPD82r+Iv
+    bZVlyiWP190j4botuV3TRyyqV/Ief5LASI2UOjniTlNzmd0vv/h3RPj8p/yU+2tG
+    JXdehHNLjS8vQhB8FK3ZKzOIhttiLkheAQNTXMuJSlPGvX1GRvupvojMaGc06Oii
+    ktwfD+9XQjja/zcfKKEwO/rVT6r9kB63ZFFi6UZWLin3DHapPJUITVIaRjGXWOn9
+    3IwcYaA6WZrAUVzu23K6aiTg9yeMUU7ZiiDIDZbIrfxWx3eSf1BSbGnUwya+GUKJ
+    GUQfV/afvejkO5DStzReUel09xvOjBzwcUftqPAgKosVsSIPXZDQSwFSPN4S2MLq
+    5DfyXMxM+oeTRlXeY+CgmkdjeCYhwUCVrZFozNuNWV2CAh8Ba2NhHjiU0k+FNxQk
+    at1l+IDOWjQQTe0lj6mqI42gKY3gRwipTLsy4yOkxGl5zF0/YxGhzAo9lHBR0zL0
+    J/DceE8pNYs9ubeAsvd7qw==

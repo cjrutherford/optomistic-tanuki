@@ -18,6 +18,7 @@
     "paths": {
       "@optomistic-tanuki/auth-tooling": ["libs/auth-tooling/src/index.ts"],
       "@optomistic-tanuki/database": ["libs/database/src/index.ts"],
+      "@optomistic-tanuki/encryption": ["libs/encryption/src/index.ts"],
       "@optomistic-tanuki/libs/constants": ["libs/constants/src/index.ts"],
       "@optomistic-tanuki/libs/models": ["libs/models/src/index.ts"],
       "@optomistic-tanuki/logger": ["libs/logger/src/index.ts"]

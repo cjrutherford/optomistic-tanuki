@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import loadConfig from '../config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +10,10 @@ import { TokenEntity } from '../tokens/entities/token.entity';
 import { KeyDatum } from '../key-data/entities/key-datum.entity';
 import { Repositories } from '../constants';
 import { LoggerModule } from '@optomistic-tanuki/logger';
+import { AsymmetricService, SaltedHashService } from '@optomistic-tanuki/encryption';
+import { KeyService } from './key.service';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { authenticator } from 'otplib';
 
 @Module({
   imports: [
@@ -26,16 +30,28 @@ import { LoggerModule } from '@optomistic-tanuki/logger';
   controllers: [AppController],
   providers: [
     AppService,
+    SaltedHashService,
+    KeyService,
+    AsymmetricService,
     {
-      provide: Repositories.User,
+      provide: 'totp',
+      useValue: authenticator,
+    },
+    {
+      provide: 'JWT_SECRET',
+      useFactory: (config: ConfigService) => config.get('auth').jwt_secret!,
+      inject: [ConfigService],
+    },
+    {
+      provide: getRepositoryToken (UserEntity),
       useFactory: (ds: any) => ds.getRepository(UserEntity),
       inject: ['AUTHENTICATION_CONNECTION'],
     },{
-      provide: Repositories.Token,
+      provide: getRepositoryToken(TokenEntity),
       useFactory: (ds: any) => ds.getRepository(TokenEntity),
       inject: ['AUTHENTICATION_CONNECTION'],
     },{
-      provide: Repositories.KeyData,
+      provide: getRepositoryToken(KeyDatum),
       useFactory: (ds: any) => ds.getRepository(KeyDatum),
       inject: ['AUTHENTICATION_CONNECTION'],
     }

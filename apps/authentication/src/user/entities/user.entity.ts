@@ -24,6 +24,9 @@ export class UserEntity {
 
   @Column({ type: 'text' })
   bio: string;
+  
+  @Column({ default: null })
+  totpSecret?: string;
 
   @OneToMany((type) => TokenEntity, (te) => te.user)
   tokens: TokenEntity[];
