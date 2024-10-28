@@ -8,7 +8,7 @@ import loadDatabase from './loadDatabase';
 import { UserEntity } from '../user/entities/user.entity';
 import { TokenEntity } from '../tokens/entities/token.entity';
 import { KeyDatum } from '../key-data/entities/key-datum.entity';
-import { Repositories } from '../constants';
+import * as jwt from 'jsonwebtoken'
 import { LoggerModule } from '@optomistic-tanuki/logger';
 import { AsymmetricService, SaltedHashService } from '@optomistic-tanuki/encryption';
 import { KeyService } from './key.service';
@@ -54,6 +54,9 @@ import { authenticator } from 'otplib';
       provide: getRepositoryToken(KeyDatum),
       useFactory: (ds: any) => ds.getRepository(KeyDatum),
       inject: ['AUTHENTICATION_CONNECTION'],
+    },{
+      provide: 'jwt',
+      useValue: jwt,
     }
   ],
 })

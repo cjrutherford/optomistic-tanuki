@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AuthCommands } from '@optomistic-tanuki/libs/constants';
 import { AppService } from './app.service';
-import { LoginRequest, ResetPasswordRequest } from '@optomistic-tanuki/libs/models';
+import { EnableMultiFactorRequest, LoginRequest, RegisterRequest, ResetPasswordRequest, ValidateTokenRequest } from '@optomistic-tanuki/libs/models';
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
 
 @Controller()
@@ -14,18 +14,16 @@ export class AppController {
       const { email, password, mfa } = data;
       return await this.appService.login(email, password, mfa);
     } catch (e) {
-      console.error(e);
       throw new RpcException(e);
     }
   }
 
   @MessagePattern({ cmd: AuthCommands.Register })
-  async register(@Payload() data: any) {
+  async register(@Payload() data: RegisterRequest) {
     try {
       const { email, fn, ln, password, confirm } = data;
       return await this.appService.registerUser(email, fn, ln, password, confirm);
     } catch (e) {
-      console.error(e);
       throw new RpcException(e);
     }
   }
@@ -36,18 +34,36 @@ export class AppController {
       const {email, newPass, newConf, oldPass, mfa } = data;
       return await this.appService.resetPassword(email, newPass, newConf, oldPass, mfa);
     } catch (e) {
-      console.error(e);
       throw new RpcException(e);
     }
   }
 
   @MessagePattern({ cmd: AuthCommands.Validate })
-  async validate(@Payload() data: any) {
+  async validate(@Payload() data: ValidateTokenRequest) {
     try {
       const { token } = data;
       return await this.appService.validateToken(token);
     } catch (e) {
-      console.error(e);
+      throw new RpcException(e);
+    }
+  }
+
+  @MessagePattern({ cmd: AuthCommands.EnableMultiFactor })
+  async enableMfa(@Payload() data: EnableMultiFactorRequest) {
+    try {
+      const { userId } = data;
+      return await this.appService.setupTotp(userId);
+    } catch (e) {
+      throw new RpcException(e);
+    }
+  }
+
+  @MessagePattern({ cmd: AuthCommands.ValidateTotp })
+  async validateTotp(@Payload() data: { userId: string, token: string }) {
+    try {
+      const { userId, token } = data;
+      return await this.appService.validateTotp(userId, token);
+    } catch (e) {
       throw new RpcException(e);
     }
   }

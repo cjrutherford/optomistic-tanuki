@@ -25,6 +25,7 @@ export class AppService {
     private readonly keyService: KeyService,
     @Inject('JWT_SECRET') private readonly jwtSecret: string,
     @Inject('totp') private readonly totp: typeof authenticator,
+    @Inject('jwt') private readonly jsonWebToken: typeof jwt
   ) {}
 
   async login(email: string, password: string, mfa?: string) {
@@ -61,7 +62,7 @@ export class AppService {
     }
 
     const pl = { userId, name: `${user.firstName} ${user.lastName}`, email };
-    const tk = jwt.sign(pl, this.jwtSecret, { expiresIn: '1h' });
+    const tk = this.jsonWebToken.sign(pl, this.jwtSecret, { expiresIn: '1h' });
 
     delete user.keyData;
     delete user.password;
@@ -99,22 +100,22 @@ export class AppService {
       throw new RpcException('User already exists');
     }
 
-    const { salt, hash } = this.saltedHashService.createNewHash(password);
+    const hashData = await this.saltedHashService.createNewHash(password);
 
     const newUser = (await this.userRepo.save({
       email,
       firstName: fn,
       lastName: ln,
-      password: hash,
-      keyData: { salt },
+      password: hashData.hash,
+      keyData: { salt: hashData.salt },
     })) as UserEntity;
     const { pubKey, privLocation } = await this.keyService.generateUserKeys(
       newUser.id,
-      hash
+      hashData.hash
     );
     const nk: Partial<KeyDatum> = {
       public: Buffer.from(pubKey),
-      salt: salt.toString(),
+      salt: hashData.salt.toString(),
     };
     const newKeyData = await this.keyRepo.save({ ...nk });
     newUser.keyData = newKeyData;
@@ -154,7 +155,7 @@ export class AppService {
     }
 
     if(mfa !== undefined) {
-      const isValidMfa = authenticator.check(mfa, user.totpSecret);
+      const isValidMfa = this.totp.check(mfa, user.totpSecret);
       if (!isValidMfa) {
         throw new RpcException('Invalid MFA token');
       }
@@ -171,7 +172,7 @@ export class AppService {
 
   async validateToken(token: string) {
     try {
-      const decoded = jwt.verify(token, this.jwtSecret);
+      const decoded = this.jsonWebToken.verify(token, this.jwtSecret);
       const storedToken = await this.tokenRepo.findOne({
         where: { tokenData: token },
       });
@@ -187,8 +188,15 @@ export class AppService {
   async setupTotp( userId: string ) {
     // Implement your TOTP setup logic here
     const newSecret = randomBytes(20).toString('hex');
-    await this.userRepo.update(userId, { totpSecret: newSecret });
+    try{
+      const existingUser = await this.userRepo.findOne({ where: { id: userId } });
+      if(!existingUser) throw new RpcException('User not found');
+      if(existingUser.totpSecret) throw new RpcException('TOTP already set up');
+      await this.userRepo.update(userId, { totpSecret: newSecret });
     return { message: 'TOTP setup successful', code: 0, data: { qr: qrcode.toDataURL(authenticator.keyuri( userId, "optomistic-tanuki", newSecret )) } };
+    } catch (e) {
+      throw new RpcException('TOTP setup failed');
+    }
   }
 
   async validateTotp( userId: string, token: string ) {

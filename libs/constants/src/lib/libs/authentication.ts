@@ -5,6 +5,7 @@ const AuthCommands = {
     ResetPassword: 'ResetPassword',
     Register: 'Register',
     Validate: 'Validate',
+    ValidateTotp: 'ValidateTotp'
 };
 
 export default AuthCommands;

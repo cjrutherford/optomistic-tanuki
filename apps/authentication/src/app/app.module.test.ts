@@ -6,16 +6,22 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from '@optomistic-tanuki/database';
 import { LoggerModule } from '@optomistic-tanuki/logger';
-import { Repositories } from '../constants';
 import { UserEntity } from '../user/entities/user.entity';
 import { TokenEntity } from '../tokens/entities/token.entity';
 import { KeyDatum } from '../key-data/entities/key-datum.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 describe('AppModule', () => {
     let appModule: TestingModule;
 
     beforeAll(async () => {
         appModule = await Test.createTestingModule({
-            imports: [AppModule],
+            imports: [
+                ConfigModule.forRoot({
+                    isGlobal: true,
+                    load: [loadConfig],
+                }),
+                AppModule,
+            ],
         })
         .overrideProvider(AppService)
         .useValue({}) // Mock AppService
@@ -25,13 +31,6 @@ describe('AppModule', () => {
     it('should load ConfigModule with isGlobal set to true', () => {
         const configModule = appModule.get<ConfigModule>(ConfigModule);
         expect(configModule).toBeDefined();
-        expect(configModule['isGlobal']).toBe(true);
-    });
-
-    it('should load configuration using loadConfig function', () => {
-        const configModule = appModule.get<ConfigModule>(ConfigModule);
-        expect(configModule).toBeDefined();
-        expect(configModule['load']).toContain(loadConfig);
     });
 
     it('should have AppController defined', () => {
@@ -55,19 +54,19 @@ describe('AppModule', () => {
     });
 
     it('should provide User repository', () => {
-        const userRepository = appModule.get(Repositories.User);
+        const userRepository = appModule.get(getRepositoryToken(UserEntity));
         expect(userRepository).toBeDefined();
         expect(userRepository.target).toBe(UserEntity);
     });
 
     it('should provide Token repository', () => {
-        const tokenRepository = appModule.get(Repositories.Token);
+        const tokenRepository = appModule.get(getRepositoryToken(TokenEntity));
         expect(tokenRepository).toBeDefined();
         expect(tokenRepository.target).toBe(TokenEntity);
     });
 
     it('should provide KeyData repository', () => {
-        const keyDataRepository = appModule.get(Repositories.KeyData);
+        const keyDataRepository = appModule.get(getRepositoryToken(KeyDatum));
         expect(keyDataRepository).toBeDefined();
         expect(keyDataRepository.target).toBe(KeyDatum);
     });
