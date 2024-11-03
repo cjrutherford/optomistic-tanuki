@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import { Inject, Injectable } from '@nestjs/common';
 import { getRepositoryToken, InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/entities/user.entity';

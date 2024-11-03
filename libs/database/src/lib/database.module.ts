@@ -1,6 +1,7 @@
 import { DynamicModule, Module, Provider, Type } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DataSource, DataSourceOptions, EntitySchema } from 'typeorm';
+export { FindOptionsBuilder } from './findOptionsBuilder';
 
 @Module({
 })
