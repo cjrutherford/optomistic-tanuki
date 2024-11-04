@@ -15,7 +15,17 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
                         durable: false,
                     },
                 },
-            },
+            },{
+                name: 'PROFILE_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'profile_queue',
+                    queueOptions: {
+                        durable: false,
+                    },
+                },
+            }
         ])
     ],
     controllers: [

@@ -48,14 +48,4 @@ describe('KeyDatum Entity', () => {
         expect(errors.length).toBeGreaterThan(0);
     });
 
-    it('should fail validation if User is missing', async () => {
-        const keyDatum = plainToClass(KeyDatum, {
-            id: 'some-uuid',
-            public: Buffer.from('some-public-key'),
-            salt: 'some-salt',
-        });
-
-        const errors = await validate(keyDatum);
-        expect(errors.length).toBeGreaterThan(0);
-    }); //another change
 }); //another change

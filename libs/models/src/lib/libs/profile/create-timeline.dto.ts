@@ -120,5 +120,5 @@ export class CreateTimelineDtoFactory {
 //     .setIsCompleted(false)
 //     .setIsPublished(true)
 //     .setIsDeleted(false)
-//     .setType(TimeLineEventType.SomeType)
+//     .setType(TimelineEventType.SomeType)
 //     .build();
