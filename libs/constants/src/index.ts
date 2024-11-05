@@ -6,3 +6,10 @@ export {
     GoalCommands,
     TimelineCommands
 } from './lib/libs/profile';
+export {
+    PostCommands,
+    CommentCommands,
+    AttachmentCommands,
+    VoteCommands,
+    LinkCommands
+} from './lib/libs/social';

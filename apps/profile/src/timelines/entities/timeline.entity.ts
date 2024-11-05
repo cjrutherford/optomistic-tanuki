@@ -2,8 +2,22 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Goal } from "../../goals/entities/goal.entity";
 import { Project } from "../../projects/entities/project.entity";
 import { Profile } from "../../profiles/entities/profile.entity";
-import { TimelineEventType } from "@optomistic-tanuki/libs/models";
 
+export enum TimelineEventType {
+    AddedGoal = 'AddedGoal',
+    AddedProject = 'AddedProject',
+    UpdatedGoal = 'UpdatedGoal',
+    UpdatedProject = 'UpdatedProject',
+    CreateProfile = 'CreateProfile',
+    UpdatedProfile = 'UpdatedProfile',
+    CompletedGoal = 'CompletedGoal',
+    CompletedProject = 'CompletedProject',
+    DeletedGoal = 'DeletedGoal',
+    Posted = 'Posted',
+    Commented = 'Commented',
+    Liked = 'Liked',
+    Contrubuted = 'Contributed'
+}
 @Entity()
 export class Timeline {
 
