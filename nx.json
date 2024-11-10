@@ -41,7 +41,8 @@
         "apps/user-accounts-e2e/**/*",
         "apps/authentication-e2e/**/*",
         "apps/profile-e2e/**/*",
-        "apps/social-e2e/**/*"
+        "apps/social-e2e/**/*",
+        "apps/procedures-e2e/**/*"
       ]
     }
   ]
