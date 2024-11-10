@@ -20,10 +20,10 @@ export class TimerEntity {
     @Column()
     start: Date;
 
-    @Column()
+    @Column({ default: null })
     end: Date;
 
-    @Column()
+    @Column({ default: 0})
     duration: number;
 
     @Column()
@@ -35,7 +35,7 @@ export class TimerEntity {
     @Column()
     updatedAt: Date;
 
-    @Column()
+    @Column({ default: null })
     deletedAt: Date;
 
     @Column({ type: 'enum', enum: TimerStatus, default: TimerStatus.ACTIVE })

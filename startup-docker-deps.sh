@@ -7,10 +7,13 @@ docker run -d --name ot-pg\
     -p 5432:5432 \
     -d postgres:latest
 
-
+export POSTGRES_PASSWORD=postgres
+export POSTGRES_USER=postgres
+export PG_PASSWORD=postgres
 psql -U postgres -h localhost -W -c "CREATE DATABASE ot_authentication;"
 psql -U postgres -h localhost -W -c "CREATE DATABASE ot_profile;"
 psql -U postgres -h localhost -W -c "CREATE DATABASE ot_social;"
+psql -U postgres -h localhost -W -c "CREATE DATABASE ot_tasks;"
 
 docker stop ot-rmq
 docker rm ot-rmq
