@@ -37,6 +37,17 @@ import { SocialController } from "../controllers/social/social.controller";
                         durable: false,
                     },
                 },
+            },
+            {
+                name: 'TASKS_SERVICE',
+                transport: Transport.RMQ,
+                options: {
+                    urls: ['amqp://localhost:5672'],
+                    queue: 'tasks_queue',
+                    queueOptions: {
+                        durable: false,
+                    },
+                },
             }
         ])
     ],

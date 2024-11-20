@@ -13,3 +13,9 @@ export {
     VoteCommands,
     LinkCommands
 } from './lib/libs/social';
+
+export {
+    TasksCommands,
+    TimersCommands,
+    NotesCommands
+} from './lib/libs/tasks';
