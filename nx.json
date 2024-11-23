@@ -14,7 +14,7 @@
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/yci.yml"]
   },
-  "nxCloudId": "6715332d4f834810fc20ae0d",
+  "nxCloudId": "674211c2e148096fae85932d",
   "plugins": [
     {
       "plugin": "@nx/webpack/plugin",
@@ -24,17 +24,10 @@
         "previewTargetName": "preview"
       }
     },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    },
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
     {
       "plugin": "@nx/jest/plugin",
-      "options": {
-        "targetName": "test"
-      },
+      "options": { "targetName": "test" },
       "exclude": [
         "apps/gateway-e2e/**/*",
         "apps/user-accounts--dry-run-e2e/**/*",
