@@ -27,12 +27,12 @@ describe('UpdateUserDto', () => {
 
     it('should allow empty fields', () => {
         const dto = new UpdateUserDto();
-        expect(dto.firstName).toBeUndefined();
-        expect(dto.lastName).toBeUndefined();
-        expect(dto.email).toBeUndefined();
-        expect(dto.bio).toBeUndefined();
+        expect(dto.firstName).toBe('');
+        expect(dto.lastName).toBe('');
+        expect(dto.email).toBe('');
+        expect(dto.bio).toBe('');
         expect(dto.oldPassword).toBeUndefined();
         expect(dto.newPassword).toBeUndefined();
-        expect(dto.confirmPassword).toBeUndefined();
+        expect(dto.confirmPassword).toBe('');
     });
 });

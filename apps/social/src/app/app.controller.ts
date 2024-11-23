@@ -50,7 +50,7 @@ export class AppController {
   }
 
   @MessagePattern({ cmd: VoteCommands.UPVOTE })
-  async upvotePost(@Payload('id') id: number, @Payload('userId') userId: string) {
+  async upvotePost(@Payload('id') id: string, @Payload('userId') userId: string) {
     return await this.voteService.create({
       postId: id, value: 1,
       userId: userId,
@@ -58,7 +58,7 @@ export class AppController {
   }
 
   @MessagePattern({ cmd: VoteCommands.DOWNVOTE })
-  async downvotePost(@Payload('id') id: number, @Payload('userId') userId: string) {
+  async downvotePost(@Payload('id') id: string, @Payload('userId') userId: string) {
     return await this.voteService.create({
       postId: id, value: -1,
       userId: userId,

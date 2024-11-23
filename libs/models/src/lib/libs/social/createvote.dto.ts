@@ -8,5 +8,5 @@ export class CreateVoteDto {
     userId: string;
 
     @ApiProperty({ description: 'The ID of the post' })
-    postId: number;
+    postId: string;
 }

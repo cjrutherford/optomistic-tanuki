@@ -23,8 +23,30 @@ describe('AppModule', () => {
                 AppModule,
             ],
         })
+        .overrideModule(DatabaseModule)
+        .useModule({
+            module: DatabaseModule,
+            exports: [],
+            providers: [],
+        })
         .overrideProvider(AppService)
         .useValue({}) // Mock AppService
+        .overrideProvider(getRepositoryToken(UserEntity))
+        .useValue({ target: UserEntity })
+        .overrideProvider(getRepositoryToken(TokenEntity))
+        .useValue({ target: TokenEntity })
+        .overrideProvider(getRepositoryToken(KeyDatum))
+        .useValue({ target: KeyDatum })
+        .overrideProvider('AUTHENTICATION_CONNECTION')
+        .useValue({ // Mock DatabaseModule
+            createConnection: jest.fn().mockResolvedValue({
+                query: jest.fn(),
+                manager: {
+                    transaction: jest.fn(),
+                },
+            }),
+            close: jest.fn().mockResolvedValue({}),
+        })
         .compile();
     });
 
@@ -70,4 +92,6 @@ describe('AppModule', () => {
         expect(keyDataRepository).toBeDefined();
         expect(keyDataRepository.target).toBe(KeyDatum);
     });
+
+
 });

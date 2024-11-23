@@ -1,17 +1,41 @@
 import { TimelineEventType } from "@optomistic-tanuki/libs/models";
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTimelineDto {
+    @ApiProperty({ description: 'Name of the timeline' })
     name: string;
+
+    @ApiProperty({ description: 'Description of the timeline' })
     description: string;
+
+    @ApiProperty({ description: 'ID of the user' })
     userId: string;
+
+    @ApiProperty({ description: 'ID of the profile' })
     profileId: string;
+
+    @ApiProperty({ description: 'ID of the project' })
     projectId: string;
+
+    @ApiProperty({ description: 'ID of the goal' })
     goalId: string;
+
+    @ApiProperty({ description: 'Start date of the timeline', example: '2023-01-01' })
     startDate: string;
+
+    @ApiProperty({ description: 'End date of the timeline', example: '2023-12-31' })
     endDate: string;
+
+    @ApiProperty({ description: 'Completion status of the timeline' })
     isCompleted: boolean;
+
+    @ApiProperty({ description: 'Publication status of the timeline' })
     isPublished: boolean;
+
+    @ApiProperty({ description: 'Deletion status of the timeline' })
     isDeleted: boolean;
+
+    @ApiProperty({ description: 'Type of the timeline event', enum: TimelineEventType })
     type: TimelineEventType;
 }
 
