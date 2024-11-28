@@ -15,14 +15,7 @@ psql -U postgres -h localhost -W -c "CREATE DATABASE ot_profile;"
 psql -U postgres -h localhost -W -c "CREATE DATABASE ot_social;"
 psql -U postgres -h localhost -W -c "CREATE DATABASE ot_tasks;"
 
-docker stop ot-rmq
-docker rm ot-rmq
-docker run -d --name ot-rmq \
-    -p 5672:5672 \
-    -p 15672:15672 \
-    rabbitmq
-
-for app in authentication profile; do
+for app in authentication profile social tasks; do
     cd apps/${app} 
     node -r ts-node/register ../../node_modules/typeorm/cli.js -d ./src/app/staticDatabase.ts migration:run
     cd -

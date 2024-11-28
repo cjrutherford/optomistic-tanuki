@@ -4,10 +4,10 @@ import { Attachment } from "../entities/attachment.entity";
 import { Post } from "../entities/post.entity";
 import { Vote } from "../entities/vote.entity";
 import { Link } from "../entities/link.entity";
+import { Comment } from "../entities/comment.entity";
 
 const loadDatabase = (config: ConfigService) => {
     const database = config.get('database');
-    console.log("🚀 ~ loadDatabase ~ database:", database)
     const entities = [Attachment, Comment, Post, Vote, Link];
     const ormConfig: PostgresConnectionOptions = {
         type: 'postgres',

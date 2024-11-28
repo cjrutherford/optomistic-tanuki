@@ -13,7 +13,7 @@ export class SaltedHashService {
         return {salt, hash: value}
     }
     private saltAndHash(pass: string): SaltHash {
-        const salt = randomBytes(64).toString('utf-8');
+        const salt = randomBytes(64).toString('hex');
         // stringify the salt in a way that's safe for database storage
         const finalSalt = salt.replace(/\0/g,'')
         return this.sha512(pass, finalSalt);

@@ -18,6 +18,7 @@ describe('AuthenticationController', () => {
   beforeEach(async () => {
     clientProxy = {
       send: jest.fn().mockReturnValue(of(true)),
+      connect: jest.fn().mockResolvedValue({}),
     } as any;
 
     const module: TestingModule = await Test.createTestingModule({

@@ -17,10 +17,10 @@ module.exports = {
       outputHashing: 'none',
       generatePackageJson: true,
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: join(__dirname, 'config.yaml'), to: join(__dirname, '../../dist/apps/authentication/config.yaml') },
-      ],
-    }),
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     { from: join(__dirname, './assets/config.yaml'), to: join(__dirname, '../../dist/apps/authentication/assets/config.yaml') },
+    //   ],
+    // }),
   ],
 };

@@ -30,7 +30,7 @@ export class NoteEntity {
     @Column()
     description: string;
 
-    @Column({ type: 'longtext'})
+    @Column({ type: 'text'})
     contents: string;
 
     @Column()

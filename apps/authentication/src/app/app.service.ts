@@ -21,61 +21,66 @@ export class AppService {
     private readonly userRepo: Repository<UserEntity>,
     @Inject(getRepositoryToken(TokenEntity))
     private readonly tokenRepo: Repository<TokenEntity>,
-    @Inject(getRepositoryToken(KeyDatum)) private readonly keyRepo: Repository<KeyDatum>,
+    @Inject(getRepositoryToken(KeyDatum))
+    private readonly keyRepo: Repository<KeyDatum>,
     private readonly saltedHashService: SaltedHashService,
     private readonly keyService: KeyService,
     @Inject('JWT_SECRET') private readonly jwtSecret: string,
     @Inject('totp') private readonly totp: typeof authenticator,
-    @Inject('jwt') private readonly jsonWebToken: typeof jwt
+    @Inject('jwt') private readonly jsonWebToken: typeof jwt,
   ) {}
 
   async login(email: string, password: string, mfa?: string) {
-    // Implement your login logic here
-    const user = await this.userRepo.findOne({ where: { email } });
-    if (!user) {
+    try {
+      const user = await this.userRepo.findOne({ where: { email } , relations: ['keyData']});
+      if (!user) {
       throw new RpcException('User not found');
-    }
+      }
 
-    // Check password and MFA here
-    const {
+      const {
       id: userId,
       password: storedHash,
+      totpSecret,
       keyData: { salt },
-    } = user;
+      } = user;
 
-    const valid = await this.saltedHashService.validateHash(
+      const valid = await this.saltedHashService.validateHash(
       password,
       storedHash,
-      salt
-    );
+      salt,
+      );
 
-    if (!valid) {
+      if (!valid) {
       throw new RpcException('Invalid password');
-    }
+      }
 
-    if(mfa !== undefined) {
+      if (mfa !== undefined) {
       const isValidMfa = this.totp.check(mfa, user.totpSecret);
       if (!isValidMfa) {
         throw new RpcException('Invalid MFA token');
       }
-    } else if (user.totpSecret !== undefined && mfa === undefined) {
+      } else if (user.totpSecret !== null && mfa === undefined) {
       throw new RpcException('MFA token is required for this user.');
-    }
+      }
 
-    const pl = { userId, name: `${user.firstName} ${user.lastName}`, email };
-    const tk = this.jsonWebToken.sign(pl, this.jwtSecret, { expiresIn: '1h' });
+      const pl = { userId, name: `${user.firstName} ${user.lastName}`, email };
+      const tk = this.jsonWebToken.sign(pl, this.jwtSecret, { expiresIn: '1h' });
 
-    delete user.keyData;
-    delete user.password;
-    const ntk = {
+      delete user.keyData;
+      delete user.password;
+      const ntk = {
       tokenData: tk,
       userId,
       user,
       revoked: false,
-    };
-    await this.tokenRepo.save(ntk);
+      };
+      await this.tokenRepo.save(ntk);
 
-    return { message: 'Login successful', code: 0, data: { newToken: tk } };
+      return { message: 'Login successful', code: 0, data: { newToken: tk } };
+    } catch (e) {
+      console.error('Error in login:', e);
+      throw new RpcException(e);
+    }
   }
 
   async registerUser(
@@ -83,58 +88,77 @@ export class AppService {
     fn: string,
     ln: string,
     password: string,
-    confirm: string
+    confirm: string,
+    bio: string,
   ) {
-    // Implement your registration logic here
-    if (password !== confirm) {
-      throw new RpcException('Passwords do not match');
+    try {
+      if (password !== confirm) {
+        throw new RpcException('Passwords do not match');
+      }
+      if (
+        !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(
+          email,
+        )
+      ) {
+        throw new RpcException('Invalid Email');
+      }
+      const existingUser = await this.userRepo.findOne({ where: { email } });
+      if (existingUser) {
+        console.error('User already exists');
+        throw new RpcException('User already exists');
+      }
+      const hashData = await this.saltedHashService.createNewHash(password);
+      if(!hashData) {
+        console.error('Error creating hash');
+        throw new RpcException('Error creating hash');
+      }
+      const insertResult = await this.userRepo.insert({
+        email,
+        firstName: fn,
+        lastName: ln,
+        password: hashData.hash,
+        keyData: { salt: hashData.salt },
+        bio,
+      });
+      const newUserId = insertResult.identifiers[0].id;
+      const newUser = await this.userRepo.findOne({ where: { id: newUserId } });
+
+      const { pubKey, privLocation } = await this.keyService.generateUserKeys(
+        newUser.id,
+        hashData.hash,
+      );
+      const nk: Partial<KeyDatum> = {
+        public: Buffer.from(pubKey),
+        salt: hashData.salt.toString(),
+      };
+
+      const newKeyData = await this.keyRepo.save({ ...nk });
+      newUser.keyData = newKeyData;
+      await this.userRepo.save(newUser);
+
+      return {
+        message: 'User Created',
+        code: 0,
+        data: {
+          pub: pubKey,
+          user: newUser.id,
+          privKey: privLocation,
+          inventory: undefined,
+        },
+      };
+    } catch (e) {
+      console.error('Error in registerUser:', e);
+      throw new RpcException(e);
     }
-    if (
-      !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(
-        email
-      )
-    )
-      throw new RpcException('Invalid Email');
-
-    const existingUser = await this.userRepo.findOne({ where: { email } });
-    if (existingUser) {
-      throw new RpcException('User already exists');
-    }
-
-    const hashData = await this.saltedHashService.createNewHash(password);
-
-    const newUser = (await this.userRepo.save({
-      email,
-      firstName: fn,
-      lastName: ln,
-      password: hashData.hash,
-      keyData: { salt: hashData.salt },
-    })) as UserEntity;
-    const { pubKey, privLocation } = await this.keyService.generateUserKeys(
-      newUser.id,
-      hashData.hash
-    );
-    const nk: Partial<KeyDatum> = {
-      public: Buffer.from(pubKey),
-      salt: hashData.salt.toString(),
-    };
-    const newKeyData = await this.keyRepo.save({ ...nk });
-    newUser.keyData = newKeyData;
-    await this.userRepo.save(newUser);
-
-    return {
-      message: 'User Created',
-      code: 0,
-      data: {
-        pub: pubKey,
-        user: newUser.id,
-        privKey: privLocation,
-        inventory: undefined,
-      },
-    };
   }
 
-  async resetPassword(email: string, newPassword: string, confirm: string, oldPass: string,  mfa?: string) {
+  async resetPassword(
+    email: string,
+    newPassword: string,
+    confirm: string,
+    oldPass: string,
+    mfa?: string,
+  ) {
     // Implement your password reset logic here
     if (newPassword !== confirm) {
       throw new RpcException('Passwords do not match');
@@ -148,14 +172,14 @@ export class AppService {
     const valid = await this.saltedHashService.validateHash(
       oldPass,
       user.password,
-      user.keyData.salt
+      user.keyData.salt,
     );
 
     if (!valid) {
       throw new RpcException('Invalid old password');
     }
 
-    if(mfa !== undefined) {
+    if (mfa !== undefined) {
       const isValidMfa = this.totp.check(mfa, user.totpSecret);
       if (!isValidMfa) {
         throw new RpcException('Invalid MFA token');
@@ -186,21 +210,32 @@ export class AppService {
     }
   }
 
-  async setupTotp( userId: string ) {
+  async setupTotp(userId: string) {
     // Implement your TOTP setup logic here
     const newSecret = randomBytes(20).toString('hex');
-    try{
-      const existingUser = await this.userRepo.findOne({ where: { id: userId } });
-      if(!existingUser) throw new RpcException('User not found');
-      if(existingUser.totpSecret) throw new RpcException('TOTP already set up');
+    try {
+      const existingUser = await this.userRepo.findOne({
+        where: { id: userId },
+      });
+      if (!existingUser) throw new RpcException('User not found');
+      if (existingUser.totpSecret)
+        throw new RpcException('TOTP already set up');
       await this.userRepo.update(userId, { totpSecret: newSecret });
-    return { message: 'TOTP setup successful', code: 0, data: { qr: qrcode.toDataURL(authenticator.keyuri( userId, "optomistic-tanuki", newSecret )) } };
+      return {
+        message: 'TOTP setup successful',
+        code: 0,
+        data: {
+          qr: qrcode.toDataURL(
+            authenticator.keyuri(userId, 'optomistic-tanuki', newSecret),
+          ),
+        },
+      };
     } catch (e) {
       throw new RpcException('TOTP setup failed');
     }
   }
 
-  async validateTotp( userId: string, token: string ) {
+  async validateTotp(userId: string, token: string) {
     const user = await this.userRepo.findOne({ where: { id: userId } });
     if (!user || !user.totpSecret) {
       throw new RpcException('User not found or TOTP not set up');

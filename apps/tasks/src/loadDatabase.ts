@@ -4,7 +4,6 @@ import { NoteEntity, TaskEntity, TimerEntity } from "./entities";
 
 const loadDatabase = (config: ConfigService) => {
     const database = config.get('database');
-    console.log("🚀 ~ loadDatabase ~ database:", database)
     const entities = [TaskEntity, NoteEntity, TimerEntity];
     const ormConfig: PostgresConnectionOptions = {
         type: 'postgres',

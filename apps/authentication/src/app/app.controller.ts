@@ -2,7 +2,7 @@ import { Controller, Get } from '@nestjs/common';
 import { AuthCommands } from '@optomistic-tanuki/libs/constants';
 import { AppService } from './app.service';
 import { EnableMultiFactorRequest, LoginRequest, RegisterRequest, ResetPasswordRequest, ValidateTokenRequest } from '@optomistic-tanuki/libs/models';
-import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
+import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -21,8 +21,9 @@ export class AppController {
   @MessagePattern({ cmd: AuthCommands.Register })
   async register(@Payload() data: RegisterRequest) {
     try {
-      const { email, fn, ln, password, confirm } = data;
-      return await this.appService.registerUser(email, fn, ln, password, confirm);
+      const { email, fn, ln, password, confirm, bio } = data;
+      const userReg =  await this.appService.registerUser(email, fn, ln, password, confirm, bio);
+      return userReg;
     } catch (e) {
       throw new RpcException(e);
     }
