@@ -31,6 +31,7 @@ describe('AppService', () => {
             findOne: jest.fn(),
             save: jest.fn(),
             update: jest.fn(),
+            insert: jest.fn(),
           },
         },
         {
@@ -176,20 +177,20 @@ describe('AppService', () => {
   describe('App Service Register User Errors', () => {
     it('should throw an error when passwords do not match during registration', async () => {
       expect(
-        service.registerUser(email, 'Thomas', 'Morrow', pw, 'differentPassword')
+        service.registerUser(email, 'Thomas', 'Morrow', pw, 'differentPassword', 'a day away')
       ).rejects.toThrow(RpcException);
     });
 
     it('should throw an error when the email is malformed during registration', async () => {
       expect(
-        service.registerUser('invalidEmail', 'Thomas', 'Morrow', pw, pw)
+        service.registerUser('invalidEmail', 'Thomas', 'Morrow', pw, pw, 'a day away')
       ).rejects.toThrow(RpcException);
     });
 
     it('should throw an error when the user already exists during registration', async () => {
       (userRepo.findOne as jest.Mock).mockResolvedValue({ email });
       await expect(
-        service.registerUser(email, 'Thomas', 'Morrow', pw, pw)
+        service.registerUser(email, 'Thomas', 'Morrow', pw, pw, 'a day away')
       ).rejects.toThrow(RpcException);
     });
   });
@@ -204,14 +205,16 @@ describe('AppService', () => {
         pubKey: 'publicKey',
         privLocation: 'private',
       });
-      (userRepo.save as jest.Mock).mockResolvedValue({ id: 'user-id' });
+      (userRepo.findOne as jest.Mock).mockResolvedValue({ id: 'user-id', keyData: { salt: 'salt' } });
+      (userRepo.insert as jest.Mock).mockResolvedValue({ identifiers: [{ id: 'user-id' }] });
 
       const result = await service.registerUser(
         email,
         'Thomas',
         'Morrow',
         pw,
-        pw
+        pw,
+        'a day awaay'
       );
       expect(result).toHaveProperty('message');
       expect(result.message).toBe('User Created');

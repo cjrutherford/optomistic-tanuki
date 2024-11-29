@@ -7,8 +7,7 @@ import { Project } from "../projects/entities/project.entity";
 import { Goal } from "../goals/entities/goal.entity";
 import { Timeline } from "../timelines/entities/timeline.entity";
 
-const config = yaml.load(fs.readFileSync(path.resolve('config.yaml'), 'utf8')) as Record<string, any>;
-// console.log("🚀 ~ config:", config)
+const config = yaml.load(fs.readFileSync(path.resolve(__dirname, '../assets/config.yaml'), 'utf8')) as Record<string, any>;
 const { database: {
     host,
     port,
@@ -30,5 +29,4 @@ const staticSource =  new DataSource({
     entities,
     migrations: ['migrations/*.ts'],
 }); 
-// console.log("🚀 ~ staticSource:", staticSource)
 export default staticSource

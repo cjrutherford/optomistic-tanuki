@@ -61,7 +61,7 @@ it('should create a vote', async () => {
 it('should create a comment', async () => {
     const commentDto: CreateCommentDto = { 
         content: 'Test Content', 
-        authorId: '1',
+        userId: '1',
         postId: '1',
      };
     await socialController.comment(commentDto);
@@ -142,7 +142,7 @@ it('should update a comment', async () => {
     const id = '1';
     const updateCommentDto: UpdateCommentDto = { 
         content: 'Test Content', 
-        authorId: '1',
+        userId: '1',
         postId: '1',
     };
     await socialController.updateComment(id, updateCommentDto);

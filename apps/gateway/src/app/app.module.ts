@@ -1,61 +1,91 @@
 import { Module } from "@nestjs/common";
 import { AuthenticationController } from "../controllers/authentication/authentication.controller";
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { Client, ClientProxyFactory, ClientsModule, Transport } from "@nestjs/microservices";
 import { ProfileController } from "../controllers/profile/profile.controller";
 import { SocialController } from "../controllers/social/social.controller";
+import { AuthGuard } from "./auth.guard";
+import { JwtService } from "@nestjs/jwt";
+import { NotesController } from "../controllers/notes.controller";
+import { TasksController } from "../controllers/tasks.controller";
+import { TimersController } from "../controllers/timers.controller";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { TcpServiceConfig, loadConfig } from '../config';
+import { ServiceTokens } from "@optomistic-tanuki/libs/constants";
 
 @Module({
     imports: [
-        ClientsModule.register([
-            {
-                name: 'AUTHENTICATION_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'authentication_queue',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },{
-                name: 'PROFILE_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'profile_queue',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },{
-                name: 'SOCIAL_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'social_queue',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            },
-            {
-                name: 'TASKS_SERVICE',
-                transport: Transport.RMQ,
-                options: {
-                    urls: ['amqp://localhost:5672'],
-                    queue: 'tasks_queue',
-                    queueOptions: {
-                        durable: false,
-                    },
-                },
-            }
-        ])
+        ConfigModule.forRoot({
+            isGlobal: true,
+            load: [loadConfig]
+        }),
     ],
     controllers: [
         AuthenticationController,
         ProfileController,
         SocialController,
+        NotesController,
+        TasksController,
+        TimersController
     ],
-    providers: [],
+    providers: [
+        AuthGuard,
+        JwtService,
+            {
+                provide: ServiceTokens.AUTHENTICATION_SERVICE,
+                useFactory: (configService: ConfigService) => {
+                    const serviceConfig = configService.get<TcpServiceConfig>('services.authentication');
+                    return ClientProxyFactory.create({
+                        transport: Transport.TCP,
+                        options: {
+                            host: serviceConfig.host,
+                            port: serviceConfig.port,
+                        },
+                    });
+                },
+                inject: [ConfigService],
+            },
+            {
+                provide: ServiceTokens.PROFILE_SERVICE,
+                useFactory: (configService: ConfigService) => {
+                    const serviceConfig = configService.get<TcpServiceConfig>('services.profile');
+                    return ClientProxyFactory.create({
+                        transport: Transport.TCP,
+                        options: {
+                            host: serviceConfig.host,
+                            port: serviceConfig.port,
+                        },
+                    });
+                },
+                inject: [ConfigService],
+            },
+            {
+                provide: ServiceTokens.SOCIAL_SERVICE,
+                useFactory: (configService: ConfigService) => {
+                    const serviceConfig = configService.get<TcpServiceConfig>('services.social');
+                    return ClientProxyFactory.create({
+                        transport: Transport.TCP,
+                        options: {
+                            host: serviceConfig.host,
+                            port: serviceConfig.port,
+                        },
+                    });
+                },
+                inject: [ConfigService],
+            },
+            {
+                provide: ServiceTokens.TASKS_SERVICE,
+                useFactory: (configService: ConfigService) => {
+                    const serviceConfig = configService.get<TcpServiceConfig>('services.tasks');
+                    return ClientProxyFactory.create({
+                        transport: Transport.TCP,
+                        options: {
+                            host: serviceConfig.host,
+                            port: serviceConfig.port,
+                        },
+                    });
+                },
+                inject: [ConfigService],
+            },
+    ],
 })
 export class AppModule {}

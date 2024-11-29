@@ -54,7 +54,7 @@ describe('register', () => {
   it('should call appService.registerUser with correct parameters', async () => {
     const registerRequest: RegisterRequest = { email: 'test@example.com', fn: 'First', ln: 'Last', password: 'password', confirm: 'password', bio: '  ' };
     await appController.register(registerRequest);
-    expect(appService.registerUser).toHaveBeenCalledWith('test@example.com', 'First', 'Last', 'password', 'password');
+    expect(appService.registerUser).toHaveBeenCalledWith('test@example.com', 'First', 'Last', 'password', 'password','  ');
   });
 
   it('should throw RpcException on error', async () => {

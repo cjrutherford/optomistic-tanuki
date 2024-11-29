@@ -5,7 +5,7 @@ export class CreateCommentDto {
   content: string;
 
   @ApiProperty({ description: 'ID of the author' })
-  authorId: string;
+  userId: string;
 
   @ApiProperty({ description: 'ID of the post' })
   postId: string;
