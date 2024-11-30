@@ -1,1 +1,14 @@
-<app-nx-welcome></app-nx-welcome> <router-outlet></router-outlet>
+<mat-sidenav-container class="container" [ngStyle]="{ 'background-color': background, 'color': foreground, 'border': '1px solid ' + accent }">
+    <mat-sidenav mode="side" [opened]="isNavExpanded">
+        <mat-nav-list>
+            <a mat-list-item href="#">Nav Item 1</a>
+            <a mat-list-item href="#">Nav Item 2</a>
+            <a mat-list-item href="#">Nav Item 3</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ot-toolbar (navToggle)="toggleNav()"></ot-toolbar>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+

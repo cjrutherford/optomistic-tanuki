@@ -1,0 +1,27 @@
+<mat-toolbar [ngStyle]="themeStyles">
+    <button class="nav-button" mat-raised-button (click)="emit()">
+        <img src="assets/tanuki.jpg" alt="" width="50px">
+    </button>
+    <h4>Optomistic Tanuki</h4>
+    <span class="spacer"></span>
+    <span >
+    <!-- <span *ngIf="!_isAuthenticated"> -->
+        <a mat-button routerLink="home" routerLinkActive="active">Home</a>
+        <a mat-button routerLink="about"routerLinkActive="active">About</a>
+        <a mat-button routerLink="contact"routerLinkActive="active">Contact</a>
+        <a mat-button routerLink="login"routerLinkActive="active">Login</a>
+        <a mat-button routerLink="register"routerLinkActive="active">Register</a>
+    </span>
+    <!-- <span *ngIf="_isAuthenticated"> -->
+    <span>
+        <a mat-button routerLink="profile"routerLinkActive="active">Profile</a>
+        <a mat-button routerLink="dashboard"routerLinkActive="active">Feed</a>
+        <a mat-button routerLink="admin"routerLinkActive="active">Settings</a>
+        <a mat-button routerLink="user"routerLinkActive="active">Followers/Following</a>
+        <a mat-button routerLink="chat"routerLinkActive="active">Chat</a>
+        <a mat-button routerLink="inventory"routerLinkActive="active">Inventory</a>
+        <a mat-button routerLink="campaigns"routerLinkActive="active">Campaigns</a>
+        <a mat-button routerLink="logout"routerLinkActive="active">Logout</a>
+    </span>
+    <app-toggle></app-toggle>
+</mat-toolbar>
