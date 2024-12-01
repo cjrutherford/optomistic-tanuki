@@ -3,5 +3,5 @@
 <div *ngIf="previewUrl">
   <h3>Preview:</h3>
   <img *ngIf="file && file.type && file.type.startsWith('image/')" [src]="previewUrl" alt="File Preview" style="max-width: 100%;">
-  <p *ngIf="file && file.type && file.name">File selected: {{ file?.name }} | {{file.type}}</p>
+  <p *ngIf="file && file.type && file.name">File selected: {{ file.name }} | {{file.type}}</p>
 </div>
