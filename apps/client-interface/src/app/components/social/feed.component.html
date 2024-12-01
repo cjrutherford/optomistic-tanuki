@@ -2,7 +2,7 @@
   <mat-card-header class="compose-header">
       <app-compose style="width: 95%; padding-left: 2em"></app-compose>
   </mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="post-list">
         <div class="post" *ngFor="let post of posts">
             <app-post [content]="post"></app-post>
         </div>

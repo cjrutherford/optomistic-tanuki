@@ -5,8 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { ComposeComponent } from './compose.component';
-import { PostComponent } from './post.component';
+import { PostComponent, PostType } from './post.component';
 import { ThemeService } from '../../theme/theme.service';
+import { PostDto } from '@optomistic-tanuki/libs/models';
 
 @Component({
   selector: 'app-feed',
@@ -40,10 +41,16 @@ export class FeedComponent {
       };
     });
   }
-  posts = Array.from({ length: 20 }, (_, i) => `Post #${i + 1}`);
+  posts = Array.from({ length: 20 }, (_, i) => ({
+    id: (i + 1).toString(),
+    title: `Post #${i + 1}`,
+    content: `This is the content of post #${i + 1}`,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  } as PostType));
   
   onScroll() {
-    const length = this.posts.length;
-    this.posts.push(...Array.from({ length: 20 }, (_, i) => `Post #${length + i + 1}`));
+    // const length = this.posts.length;
+    // this.posts.push(...Array.from({ length: 20 }, (_, i) => `Post #${length + i + 1}`));
   }
 }

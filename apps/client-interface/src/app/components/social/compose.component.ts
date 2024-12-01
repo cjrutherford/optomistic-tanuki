@@ -4,11 +4,12 @@ import { AttachmentComponent } from './attachment.component';
 import { LinkComponent } from './link.component';
 import { Subscription } from 'rxjs';
 import { ThemeService } from '../../theme/theme.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-compose',
   standalone: true,
-  imports: [CommonModule, AttachmentComponent, LinkComponent],
+  imports: [CommonModule, AttachmentComponent, LinkComponent, MatButtonModule],
   providers: [ThemeService],
   templateUrl: './compose.component.html',
   styleUrl: './compose.component.scss',

@@ -1,1 +1,29 @@
-<p>post works!</p>
+<mat-card class="post-container">
+  <mat-card-header>
+    <mat-card-title>{{ content.title }}</mat-card-title>
+    <mat-card-subtitle>{{ content.createdAt | date }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ content.content }}</p>
+    <div *ngIf="attachments.length > 0">
+      <h3>Attachments</h3>
+      <div *ngFor="let attachment of attachments" class="attachment">
+        <!-- Display attachment details here -->
+        <a [href]="attachment.url" target="_blank">{{ attachment.name }}</a>
+      </div>
+    </div>
+    <div *ngIf="links.length > 0">
+      <h3>Links</h3>
+      <div *ngFor="let link of links" class="link">
+        <!-- Display link details here -->
+        <a [href]="link.url" target="_blank">{{ link.title }}</a>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>Like</button>
+    <button mat-button>Share</button>
+    <app-vote></app-vote>
+    <app-comment></app-comment>
+  </mat-card-actions>
+</mat-card>
