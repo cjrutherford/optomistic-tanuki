@@ -10,5 +10,8 @@ export const appRoutes: Route[] = [
     },{
         path: 'feed',
         loadComponent: () => import('./components/social/feed.component').then(m => m.FeedComponent)
+    },{
+        path: 'profile',
+        loadComponent: () => import('./components/profile.component').then(m => m.ProfileComponent)
     }
 ];
