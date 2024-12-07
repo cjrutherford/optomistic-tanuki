@@ -15,7 +15,23 @@ export class ProfileComponent {
   profilePicture = 'https://placehold.it/600x600';
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   bannerPhoto: string = 'https://placehold.it/1200x300';
-  photoGalleries: string[] = ['gallery1.jpg', 'gallery2.jpg', 'gallery3.jpg'];
-  friends: string[] = ['Friend 1', 'Friend 2', 'Friend 3', 'Friend 4', 'Friend 5', 'Friend 6'];
+  photoGalleries: {coverPhoto: string, title: string}[] = [{
+    coverPhoto: 'https://placehold.it/300x300', 
+    title: "Gallery1"
+  },{ 
+    coverPhoto: 'https://placehold.it/300x300',
+    title: 'Gallery2',
+  },{
+    coverPhoto: 'https://placehold.it/300x300',
+    title: 'Gallery3', 
+  }];
+  friends: {photo: string, name: string}[] = [
+    { name: 'Friend 1', photo: 'https://placehold.it/300x300' }, 
+    { name: 'Friend 2', photo: 'https://placehold.it/300x300' }, 
+    { name: 'Friend 3', photo: 'https://placehold.it/300x300' }, 
+    { name: 'Friend 4', photo: 'https://placehold.it/300x300' }, 
+    { name: 'Friend 5', photo: 'https://placehold.it/300x300' }, 
+    { name: 'Friend 6', photo: 'https://placehold.it/300x300' }
+  ];
   recentPosts: string[] = ['Post 1', 'Post 2', 'Post 3'];
 }
