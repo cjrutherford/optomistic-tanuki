@@ -1,0 +1,27 @@
+mat-list-item.task-item.active {
+  background-color: var(--accent-shade-default);
+  color: var(--foreground-color);
+  border: 1px solid var(--accent-shade-default);
+}
+
+
+.mat-tab-group {
+  display: flex;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  border: 1px solid var(--accent-shade-default);
+}
+
+.mat-tab-label {
+  min-width: 150px;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  border: 1px solid var(--accent-shade-default);
+}
+
+.mat-tab-body-wrapper {
+  flex-grow: 1;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+  border: 1px solid var(--accent-shade-default);
+}

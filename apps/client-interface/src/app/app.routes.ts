@@ -13,5 +13,11 @@ export const appRoutes: Route[] = [
     },{
         path: 'profile',
         loadComponent: () => import('./components/profile.component').then(m => m.ProfileComponent)
+    },{
+        path: 'tasks',
+        loadComponent: () => import('./components/tasks/tasks.component').then(m => m.TasksComponent)
+    },{
+        path: '**',
+        redirectTo: 'feed'
     }
 ];

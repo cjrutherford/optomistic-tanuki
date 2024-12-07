@@ -1,0 +1,31 @@
+<div>
+  <h2>Tasks <app-first-svg></app-first-svg></h2>
+  <mat-tab-group>
+    <mat-tab *ngFor="let task of tasks" [label]="task.title" class="task-title">
+      <mat-card>
+        <mat-card-title>Details</mat-card-title>
+        <mat-card-content>
+          <p>{{ task.description }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-title>Timers</mat-card-title>
+        <mat-list>
+          <mat-list-item 
+            *ngFor="let timer of getFilteredTimers(task.id)"
+            >
+            {{ timer.description }} - {{ timer.status }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+      <mat-card>
+        <mat-card-title>Notes</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let note of getFilteredNotes(task.id)">
+            {{ note.title }} - {{ note.status }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>
