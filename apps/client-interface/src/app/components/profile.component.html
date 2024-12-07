@@ -10,19 +10,12 @@
 </mat-card>
 
 <div>
-  <mat-card class="galleries">
+  <mat-card class="friends">
     <div class="filter">
-      <h2>Photo Galleries</h2>
-      <div class="photo-gallery">
-        <div class="gallery-card" *ngFor="let gallery of photoGalleries">
-          <mat-card>
-            <img
-              mat-card-image
-              [src]="gallery.coverPhoto"
-              alt="Gallery Cover Photo"
-            />
-            <mat-card-title>{{ gallery.title }}</mat-card-title>
-          </mat-card>
+      <h2>Friends</h2>
+      <div class="friend-grid">
+        <div *ngFor="let friend of friends">
+          <app-friends [friend]="friend"></app-friends>
         </div>
       </div>
     </div>
@@ -30,16 +23,14 @@
 </div>
 
 <div>
-  <mat-card class="friends">
+  <mat-card class="galleries">
     <div class="filter">
-      <h2>Friends</h2>
-      <mat-list>
-        <mat-list-item *ngFor="let friend of friends">
-          <mat-icon matListIcon>person</mat-icon>
-          <img mat-card-avatar [src]="friend.photo" alt="{{ friend.name }}" />
-          <p matLine>{{ friend.name }}</p>
-        </mat-list-item>
-      </mat-list>
+      <h2>Photo Galleries</h2>
+      <div class="photo-gallery">
+        <div class="gallery-card" *ngFor="let gallery of photoGalleries">
+          <app-gallery [data]="gallery"></app-gallery>
+        </div>
+      </div>
     </div>
   </mat-card>
 </div>
@@ -48,12 +39,11 @@
   <mat-card class="posts">
     <div class="filter">
       <h2>Recent Posts</h2>
-      <mat-list>
-        <mat-list-item *ngFor="let post of recentPosts">
-          <mat-icon matListIcon>article</mat-icon>
-          <p matLine>{{ post }}</p>
-        </mat-list-item>
-      </mat-list>
+      <div id="post-container">
+        <div *ngFor="let post of recentPosts">
+          <app-post [data]="post"></app-post>
+        </div>
+      </div>
     </div>
   </mat-card>
 </div>

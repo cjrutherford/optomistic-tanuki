@@ -10,7 +10,13 @@ import { ThemeService } from '../theme/theme.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    MatInputModule, 
+    MatButtonModule, 
+    MatCardModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [ThemeService],

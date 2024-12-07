@@ -5,11 +5,12 @@ import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-comment',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatInputModule],
+  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatInputModule, MatButtonModule],
   providers: [ThemeService],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
