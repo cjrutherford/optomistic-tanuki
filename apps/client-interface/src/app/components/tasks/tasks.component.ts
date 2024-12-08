@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
 import { TaskDto, TaskStatus } from '../../models/task.dto';
 import { NoteDto, NoteStatus } from '../../models/note.dto';
 import { TimerDto, TimerStatus } from '../../models/timer.dto';
@@ -11,7 +8,7 @@ import { FirstSvgComponent } from '../Svg/first-svg/first-svg.component';
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatCardModule, MatTabsModule, FirstSvgComponent],
+  imports: [CommonModule, FirstSvgComponent],
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.scss'],
 })
@@ -161,13 +158,5 @@ export class TasksComponent implements OnInit {
 
   getFilteredNotes(taskId: string) {
     return this.notes.filter(note => note.taskId === taskId);
-  }
-
-  loadTimers(taskId: string) {
-    // No longer needed
-  }
-
-  loadNotes(taskId: string) {
-    // No longer needed
   }
 }

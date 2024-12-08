@@ -1,31 +1,28 @@
-<div>
-  <h2>Tasks <app-first-svg></app-first-svg></h2>
-  <mat-tab-group>
-    <mat-tab *ngFor="let task of tasks" [label]="task.title" class="task-title">
-      <mat-card>
-        <mat-card-title>Details</mat-card-title>
-        <mat-card-content>
-          <p>{{ task.description }}</p>
-        </mat-card-content>
-      </mat-card>
-      <mat-card>
-        <mat-card-title>Timers</mat-card-title>
-        <mat-list>
-          <mat-list-item 
-            *ngFor="let timer of getFilteredTimers(task.id)"
-            >
-            {{ timer.description }} - {{ timer.status }}
-          </mat-list-item>
-        </mat-list>
-      </mat-card>
-      <mat-card>
-        <mat-card-title>Notes</mat-card-title>
-        <mat-list>
-          <mat-list-item *ngFor="let note of getFilteredNotes(task.id)">
-            {{ note.title }} - {{ note.status }}
-          </mat-list-item>
-        </mat-list>
-      </mat-card>
-    </mat-tab>
-  </mat-tab-group>
+<div class="tasks-container">
+  <div class="task-list">
+    <h2>Tasks</h2>
+    <div class="tab-group">
+      <div *ngFor="let task of tasks" class="tab-label" [class.active]="selectedTask && selectedTask.id === task.id" (click)="selectTask(task)">
+        {{ task.title }}
+      </div>
+    </div>
+  </div>
+  <div class="task-details" *ngIf="selectedTask">
+    <div class="card">
+      <div class="card-title">Details</div>
+      <div>{{ selectedTask.description }}</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Timers</div>
+      <div *ngFor="let timer of filteredTimers" class="list-item">
+        {{ timer.description }} - {{ timer.status }}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Notes</div>
+      <div *ngFor="let note of filteredNotes" class="list-item">
+        {{ note.title }} - {{ note.status }}
+      </div>
+    </div>
+  </div>
 </div>
