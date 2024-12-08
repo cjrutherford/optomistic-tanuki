@@ -1,0 +1,21 @@
+<form [formGroup]="linkForm" (ngSubmit)="addLink()">
+  <mat-form-field appearance="fill">
+    <mat-label>URL</mat-label>
+    <input matInput formControlName="url" placeholder="Enter URL">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <input matInput formControlName="description" placeholder="Enter Description">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Add Link</button>
+</form>
+
+<mat-card *ngIf="linkForm.value.url">
+  <mat-card-title>Link Preview</mat-card-title>
+  <mat-card-content>
+    <p><strong>URL:</strong> {{ linkForm.value.url }}</p>
+    <p><strong>Description:</strong> {{ linkForm.value.description }}</p>
+  </mat-card-content>
+</mat-card>

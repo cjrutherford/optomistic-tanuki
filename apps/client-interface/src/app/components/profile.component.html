@@ -1,0 +1,49 @@
+<mat-card class="profile-banner">
+  <div
+    class="profile-banner-image"
+    [style.backgroundImage]="'url(' + bannerPhoto + ')'"
+    style="height: 100%; width: 100%"
+  >
+    <div class="profile-banner-image-filter"></div>
+  </div>
+  <img class="profile-picture" [src]="profilePicture" alt="Profile Picture" />
+</mat-card>
+
+<div>
+  <mat-card class="friends">
+    <div class="filter">
+      <h2>Friends</h2>
+      <div class="friend-grid">
+        <div *ngFor="let friend of friends">
+          <app-friends [friend]="friend"></app-friends>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div>
+  <mat-card class="galleries">
+    <div class="filter">
+      <h2>Photo Galleries</h2>
+      <div class="photo-gallery">
+        <div class="gallery-card" *ngFor="let gallery of photoGalleries">
+          <app-gallery [data]="gallery"></app-gallery>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div>
+  <mat-card class="posts">
+    <div class="filter">
+      <h2>Recent Posts</h2>
+      <div id="post-container">
+        <div *ngFor="let post of recentPosts">
+          <app-post [data]="post"></app-post>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

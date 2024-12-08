@@ -1,0 +1,24 @@
+<mat-card class="post-item">
+  <mat-card-header>
+    <mat-icon matListIcon>article</mat-icon>
+    <mat-card-title>{{ data.title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ data.content }}</p>
+  </mat-card-content>
+  <mat-card-footer class="flex-row space-between">
+    <div class="vote">
+      <mat-icon>up</mat-icon>
+      <span>{{ data.votes.upvotes - data.votes.downvotes }}</span>
+      <mat-icon>down</mat-icon>
+    </div>
+    <div class="attachment">
+      <mat-icon>attachment</mat-icon>
+      <span>{{ data.attachment.length }}</span>
+    </div>
+    <div class="comments">
+      <mat-icon>comment</mat-icon>
+      <span>{{ data.comments.length }}</span>
+    </div>
+  </mat-card-footer>
+</mat-card>

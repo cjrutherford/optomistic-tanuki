@@ -1,0 +1,10 @@
+<mat-card class="default-container flex-row">
+    <div class="icon">
+        <mat-icon matListIcon>person</mat-icon>
+    </div>
+    <div class="img">
+        <img mat-card-avatar [src]="friend.photo" alt="{{ friend.name }}" />
+    </div>
+
+    <div matLine>{{ friend.name }}</div>
+</mat-card>

@@ -1,0 +1,25 @@
+.post-container {
+  margin: 20px;
+  width: 95vw;
+  background: var(--background-color);
+  color: var(--foreground-color);
+  border: 1px solid var(--accent-shade-standard);
+  border-radius: 5px;
+  padding: 20px;
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80vw;
+  }
+}
+
+mat-card-actions.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.attachment,
+.link {
+  margin-top: 10px;
+}
