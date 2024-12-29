@@ -1,4 +1,4 @@
-<mat-card class="post-container">
+<mat-card class="post-container" [ngClass]="'background-gradient-' + theme">
   <mat-card-header>
     <mat-card-title>{{ content.title }}</mat-card-title>
     <mat-card-subtitle>{{ content.createdAt | date }}</mat-card-subtitle>
@@ -21,8 +21,8 @@
     </div>
   </mat-card-content>
   <mat-card-actions class="actions">
-    <button mat-raised-button>Like</button>
-    <button mat-raised-button>Share</button>
+    <button mat-raised-button class="button-default">Like</button>
+    <button mat-raised-button class="button-default">Share</button>
     <app-vote></app-vote>
     <app-comment></app-comment>
   </mat-card-actions>

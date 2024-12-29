@@ -28,11 +28,11 @@ export class AppComponent {
   background: string;
   foreground: string;
   accent: string;
+  backgroundGradient: string; // New property
+
   constructor(private readonly themeService: ThemeService) {
-    this.themeService.themeColors$.subscribe((colors) => {
-      this.background = colors.background;
-      this.foreground = colors.foreground;
-      this.accent = colors.accent;
+    this.themeService.theme$.subscribe((theme) => {
+      this.backgroundGradient = 'background-gradient-' + theme;
     });
   }
   title = 'client-interface';

@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 mat-card.profile-banner {
   width: 100%;
   height: 25vh;
@@ -6,15 +8,18 @@ mat-card.profile-banner {
   position: relative;
   background: var(--gradient-fastCycle); // Use the new gradient variable
 }
+
 .profile-banner-image {
-    background-size: cover;
+  background-size: cover;
 }
+
 .friend-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1rem;
   padding: 1rem;
 }
+
 .profile-banner-image-filter {
   background-color: rgba(10, 10, 10, 0.8);
   height: 100%;
@@ -25,7 +30,7 @@ mat-card.profile-banner {
 }
 
 mat-card.post-item {
-  background: var(--background-color) !important;
+  @extend .background-default, .border-default, .shadow-default;
   color: var(--foreground-color);
   border-radius: 8px;
   width: 100%;
@@ -64,13 +69,13 @@ mat-card.post-item {
 }
 
 .galleries, .friends, .posts {
+  @extend .background-gradient-dark, .border-default, .shadow-default;
   width: 100%;
   padding: 0.5rem;
   margin: 0;
   background-size: cover;
   background-position: center;
   position: relative;
-  background: var(--gradient-dark); // Use the new gradient variable
   margin-top: 1rem;
   border-radius: 8px;
 }
@@ -93,7 +98,7 @@ mat-list-item {
 }
 
 .galleries .photo-gallery, .friends mat-list, .posts mat-list {
-  background-color: var(--background-color);
+  @extend .background-default, .border-default, .shadow-default;
   opacity: 0.8;
   color: var(--foreground-color);
   padding: 1rem;
@@ -101,10 +106,10 @@ mat-list-item {
 }
 
 .filter {
+  @extend .background-default, .border-default, .shadow-default;
   padding: 1rem;
   margin: 0;
   border-radius: 5px;
-  background-color: var(--background-color);
   opacity: 0.8;
   height: 100%;
   width: 100%;

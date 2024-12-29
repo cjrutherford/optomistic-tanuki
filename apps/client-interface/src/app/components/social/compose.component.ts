@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttachmentComponent } from './attachment.component';
 import { LinkComponent } from './link.component';
@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './compose.component.html',
   styleUrl: './compose.component.scss',
 })
-export class ComposeComponent {
+export class ComposeComponent implements OnDestroy {
     themeSub: Subscription;
   themeStyles: {
     'background-color': string;

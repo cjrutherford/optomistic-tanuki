@@ -1,9 +1,9 @@
-<mat-sidenav-container class="container" [ngStyle]="{ 'background-color': background, 'color': foreground, 'border': '1px solid ' + accent }">
-    <mat-sidenav mode="side" [opened]="isNavExpanded">
-        <mat-nav-list>
-            <a mat-list-item href="#">Nav Item 1</a>
-            <a mat-list-item href="#">Nav Item 2</a>
-            <a mat-list-item href="#">Nav Item 3</a>
+<mat-sidenav-container class="container" [ngClass]="backgroundGradient" [ngStyle]="{ 'color': foreground }">
+    <mat-sidenav mode="side" [opened]="isNavExpanded" class="border-default shadow-default">
+        <mat-nav-list class="border-default shadow-default background-gradient-dark sidenav">
+            <a mat-list-item class="button-default" routerLink="/profile">Profile</a>
+            <a mat-list-item class="button-default" routerLink="/feed">Feed</a>
+            <a mat-list-item class="button-default" routerLink="/goals">Goals</a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

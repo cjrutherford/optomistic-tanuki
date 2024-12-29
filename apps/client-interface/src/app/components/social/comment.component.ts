@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from '../../theme/theme.service';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class CommentComponent {
   commentForm: FormGroup;
-  @ViewChild('commentDialog') commentDialog: any;
+  @ViewChild('commentDialog') commentDialog: TemplateRef<any>;
 
   constructor(private dialog: MatDialog, private fb: FormBuilder) {
     this.commentForm = this.fb.group({

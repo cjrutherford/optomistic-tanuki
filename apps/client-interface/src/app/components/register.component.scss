@@ -1,3 +1,9 @@
+@import '../../variables.scss';
+.container-card {
+  margin: 20px;
+  padding: 20px;
+  @extend .border-default, .shadow-default;
+}
 form {
   display: flex;
   flex-direction: column;

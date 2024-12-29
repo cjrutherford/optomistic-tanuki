@@ -1,4 +1,4 @@
-<button mat-raised-button (click)="openCommentDialog()">Add Comment</button>
+<button mat-raised-button class="button-default" (click)="openCommentDialog()">Add Comment</button>
 
 <ng-template #commentDialog>
     <h2 mat-dialog-title>Add a Comment</h2>
@@ -11,7 +11,7 @@
         </form>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button (click)="onCancel()">Cancel</button>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!commentForm.valid">Submit</button>
+        <button mat-button class="button-default" (click)="onCancel()">Cancel</button>
+        <button class="button-default" mat-raised-button color="primary" type="submit" [disabled]="!commentForm.valid">Submit</button>
     </mat-dialog-actions>
 </ng-template>

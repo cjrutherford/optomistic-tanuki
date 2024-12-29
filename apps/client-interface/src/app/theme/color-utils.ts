@@ -39,3 +39,18 @@ function darken(color: string, amount: number): string {
 
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }
+
+export function generateComplementaryColor(color: string): string {
+  let r = parseInt(color.slice(1, 3), 16);
+  let g = parseInt(color.slice(3, 5), 16);
+  let b = parseInt(color.slice(5, 7), 16);
+
+  r = Math.abs(255 - r);
+  g = Math.abs(255 - g);
+  b = Math.abs(255 - b);
+  
+  let hashVal = "#" + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
+  return hashVal;
+}
+
+

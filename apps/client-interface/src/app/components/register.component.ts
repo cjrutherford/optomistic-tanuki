@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { ThemeService } from '../theme/theme.service';
 
 @Component({
   selector: 'app-register',
@@ -13,9 +14,10 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
+  theme: 'light' | 'dark';
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private readonly themeService:ThemeService) {
     this.registerForm = this.fb.group({
       firstName: [''],
       lastName: [''],
@@ -23,6 +25,9 @@ export class RegisterComponent {
       password: [''],
       confirmation: [''],
       bio: ['']
+    });
+    this.themeService.theme$.subscribe((theme) => {
+      this.theme = theme;
     });
   }
 

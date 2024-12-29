@@ -5,7 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { GalleryComponent } from './profile/gallery/gallery.component';
 import { FriendsComponent } from './profile/friends/friends.component';
-import { PostComponent } from './profile/posts/posts.component';
+import { PostComponent, PostType } from './social/post.component';
 
 @Component({
   selector: 'app-profile',
@@ -44,14 +44,11 @@ export class ProfileComponent {
     { name: 'Friend 5', photo: 'https://placehold.it/300x300' }, 
     { name: 'Friend 6', photo: 'https://placehold.it/300x300' }
   ];
-recentPosts: { 
-  title: string; 
-  content: string; 
-  attachment: string; 
-  comments: { user: string; comment: string }[]; 
-  votes: { upvotes: number; downvotes: number } 
-}[] = [
+recentPosts: PostType[] = [
   { 
+    id: '1',
+    createdAt: new Date(),
+    updatedAt: new Date(),
     title: 'Post 1', 
     content: 'Content of post 1', 
     attachment: 'https://placehold.it/600x400', 
@@ -62,6 +59,9 @@ recentPosts: {
     votes: { upvotes: 10, downvotes: 2 } 
   },
   { 
+    id: '2',
+    createdAt: new Date(),
+    updatedAt: new Date(),
     title: 'Post 2', 
     content: 'Content of post 2', 
     attachment: 'https://placehold.it/600x400', 
@@ -72,6 +72,9 @@ recentPosts: {
     votes: { upvotes: 8, downvotes: 1 } 
   },
   { 
+    id: '3',
+    createdAt: new Date(),
+    updatedAt: new Date(),
     title: 'Post 3', 
     content: 'Content of post 3', 
     attachment: 'https://placehold.it/600x400', 

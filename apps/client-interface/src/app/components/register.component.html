@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="container-card" [class]="'background-gradient-' + theme">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
@@ -24,6 +24,6 @@
       <mat-label>Bio</mat-label>
       <textarea matInput formControlName="bio"></textarea>
     </mat-form-field>
-    <button mat-raised-button color="primary" type="submit">Register</button>
+    <button mat-raised-button class="button-default" color="primary" type="submit">Register</button>
   </form>
 </mat-card>

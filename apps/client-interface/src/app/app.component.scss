@@ -1,7 +1,20 @@
+@use '@angular/material' as mat;
+@import '../variables.scss';
+
 .container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  @extend .background-gradient-dark, .border-default, .shadow-default;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+:root {
+  @include mat.sidenav-overrides(
+    (
+      container-divider-color: var(--complementary-shade-darken-30),
+      container-background-color: var(--accent-color),
+      container-text-color: var(--foreground-color),
+    )
+  );
 }
 
 .app-bar {
@@ -16,7 +29,7 @@
 .nav {
   display: flex;
   flex-direction: column;
-  background-color: #f4f4f4;
+  @extend .background-gradient-dark, .border-default, .shadow-default;
   transition: width 0.3s;
 }
 
@@ -48,4 +61,15 @@
 
 mat-card.mat-mdc-card.mdc-card {
   background: transparent !important;
+}
+.sidenav {
+  .button-default{
+    border-radius: 10px;
+  }
+  height: 100%;
+  color: var(--foreground-color);
+  overflow: hidden;
+  * > {
+    color: var(--foreground-color);
+  }
 }
