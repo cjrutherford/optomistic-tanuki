@@ -21,6 +21,7 @@ export class KeyService {
     await writeFile(privLocation, privKey, 'utf-8');
     // RETURN THE PUBLIC KEY SO THAT IT CAN BE USED IN THE APPLICATION.
     // RETURN URL FOR PRIVATE KEY.
+    console.log('hlelo')
     return { pubKey, privLocation }
     } catch (e) {
       console.error(e);

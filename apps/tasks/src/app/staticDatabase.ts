@@ -8,7 +8,7 @@ const config = yaml.load(fs.readFileSync(path.resolve(__dirname, '../assets/conf
 const { database: {
     host,
     port,
-    user,
+    user: user,
     password,
     name,
     database

@@ -1,0 +1,74 @@
+services:
+  nginx:
+    extends:
+      file: docker-compose.yaml
+      service: nginx
+  build_base:
+    extends:
+      file: docker-compose.yaml
+      service: build_base
+  migration_runner:
+    extends:
+      file: docker-compose.yaml
+      service: migration_runner
+  db:
+    extends:
+      file: docker-compose.yaml
+      service: db
+  db_init:
+    extends:
+      file: docker-compose.yaml
+      service: db_init
+  ot_client_interface:
+    extends:
+      file: docker-compose.yaml
+      service: ot_client_interface
+    command: ["sh", "-c", "npx nx serve client-interface"]
+    volumes: 
+      - ./:/app
+    ports:
+      - "5000:4200"
+  ot_authentication:
+    extends:
+      file: docker-compose.yaml
+      service: ot_authentication
+    command: ["sh", "-c", "npx nx serve authentication"]
+    volumes: 
+      - ./apps/authentication:/app/apps/authentication
+      - ./libs:/app/libs
+      - ./apps/authentication/src/assets/config.yaml:/app/dist/apps/authentication/assets/config.yaml
+  ot_gateway:
+    extends:
+      file: docker-compose.yaml
+      service: ot_gateway
+    command: ["sh", "-c", "npx nx serve gateway"]
+    volumes: 
+      - ./apps/gateway:/app/apps/gateway
+      - ./libs:/app/libs
+  ot_profile:
+    extends:
+      file: docker-compose.yaml
+      service: ot_profile
+    command: ["sh", "-c", "npx nx serve profile"]
+    volumes: 
+      - ./apps/profile:/app/apps/profile
+      - ./libs:/app/libs
+  ot_social:
+    extends:
+      file: docker-compose.yaml
+      service: ot_social
+    command: ["sh", "-c", "npx nx serve social"]
+    volumes: 
+      - ./apps/social:/app/apps/social
+      - ./libs:/app/libs
+  ot_tasks:
+    extends:
+      file: docker-compose.yaml
+      service: ot_tasks
+    command: ["sh", "-c", "npx nx serve tasks"]
+    volumes: 
+      - ./apps/tasks:/app/apps/tasks
+      - ./libs:/app/libs
+networks:
+  ot_network:
+    driver: bridge

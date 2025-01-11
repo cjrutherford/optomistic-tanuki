@@ -75,3 +75,14 @@ mat-card-content{
     padding: 4rem;
     box-shadow: 0 0 10px 0 var(--accent-shade-lighten-30) !important;
 }
+
+input {
+    width: 90%;
+    margin-left: 20px;
+    background-color: var(--background-color);
+    color: #fff;//var(--foreground-color);
+    border: 1px solid var(--accent-shade-standard);
+    border-radius: 0.5rem;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 var(--accent-shade-lighten-30);
+}

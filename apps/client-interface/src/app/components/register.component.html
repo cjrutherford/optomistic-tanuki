@@ -2,28 +2,29 @@
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
-      <input matInput formControlName="firstName">
+      <input placeholder="First Name" matNativeInput formControlName="firstName">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Last Name</mat-label>
-      <input matInput formControlName="lastName">
+      <input placeholder="Last Name" matNativeInput formControlName="lastName">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput formControlName="email">
+      <input matNativeInput placeholder="Email" formControlName="email">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password">
+      <input placeholder="Password" matNativeInput type="password" formControlName="password">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Confirm Password</mat-label>
-      <input matInput type="password" formControlName="confirmation">
+      <input placeholder="Confirm Password" matNativeInput type="password" formControlName="confirmation">
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Bio</mat-label>
-      <textarea matInput formControlName="bio"></textarea>
+      <textarea matNativeInput formControlName="bio"></textarea>
     </mat-form-field>
     <button mat-raised-button class="button-default" color="primary" type="submit">Register</button>
   </form>
+  
 </mat-card>

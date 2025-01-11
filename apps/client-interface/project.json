@@ -93,7 +93,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "client-interface:build",
-        "port": 4200,
+        "port": 5000,
         "spa": true
       }
     },

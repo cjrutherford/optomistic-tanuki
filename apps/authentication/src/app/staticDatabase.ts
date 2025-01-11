@@ -10,7 +10,7 @@ const config = yaml.load(fs.readFileSync(path.resolve('./src/assets/config.yaml'
 const { database: {
     host,
     port,
-    user,
+    user: user,
     password,
     name,
     database

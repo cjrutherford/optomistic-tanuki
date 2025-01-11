@@ -1,0 +1,16 @@
+FROM optomistic_tanuki/base:latest AS builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN npx nx build profile
+
+FROM node:lts-bookworm-slim
+
+WORKDIR /app
+
+COPY --from=builder /app/dist/apps/profile /app/dist/apps/profile
+COPY --from=builder /app/node_modules /app/node_modules
+
+CMD ["node", "/app/dist/apps/profile/main.js"]
