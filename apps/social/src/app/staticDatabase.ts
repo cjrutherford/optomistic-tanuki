@@ -12,7 +12,7 @@ const config = yaml.load(fs.readFileSync(path.resolve(__dirname, '../assets/conf
 const { database: {
     host,
     port,
-    user: user,
+    username,
     password,
     name,
     database
@@ -24,7 +24,7 @@ const staticSource =  new DataSource({
     type: 'postgres', 
     host: host,
     port: Number(port),
-    username: user,
+    username,
     password,
     database: database,
     entities,

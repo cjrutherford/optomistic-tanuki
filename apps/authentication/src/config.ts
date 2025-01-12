@@ -19,7 +19,9 @@ export declare type AuthConfigType = {
 const loadConfig = () => {
         const configPath = path.resolve(__dirname, './assets/config.yaml');
         const configFile = fs.readFileSync(configPath, 'utf8');
-        return yaml.load(configFile) as AuthConfigType;
+        const configData = yaml.load(configFile) as AuthConfigType;
+        console.log("🚀 ~ loadConfig ~ configData:", configData)
+        return configData;
 };
 
 export default loadConfig;

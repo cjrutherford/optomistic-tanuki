@@ -22,6 +22,7 @@ RUN npm install -g serve
 # Copy the built Angular application
 COPY --from=root /app/dist/apps/client-interface /app
 
+
 # Expose port 5000
 EXPOSE 5000
 
