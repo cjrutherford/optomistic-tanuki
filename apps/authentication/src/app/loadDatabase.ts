@@ -11,7 +11,7 @@ const loadDatabase = (config: ConfigService) => {
         type: 'postgres',
         host: database.host,
         port: database.port,
-        username: database.user,
+        username: database.username,
         password: database.password,
         database: database.database,
         entities

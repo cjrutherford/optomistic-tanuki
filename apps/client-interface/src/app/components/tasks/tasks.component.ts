@@ -19,7 +19,7 @@ export class TasksComponent implements OnInit {
   notes: NoteDto[] = [];
   filteredTimers: TimerDto[] = [];
   filteredNotes: NoteDto[] = [];
-  selectedTabIndex: number = 0;
+  selectedTabIndex = 0;
 
   ngOnInit() {
     this.loadTasks();

@@ -2,9 +2,9 @@
   <div class="task-list">
     <h2>Tasks</h2>
     <div class="tab-group">
-      <div *ngFor="let task of tasks" class="tab-label" [class.active]="selectedTask && selectedTask.id === task.id" (click)="selectTask(task)">
+      <button *ngFor="let task of tasks" class="tab-label" [class.active]="selectedTask && selectedTask.id === task.id" (click)="selectTask(task)">
         {{ task.title }}
-      </div>
+      </button>
     </div>
   </div>
   <div class="task-details" *ngIf="selectedTask">

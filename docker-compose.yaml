@@ -1,0 +1,148 @@
+networks:
+  ot_network:
+    driver: bridge
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./defaultnginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    networks:
+      - ot_network
+  build_base:
+    image: optomisitic_tanuki/base
+    env_file:
+      - .env
+    build:
+      dockerfile: ./dockerfile
+      context: .
+    command: ["sh", "-c", "exit 0"]
+    networks:
+      - ot_network
+    restart: "no"
+  migration_runner:
+    image: optomisitic_tanuki/base
+    depends_on:
+      - build_base
+      - db
+      - db_init
+    env_file:
+      - .env
+    entrypoint: [ "sh", "/app/run-migrations.sh"]
+    volumes:
+      - ./apps/authentication/src/assets/config.yaml:/app/apps/authentication/src/assets/config.yaml
+      - ./apps/profile/src/assets/config.yaml:/app/apps/profile/src/assets/config.yaml
+      - ./apps/social/src/assets/config.yaml:/app/apps/social/src/assets/config.yaml
+      - ./apps/tasks/src/assets/config.yaml:/app/apps/tasks/src/assets/config.yaml
+    networks:
+      - ot_network
+    restart: "no"
+  db_init:
+    image: postgres:latest
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      ADDITIONAL_DBS: ${ADDITIONAL_DBS}
+    entrypoint: ["sh", "/app/create-dbs.sh"]
+    restart: "no"
+    volumes:
+      - ./create-dbs.sh:/app/create-dbs.sh
+      - ./.env:/app/.env
+    networks:
+      - ot_network
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - ot_network
+  ot_client_interface:
+    image: optomisitic_tanuki/client_interface
+    container_name: client_interface
+    build:
+      dockerfile: ./apps/client-interface/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/client-interface/src/assets/config.yaml:/app/dist/apps/client-interface/assets/config.yaml
+  ot_authentication:
+    image: optomistic_tanuki/authentication
+    build:
+      dockerfile: ./apps/authentication/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/authentication/src/assets/config.yaml:/app/dist/apps/authentication/assets/config.yaml
+  ot_gateway:
+    image: optomistic_tanuki/gateway
+    build:
+      dockerfile: ./apps/gateway/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/gateway/src/assets/config.yaml:/app/dist/apps/gateway/assets/config.yaml
+  ot_profile:
+    image: optomistic_tanuki/profile
+    build:
+      dockerfile: ./apps/profile/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/profile/src/assets/config.yaml:/app/dist/apps/profile/assets/config.yaml
+  ot_social:
+    image: optomistic_tanuki/social
+    build:
+      dockerfile: ./apps/social/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/social/src/assets/config.yaml:/app/dist/apps/social/assets/config.yaml
+  ot_tasks:
+    image: optomistic_tanuki/tasks
+    build:
+      dockerfile: ./apps/tasks/dockerfile
+      context: .
+    depends_on:
+      - build_base
+      - db
+      - migration_runner
+    networks:
+      - ot_network
+    volumes:
+      - ./apps/tasks/src/assets/config.yaml:/app/dist/apps/tasks/assets/config.yaml

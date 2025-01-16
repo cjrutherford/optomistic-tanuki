@@ -3,10 +3,12 @@
     'color': foreground, 
     'border-color': accent
 }">
-  <label>
+  <form action="none">
+    <label for="accent-color">
       Light
-    <mat-slide-toggle type="checkbox" [color]="accent" [checked]="theme === 'dark'" (change)="toggleTheme()" />
-    Dark
-  </label>
-  <input type="color" [(ngModel)]="accentColor" (change)="updateAccentColor()" />
+      <mat-slide-toggle type="checkbox" [color]="accent" [checked]="theme === 'dark'" (change)="toggleTheme()" />
+      Dark
+    </label>
+    <input type="color" name="accent-color" [(ngModel)]="accentColor" (change)="updateAccentColor()" />
+  </form>
 </div>

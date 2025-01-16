@@ -1,9 +1,9 @@
+@import '../../../variables.scss';
+
 .post-container {
   margin: 20px;
-  width: 95vw;
-  background: var(--background-color);
-  color: var(--foreground-color);
-  border: 1px solid var(--accent-shade-standard);
+  @extend .border-default;
+  @extend .shadow-default;
   border-radius: 5px;
   padding: 20px;
   .post-list {

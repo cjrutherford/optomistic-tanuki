@@ -8,6 +8,7 @@ import { ComposeComponent } from './compose.component';
 import { PostComponent, PostType } from './post.component';
 import { ThemeService } from '../../theme/theme.service';
 import { PostDto } from '@optomistic-tanuki/libs/models';
+import { PatternComponent } from '../Svg/pattern.component';
 
 @Component({
   selector: 'app-feed',
@@ -19,7 +20,8 @@ import { PostDto } from '@optomistic-tanuki/libs/models';
     MatInputModule,
     MatIconModule,
     ComposeComponent,
-    PostComponent
+    PostComponent,
+    PatternComponent
   ],
   providers: [ThemeService],
   templateUrl: './feed.component.html',

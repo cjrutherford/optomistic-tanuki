@@ -1,0 +1,21 @@
+# Use the base Dockerfile from the root of the project
+FROM optomistic_tanuki/base:latest AS builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the rest of the application code
+COPY . .
+
+
+# Build the authentication service
+RUN npx nx build authentication
+
+FROM node:lts-bookworm-slim
+WORKDIR app
+
+COPY --from=builder /app/dist/apps/authentication /app/dist/apps/authentication
+COPY --from=builder /app/node_modules /app/node_modules
+
+# Start the application
+CMD ["node", "/app/dist/apps/authentication/main.js"]
