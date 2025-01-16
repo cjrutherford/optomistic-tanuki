@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeService } from './theme.service';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './theme.component.html',
   styleUrl: './theme.component.scss',
 })
-export class ToggleComponent {
+export class ToggleComponent implements OnInit, OnDestroy {
   theme: 'light' | 'dark';
   accentColor: string;
   background: string;
@@ -23,7 +23,10 @@ export class ToggleComponent {
   constructor(private themeService: ThemeService) {
     this.theme = this.themeService.getTheme();
     this.accentColor = this.themeService.getAccentColor();
-    this.themeService.themeColors$.subscribe((colors) => {
+  }
+
+  ngOnInit() {
+    this.themeSubscription = this.themeService.themeColors$.subscribe((colors) => {
       this.background = colors.background;
       this.foreground = colors.foreground;
       this.accent = colors.accent;
@@ -31,7 +34,9 @@ export class ToggleComponent {
   }
 
   ngOnDestroy() {
-    this.themeSubscription.unsubscribe();
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
   toggleTheme() {

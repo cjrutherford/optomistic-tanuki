@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,13 +8,13 @@ import { ThemeService } from '../theme/theme.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'ot-toolbar',
+  selector: 'app-toolbar',
   standalone: true,
   imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, ToggleComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnDestroy {
   @Output() navToggle = new EventEmitter<void>();
   themeSub: Subscription;
   themeStyles: {

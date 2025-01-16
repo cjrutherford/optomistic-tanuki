@@ -7,7 +7,7 @@ import { generateColorShades, generateComplementaryColor } from './color-utils';
 })
 export class ThemeService {
   private theme: 'light' | 'dark' = 'light';
-  private accentColor: string = '#3f51b5';
+  private accentColor = '#3f51b5';
   theme$: BehaviorSubject<'light' | 'dark'> = new BehaviorSubject(this.theme);
   private themeColors: BehaviorSubject<{
     background: string;
@@ -104,9 +104,9 @@ export class ThemeService {
   private loadTheme() {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' || 'light';
     const savedAccentColor = localStorage.getItem('accentColor') || '#3f51b5';
-    const savedAccentShades = !!localStorage.getItem('accentShades') ? JSON.parse(localStorage.getItem('accentShades')!) : generateColorShades(savedAccentColor);
+    const savedAccentShades = localStorage.getItem('accentShades') ? JSON.parse(localStorage.getItem('accentShades')!) : generateColorShades(savedAccentColor);
     const savedComplementaryColor = localStorage.getItem('complementaryColor') || generateComplementaryColor(savedAccentColor);
-    const savedComplementaryShades = !!localStorage.getItem('complementaryShades') ? JSON.parse(localStorage.getItem('complementaryShades')!) : generateColorShades(savedComplementaryColor);
+    const savedComplementaryShades = localStorage.getItem('complementaryShades') ? JSON.parse(localStorage.getItem('complementaryShades')!) : generateColorShades(savedComplementaryColor);
     const savedComplementaryGradients = this.generateGradients(savedComplementaryShades);
     this.applyGradientsToDocument(savedComplementaryGradients, 'complementary');
     if (savedTheme) {
@@ -167,7 +167,7 @@ export class ThemeService {
     };
   }
 
-  private applyGradientsToDocument(gradients: { [key: string]: string }, prefix: string = '') {
+  private applyGradientsToDocument(gradients: { [key: string]: string }, prefix = '') {
     Object.keys(gradients).forEach(key => {
       document.documentElement.style.setProperty(`--${prefix ? `${prefix}-` : ''}gradient-${key}`, gradients[key]);
     });

@@ -49,7 +49,7 @@ export function generateComplementaryColor(color: string): string {
   g = Math.abs(255 - g);
   b = Math.abs(255 - b);
   
-  let hashVal = "#" + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
+  const hashVal = "#" + r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0');
   return hashVal;
 }
 
