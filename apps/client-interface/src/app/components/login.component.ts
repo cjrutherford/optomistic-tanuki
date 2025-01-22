@@ -65,9 +65,7 @@ export class LoginComponent implements OnDestroy {
       console.log(response);
       this.authStateService.setToken(response.data.newToken);
       if (this.authStateService.isAuthenticated) {
-        this.router.navigate(['/feed']).then(() => {
-          console.log('Navigation to feed successful');
-        });
+        this.router.navigate(['/feed']);
       }
     }).catch(err => {
       console.error(err);

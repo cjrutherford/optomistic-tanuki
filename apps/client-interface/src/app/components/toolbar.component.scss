@@ -11,3 +11,8 @@ mat-toolbar > * {
         color: var(--foreground-color);
     }
 }
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

@@ -6,11 +6,16 @@ import { AuthStateService } from '../state/auth-state.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(@Inject(AuthStateService) private authStateService: AuthStateService, private router: Router) {}
+  private isAuthenticated: boolean;
+
+  constructor(@Inject(AuthStateService) private authStateService: AuthStateService, private router: Router) {
+    this.authStateService.isAuthenticated$.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
+  }
 
   canActivate(): boolean {
-    const isAuthenticated = this.authStateService.isAuthenticated;
-    if (isAuthenticated) {
+    if (this.isAuthenticated) {
       return true;
     } else {
       this.router.navigate(['/login']);

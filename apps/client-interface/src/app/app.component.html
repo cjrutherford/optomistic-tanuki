@@ -1,9 +1,18 @@
 <mat-sidenav-container class="container" [ngClass]="backgroundGradient" [ngStyle]="{ 'color': foreground }">
     <mat-sidenav mode="side" [opened]="isNavExpanded" class="border-default shadow-default">
         <mat-nav-list class="border-default shadow-default background-gradient-dark sidenav">
-            <a mat-list-item class="button-default" routerLink="/profile">Profile</a>
-            <a mat-list-item class="button-default" routerLink="/feed">Feed</a>
-            <a mat-list-item class="button-default" routerLink="/goals">Goals</a>
+            <a mat-list-item class="button-default" routerLink="/profile" [routerLinkActive]="'active'">
+                <mat-icon *ngIf="(currentUrl$ | async) === '/profile'">check</mat-icon>
+                Profile
+            </a>
+            <a mat-list-item class="button-default" routerLink="/feed" [routerLinkActive]="'active'">
+                <mat-icon *ngIf="(currentUrl$ | async) === '/feed'">check</mat-icon>
+                Feed
+            </a>
+            <a mat-list-item class="button-default" routerLink="/goals" [routerLinkActive]="'active'">
+                <mat-icon *ngIf="(currentUrl$ | async) === '/goals'">check</mat-icon>
+                Goals
+            </a>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
