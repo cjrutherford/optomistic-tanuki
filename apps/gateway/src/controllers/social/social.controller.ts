@@ -1,29 +1,37 @@
-import { Body, Controller, Inject, Post, Put, Delete } from "@nestjs/common";
+import { Body, Controller, Inject, Post, Put, Delete, UseGuards } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { AttachmentCommands, CommentCommands, PostCommands, ServiceTokens, VoteCommands } from "@optomistic-tanuki/libs/constants";
 import { AttachmentDto, CommentDto, CreateAttachmentDto, CreateCommentDto, CreatePostDto, CreateVoteDto, PostDto, SearchAttachmentDto, SearchCommentDto, SearchPostDto, UpdateAttachmentDto, UpdateCommentDto, UpdatePostDto, VoteDto } from "@optomistic-tanuki/libs/models";
 import { Get, Param } from "@nestjs/common";
 import { firstValueFrom } from 'rxjs';
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { AuthGuard } from '../../auth/auth.guard';
+import { User } from '../../decorators/user.decorator';
 
 @ApiTags('social')
 @Controller('social')
 export class SocialController {
     constructor(@Inject(ServiceTokens.SOCIAL_SERVICE) private readonly socialClient: ClientProxy) {}
 
+    @UseGuards(AuthGuard)
     @ApiTags('post')
     @ApiOperation({ summary: 'Create a new post' })
     @ApiResponse({ status: 201, description: 'The post has been successfully created.', type: PostDto })
     @Post('post')
-    async post(@Body() postDto: CreatePostDto) {
+    async post(@User() user, @Body() postDto: CreatePostDto) {
+        console.log(user);
+        postDto.userId = user.userId;
+        console.log("Updated Post Data  ", postDto);
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.CREATE }, postDto));
     }
     
+    @UseGuards(AuthGuard)
     @ApiTags('vote')
     @ApiOperation({ summary: 'Create a new vote', description: 'Value can be -1, 0, or 1, -1 for down, 0 for delete vote, and 1 for an up vote' })
     @ApiResponse({ status: 201, description: 'The vote has been successfully created.', type: VoteDto })
     @Post('vote')
-    async vote(@Body() voteDto: CreateVoteDto) {
+    async vote(@User() user, @Body() voteDto: CreateVoteDto) {
+        voteDto.userId = user.userid;
         const commandMap = {
             '-1': VoteCommands.DOWNVOTE,
             '0': VoteCommands.UNVOTE,
@@ -32,22 +40,27 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: commandMap[voteDto.value.toString()] }, voteDto));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('comment')
     @ApiOperation({ summary: 'Create a new comment' })
     @ApiResponse({ status: 201, description: 'The comment has been successfully created.', type: CommentDto })
     @Post('comment')
-    async comment(@Body() commentDto: CreateCommentDto) {
+    async comment(@User() user, @Body() commentDto: CreateCommentDto) {
+        console.log(user);
+        commentDto.userId = user.userid;
         return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.CREATE }, commentDto));
     }
     
+    @UseGuards(AuthGuard)
     @ApiTags('attachment')
     @ApiOperation({ summary: 'Create a new attachment' })
     @ApiResponse({ status: 201, description: 'The attachment has been successfully created.', type: AttachmentDto })
     @Post('attachment')
-    async attachment(@Body() attachmentDto: CreateAttachmentDto) {
+    async attachment(@User() user, @Body() attachmentDto: CreateAttachmentDto) {
         return await firstValueFrom(this.socialClient.send({ cmd: AttachmentCommands.CREATE }, attachmentDto));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('post')
     @ApiOperation({ summary: 'Get a post by ID' })
     @ApiResponse({ status: 200, description: 'The post has been successfully retrieved.', type: PostDto })
@@ -56,6 +69,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.FIND }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('comment')
     @ApiOperation({ summary: 'Get a comment by ID' })
     @ApiResponse({ status: 200, description: 'The comment has been successfully retrieved.', type: CommentDto })
@@ -64,6 +78,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.FIND }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('vote')
     @ApiOperation({ summary: 'Get a vote by ID' })
     @ApiResponse({ status: 200, description: 'The vote has been successfully retrieved.', type: VoteDto })
@@ -72,6 +87,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: VoteCommands.GET }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('attachment')
     @ApiOperation({ summary: 'Get an attachment by ID' })
     @ApiResponse({ status: 200, description: 'The attachment has been successfully retrieved.', type: AttachmentDto })
@@ -80,6 +96,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: AttachmentCommands.FIND }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('post')
     @ApiOperation({ summary: 'Search for posts' })
     @ApiResponse({ status: 200, description: 'The posts have been successfully retrieved.', type: [PostDto] })
@@ -88,6 +105,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.FIND_MANY }, searchCriteria));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('comment')
     @ApiOperation({ summary: 'Search for comments' })
     @ApiResponse({ status: 200, description: 'The comments have been successfully retrieved.', type: [CommentDto] })
@@ -97,6 +115,7 @@ export class SocialController {
     }
 
 
+    @UseGuards(AuthGuard)
     @ApiTags('attachment')
     @ApiOperation({ summary: 'Search for attachments' })
     @ApiResponse({ status: 200, description: 'The attachments have been successfully retrieved.', type: [AttachmentDto] })
@@ -105,6 +124,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: AttachmentCommands.FIND_MANY }, searchCriteria));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('post')
     @ApiOperation({ summary: 'Update a post by ID' })
     @ApiResponse({ status: 200, description: 'The post has been successfully updated.', type: PostDto })
@@ -113,6 +133,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.UPDATE }, { id, data: updatePostDto }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('comment')
     @ApiOperation({ summary: 'Update a comment by ID' })
     @ApiResponse({ status: 200, description: 'The comment has been successfully updated.', type: CommentDto })
@@ -121,6 +142,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.UPDATE }, { id, data: updateCommentDto }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('attachment')
     @ApiOperation({ summary: 'Update an attachment by ID' })
     @ApiResponse({ status: 200, description: 'The attachment has been successfully updated.', type: AttachmentDto })
@@ -129,6 +151,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: AttachmentCommands.UPDATE }, { id, data: updateAttachmentDto }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('post')
     @ApiOperation({ summary: 'Delete a post by ID' })
     @ApiResponse({ status: 200, description: 'The post has been successfully deleted.' })
@@ -137,6 +160,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.DELETE }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('comment')
     @ApiOperation({ summary: 'Delete a comment by ID' })
     @ApiResponse({ status: 200, description: 'The comment has been successfully deleted.' })
@@ -145,6 +169,7 @@ export class SocialController {
         return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.DELETE }, { id }));
     }
 
+    @UseGuards(AuthGuard)
     @ApiTags('attachment')
     @ApiOperation({ summary: 'Delete an attachment by ID' })
     @ApiResponse({ status: 200, description: 'The attachment has been successfully deleted.' })

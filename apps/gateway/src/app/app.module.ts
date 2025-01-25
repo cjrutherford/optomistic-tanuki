@@ -3,7 +3,7 @@ import { AuthenticationController } from "../controllers/authentication/authenti
 import { Client, ClientProxyFactory, ClientsModule, Transport } from "@nestjs/microservices";
 import { ProfileController } from "../controllers/profile/profile.controller";
 import { SocialController } from "../controllers/social/social.controller";
-import { AuthGuard } from "./auth.guard";
+import { AuthGuard } from "../auth/auth.guard";
 import { JwtService } from "@nestjs/jwt";
 import { NotesController } from "../controllers/notes.controller";
 import { TasksController } from "../controllers/tasks.controller";

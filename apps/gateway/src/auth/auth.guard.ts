@@ -12,24 +12,36 @@ export class AuthGuard implements CanActivate {
       return firstValueFrom(this.authService.send({ cmd: AuthCommands.Validate }, { token }));
   }
 
-  canActivate(
+  private parseToken(token: string) {
+      // Assuming the token is a JWT token
+      const payload = Buffer.from(token.split('.')[1], 'base64').toString('utf-8');
+      return JSON.parse(payload);
+  }
+
+  async canActivate(
       context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  ): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
       const authHeader = request.headers['authorization'];
       if (!authHeader) {
-          throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+          console.log("😵 No Auth Header Provided")
+          throw new HttpException('Unauthorized: No Authorization Header', HttpStatus.UNAUTHORIZED);
       }
 
       const token = authHeader.split(' ')[1];
       if (!token) {
-          throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+            console.log("😵 No Token Found");
+          throw new HttpException('Unauthorized: No Token Found.', HttpStatus.UNAUTHORIZED);
       }
-      const isAuthenticated = this.introspectToken(token);
+      const isAuthenticated = await this.introspectToken(token);
 
       if (!isAuthenticated) {
-          throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
+            console.log("😵 Token Invalid");
+          throw new HttpException('Unauthorized: Token Invalid.', HttpStatus.UNAUTHORIZED);
       }
+
+      const user = this.parseToken(token);
+      request.user = user;
 
       return true;
   }
