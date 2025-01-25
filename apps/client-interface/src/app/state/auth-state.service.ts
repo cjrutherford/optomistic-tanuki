@@ -55,4 +55,8 @@ export class AuthStateService {
     const token = localStorage.getItem('authToken');
     return token ? jwtDecode(token) : null;
   }
+
+  getToken() {
+    return this.tokenSubject.value;
+  }
 }

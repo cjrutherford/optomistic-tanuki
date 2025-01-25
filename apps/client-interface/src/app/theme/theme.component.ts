@@ -19,6 +19,8 @@ export class ToggleComponent implements OnInit, OnDestroy {
   foreground: string;
   accent: string;
   themeSubscription: Subscription;
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  transitionDuration: string = '0.3s';
 
   constructor(private themeService: ThemeService) {
     this.theme = this.themeService.getTheme();

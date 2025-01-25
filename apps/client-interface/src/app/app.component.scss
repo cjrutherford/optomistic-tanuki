@@ -69,7 +69,7 @@ mat-card.mat-mdc-card.mdc-card {
   height: 100%;
   color: var(--foreground-color);
   overflow: hidden;
-  * > {
+  > {
     color: var(--foreground-color);
   }
 }
