@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 import { AuthCommands } from '@optomistic-tanuki/libs/constants';
 import { AppService } from './app.service';
 import { EnableMultiFactorRequest, LoginRequest, RegisterRequest, ResetPasswordRequest, ValidateTokenRequest } from '@optomistic-tanuki/libs/models';
@@ -6,12 +6,14 @@ import { Ctx, MessagePattern, Payload, RmqContext, RpcException } from '@nestjs/
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly l: Logger) {}
 
   @MessagePattern({ cmd: AuthCommands.Login })
   async login(@Payload() data: LoginRequest) {
     try {
+      this.l.log('login:', data);
       const { email, password, mfa } = data;
+      this.l.log('login:', email, password, mfa);
       return await this.appService.login(email, password, mfa);
     } catch (e) {
       throw new RpcException(e);

@@ -6,11 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { ToggleComponent } from '../theme/theme.component';
 import { ThemeService } from '../theme/theme.service';
 import { Subscription } from 'rxjs';
+import { UserComponent } from './user/user.component';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, ToggleComponent],
+  imports: [CommonModule, MatToolbarModule, MatIconModule, MatButtonModule, ToggleComponent, UserComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
 })
@@ -28,6 +29,7 @@ export class ToolbarComponent implements OnDestroy {
         backgroundColor: colors.background,
         color: colors.foreground,
         border: `1px solid ${colors.accent}`,
+
       };
     });
   }

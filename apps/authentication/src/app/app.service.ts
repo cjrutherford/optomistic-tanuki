@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { getRepositoryToken, InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -17,6 +17,7 @@ import { authenticator } from 'otplib';
 @Injectable()
 export class AppService {
   constructor(
+    private readonly l: Logger,
     @Inject(getRepositoryToken(UserEntity))
     private readonly userRepo: Repository<UserEntity>,
     @Inject(getRepositoryToken(TokenEntity))
@@ -28,39 +29,39 @@ export class AppService {
     @Inject('JWT_SECRET') private readonly jwtSecret: string,
     @Inject('totp') private readonly totp: typeof authenticator,
     @Inject('jwt') private readonly jsonWebToken: typeof jwt,
-  ) {}
+  ) { }
 
   async login(email: string, password: string, mfa?: string) {
     try {
-      const user = await this.userRepo.findOne({ where: { email } , relations: ['keyData']});
+      const user = await this.userRepo.findOne({ where: { email }, relations: ['keyData'] });
       if (!user) {
-      throw new RpcException('User not found');
+        throw new RpcException('User not found');
       }
 
       const {
-      id: userId,
-      password: storedHash,
-      totpSecret,
-      keyData: { salt },
+        id: userId,
+        password: storedHash,
+        totpSecret,
+        keyData: { salt },
       } = user;
 
       const valid = await this.saltedHashService.validateHash(
-      password,
-      storedHash,
-      salt,
+        password,
+        storedHash,
+        salt,
       );
 
       if (!valid) {
-      throw new RpcException('Invalid password');
+        throw new RpcException('Invalid password');
       }
 
       if (mfa !== undefined) {
-      const isValidMfa = this.totp.check(mfa, user.totpSecret);
-      if (!isValidMfa) {
-        throw new RpcException('Invalid MFA token');
-      }
+        const isValidMfa = this.totp.check(mfa, user.totpSecret);
+        if (!isValidMfa) {
+          throw new RpcException('Invalid MFA token');
+        }
       } else if (user.totpSecret !== null && mfa === undefined) {
-      throw new RpcException('MFA token is required for this user.');
+        throw new RpcException('MFA token is required for this user.');
       }
 
       const pl = { userId, name: `${user.firstName} ${user.lastName}`, email };
@@ -69,10 +70,10 @@ export class AppService {
       delete user.keyData;
       delete user.password;
       const ntk = {
-      tokenData: tk,
-      userId,
-      user,
-      revoked: false,
+        tokenData: tk,
+        userId,
+        user,
+        revoked: false,
       };
       await this.tokenRepo.save(ntk);
 
@@ -92,6 +93,7 @@ export class AppService {
     bio: string,
   ) {
     try {
+      this.l.log('Registering user: Password: ' + ` ${password}  Confirm: ${confirm}`);
       if (password !== confirm) {
         throw new RpcException('Passwords do not match');
       }
@@ -108,7 +110,7 @@ export class AppService {
         throw new RpcException('User already exists');
       }
       const hashData = await this.saltedHashService.createNewHash(password);
-      if(!hashData) {
+      if (!hashData) {
         console.error('Error creating hash');
         throw new RpcException('Error creating hash');
       }

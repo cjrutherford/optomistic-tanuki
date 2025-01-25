@@ -28,6 +28,7 @@ export class AuthenticationController {
   @ApiResponse({ status: 500, description: 'Internal server error.' })
   async loginUser(@Body() data: LoginRequest) {
     try {
+      console.log('loginUser:', data);
       return await firstValueFrom(
         this.authClient.send({ cmd: AuthCommands.Login }, data),
       );
