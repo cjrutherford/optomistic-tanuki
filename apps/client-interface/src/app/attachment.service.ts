@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 export interface CreateAttachmentDto {
   url: string;
   postId: string;
+  type: Blob["type"];
+  name: string;
 }
 
 export interface AttachmentDto {

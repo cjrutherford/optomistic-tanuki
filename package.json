@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/swagger": "^7.4.2",
     "@nestjs/typeorm": "^10.0.2",
+    "@tinymce/tinymce-angular": "^8.0.1",
     "amqp-connection-manager": "^4.1.14",
     "amqplib": "^0.10.4",
     "axios": "^1.6.0",
@@ -41,6 +42,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "swagger-ui-express": "^5.0.1",
+    "tinymce": "^7.6.1",
     "typeorm": "^0.3.20",
     "zone.js": "~0.14.3"
   },

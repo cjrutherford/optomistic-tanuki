@@ -1,5 +1,5 @@
-<button mat-raised-button class="default-button button-default" color="primary" (click)="fileInput.click()">Choose File</button>
-<input type="file" hidden #fileInput style="display: none;" (change)="onFileSelected($event)">
+<button mat-raised-button class="default-button button-default" color="primary" type="button" (click)="fileInput.click()">Choose File</button>
+<input type="file" hidden #fileInput (change)="onFileSelected($event)">
 <div *ngIf="previewUrl">
   <h3>Preview:</h3>
   <img *ngIf="file && file.type && file.type.startsWith('image/')" [src]="previewUrl" alt="File Preview" style="max-width: 100%;">
