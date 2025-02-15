@@ -1,8 +1,8 @@
-<form class="compose-form">
-  <textarea placeholder="What's on your mind?"></textarea>
+<form class="compose-form" [formGroup]="composeForm" (ngSubmit)="submit()">
+  <textarea formControlName="content" placeholder="What's on your mind?"></textarea>
   <div class="action-area">
-    <app-attachment></app-attachment>
+    <app-attachment (attachmentsChanged)="attachmentChanged($event)"></app-attachment>
     <app-link></app-link>
-    <button mat-raised-button class="default-button" color="primary" class="btn btn-primary" type="submit">Post</button>
+    <button mat-raised-button class="default-button" color="primary" type="submit">Post</button>
   </div>
 </form>

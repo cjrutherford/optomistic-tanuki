@@ -24,6 +24,7 @@ export class AppController {
 
   @MessagePattern({ cmd: PostCommands.CREATE })
   async createPost(data: CreatePostDto) {
+    console.log("Post Data: ", data)
     return await this.postService.create(data);
   }
 

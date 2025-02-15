@@ -59,4 +59,8 @@ export class AuthStateService {
   getToken() {
     return this.tokenSubject.value;
   }
+
+  getDecodedTokenValue() {
+    return this.decodedTokenSubject.value;
+  }
 }
