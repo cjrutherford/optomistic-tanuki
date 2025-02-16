@@ -11,6 +11,10 @@ services:
       - "80:80"
     networks:
       - ot_network
+    depends_on:
+      - ot_client_interface
+      - ot_gateway
+    restart: always
   build_base:
     image: optomisitic_tanuki/base
     env_file:
@@ -69,7 +73,7 @@ services:
       - ot_network
   ot_client_interface:
     image: optomisitic_tanuki/client_interface
-    container_name: client_interface
+    container_name: ot_client_interface
     build:
       dockerfile: ./apps/client-interface/dockerfile
       context: .
@@ -83,6 +87,7 @@ services:
       - ./apps/client-interface/src/assets/config.yaml:/app/dist/apps/client-interface/assets/config.yaml
   ot_authentication:
     image: optomistic_tanuki/authentication
+    container_name: ot_authentication
     build:
       dockerfile: ./apps/authentication/dockerfile
       context: .
@@ -96,6 +101,7 @@ services:
       - ./apps/authentication/src/assets/config.yaml:/app/dist/apps/authentication/assets/config.yaml
   ot_gateway:
     image: optomistic_tanuki/gateway
+    container_name: ot_gateway
     build:
       dockerfile: ./apps/gateway/dockerfile
       context: .
@@ -103,12 +109,17 @@ services:
       - build_base
       - db
       - migration_runner
+      - ot_authentication
+      - ot_profile
+      - ot_social
+      - ot_tasks
     networks:
       - ot_network
     volumes:
       - ./apps/gateway/src/assets/config.yaml:/app/dist/apps/gateway/assets/config.yaml
   ot_profile:
     image: optomistic_tanuki/profile
+    container_name: ot_profile
     build:
       dockerfile: ./apps/profile/dockerfile
       context: .
@@ -122,6 +133,7 @@ services:
       - ./apps/profile/src/assets/config.yaml:/app/dist/apps/profile/assets/config.yaml
   ot_social:
     image: optomistic_tanuki/social
+    container_name: ot_social
     build:
       dockerfile: ./apps/social/dockerfile
       context: .
@@ -135,6 +147,7 @@ services:
       - ./apps/social/src/assets/config.yaml:/app/dist/apps/social/assets/config.yaml
   ot_tasks:
     image: optomistic_tanuki/tasks
+    container_name: ot_tasks
     build:
       dockerfile: ./apps/tasks/dockerfile
       context: .

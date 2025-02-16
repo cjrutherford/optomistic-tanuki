@@ -1,0 +1,90 @@
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &.primary {
+    background-color: var(--accent-color, #007bff);
+    color: var(--foreground-color, #fff);
+
+    &:hover {
+      background-color: var(--accent-shade-1, #0056b3);
+    }
+
+    &:disabled {
+      background-color: var(--accent-shade-2, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+
+  &.secondary {
+    background-color: var(--secondary-color, #6c757d);
+    color: var(--foreground-color, #fff);
+
+    &:hover {
+      background-color: var(--secondary-shade-1, #5a6268);
+    }
+
+    &:disabled {
+      background-color: var(--secondary-shade-2, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 1px solid var(--accent-color, #007bff);
+    color: var(--accent-color, #007bff);
+
+    &:hover {
+      background-color: var(--accent-color, #007bff);
+      color: var(--foreground-color, #fff);
+    }
+
+    &:disabled {
+      border-color: var(--accent-shade-2, #cccccc);
+      color: var(--accent-shade-2, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+
+  &.text {
+    background-color: transparent;
+    color: var(--accent-color, #007bff);
+
+    &:hover {
+      background-color: var(--accent-shade-1, #0056b3);
+      color: var(--foreground-color, #fff);
+    }
+
+    &:disabled {
+      color: var(--accent-shade-2, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+
+  &.light-mode {
+    background-color: var(--accent-shade-lighten-50, #b1baec);
+    color: var(--foreground-color, #000);
+  }
+
+  &.dark-mode {
+    background-color: var(--accent-shade-darken-50, #313a6c);
+    color: var(--foreground-color, #fff);
+  }
+
+  &.fast-cycle-mode {
+    background: var(--gradient-fastCycle);
+    color: var(--foreground-color, #fff);
+  }
+}
+
+button {
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+}

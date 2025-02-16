@@ -17,6 +17,7 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@optomistic-tanuki/auth-tooling": ["libs/auth-tooling/src/index.ts"],
+      "@optomistic-tanuki/common-ui": ["libs/common-ui/src/index.ts"],
       "@optomistic-tanuki/database": ["libs/database/src/index.ts"],
       "@optomistic-tanuki/encryption": ["libs/encryption/src/index.ts"],
       "@optomistic-tanuki/libs/constants": ["libs/constants/src/index.ts"],
