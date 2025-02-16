@@ -1,0 +1,6 @@
+<div *ngFor="let section of sections; let i = index">
+  <h3 (click)="toggleSection(i)">{{ section.heading }}</h3>
+  <div *ngIf="expandedIndex === i">
+    <p>{{ section.content }}</p>
+  </div>
+</div>
