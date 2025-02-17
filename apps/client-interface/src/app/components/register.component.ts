@@ -8,11 +8,12 @@ import { ThemeService } from '../theme/theme.service';
 import { AuthenticationService } from '../authentication.service';
 import { RegisterRequest } from '@optomistic-tanuki/libs/models';
 import { Router } from '@angular/router';
+import { RegisterBlockComponent } from '@optomistic-tanuki/auth-ui';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule, RegisterBlockComponent],
   providers: [AuthenticationService], 
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',

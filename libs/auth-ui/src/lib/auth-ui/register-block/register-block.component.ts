@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
@@ -16,6 +16,7 @@ export class RegisterBlockComponent {
   @Input() registerButtonText: string = 'Register';
   @Input() callToAction: string = 'Join us on your journey';
   @Input() heroSource: string = 'https://source.unsplash.com/random/800x600/?nature,water'; 
+  @Output() submit = new EventEmitter<{email: string; password: string, firstName: string, lastName: string, confirmation: string, bio: string}>();
   registerForm: FormGroup;
   constructor(private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -34,5 +35,6 @@ export class RegisterBlockComponent {
 
   onSubmit() {
     console.log(this.registerForm.value);
+    this.submit.emit(this.registerForm.value);
   }
 }

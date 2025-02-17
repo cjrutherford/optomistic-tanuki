@@ -1,1 +1,1 @@
-export * from './lib/auth-ui/auth-ui.component';
+export * from './lib/auth-ui';

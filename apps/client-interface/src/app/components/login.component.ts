@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 import { ThemeService } from '../theme/theme.service';
 import { AuthStateService } from '../state/auth-state.service';
 import { LoginRequest } from '@optomistic-tanuki/libs/models';
+import { LoginBlockComponent } from '@optomistic-tanuki/auth-ui';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,8 @@ import { take } from 'rxjs/operators';
     ReactiveFormsModule, 
     MatInputModule, 
     MatButtonModule, 
-    MatCardModule
+    MatCardModule,
+    LoginBlockComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
