@@ -15,7 +15,7 @@ services:
       - ot_client_interface
       - ot_gateway
   build_base:
-    image: optomisitic_tanuki/base
+    image: optomistic_tanuki/base
     env_file:
       - .env
     build:
@@ -126,7 +126,7 @@ services:
       - 3000:3000
   ot_profile:
     container_name: ot_profile
-    # image: optomistic_tanuki/profile
+    # image: optomisitic_tanuki/profile
     build:
       dockerfile: ./apps/profile/dockerfile
       context: .
@@ -141,7 +141,7 @@ services:
     command: ["sh", "-c", "npx nx serve profile"]
   ot_social:
     container_name: ot_social
-    # image: optomistic_tanuki/social
+    # image: optomisitic_tanuki/social
     build:
       dockerfile: ./apps/social/dockerfile
       context: .
@@ -156,7 +156,7 @@ services:
     command: ["sh", "-c", "npx nx serve social"]
   ot_tasks:
     container_name: ot_tasks
-    # image: optomistic_tanuki/tasks
+    # image: optomisitic_tanuki/tasks
     build:
       dockerfile: ./apps/tasks/dockerfile
       context: .

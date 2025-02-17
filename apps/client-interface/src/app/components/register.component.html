@@ -1,4 +1,12 @@
-<mat-card class="container-card" [class]="'background-gradient-' + theme">
+<lib-register-block
+  [title]="'Optomitic Tanuki'"
+  callToAction="Start a journey together"
+  heroSource="assets/tanuki.jpg"
+  heroAlt="The Optomitic Tanuki"
+  (submit)="onSubmit($event)"
+>
+</lib-register-block>
+<!-- <mat-card class="container-card" [class]="'background-gradient-' + theme">
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>First Name</mat-label>
@@ -27,4 +35,4 @@
     <button mat-raised-button class="button-default" color="primary" type="submit">Register</button>
   </form>
   
-</mat-card>
+</mat-card> -->

@@ -1,4 +1,12 @@
-<div class="default-container login-container"
+<lib-login-block
+  [title]="'Optomitic Tanuki'"
+  [description]="'Login to your account'"
+  heroSrc="assets/tanuki.jpg"
+  heroAlt="The Optomitic Tanuki"
+  (submit)="onSubmit($event)"
+>
+</lib-login-block>
+<!-- <div class="default-container login-container"
   [ngStyle]="themeStyles"
 >
   <mat-card class="default-container login-card" [ngStyle]="themeStyles">
@@ -32,4 +40,4 @@
       </div>
     </div>
   </mat-card>
-</div>
+</div> -->

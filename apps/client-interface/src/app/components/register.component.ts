@@ -8,35 +8,27 @@ import { ThemeService } from '../theme/theme.service';
 import { AuthenticationService } from '../authentication.service';
 import { RegisterRequest } from '@optomistic-tanuki/libs/models';
 import { Router } from '@angular/router';
+import { RegisterBlockComponent } from '@optomistic-tanuki/auth-ui';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatCardModule, RegisterBlockComponent],
   providers: [AuthenticationService], 
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   theme: 'light' | 'dark';
-  registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private readonly themeService:ThemeService, private readonly authenticationService: AuthenticationService, private readonly router: Router) {
-    this.registerForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      password: [''],
-      confirmation: [''],
-      bio: ['']
-    });
+  constructor(private readonly themeService:ThemeService, private readonly authenticationService: AuthenticationService, private readonly router: Router) {
     this.themeService.theme$.subscribe((theme) => {
       this.theme = theme;
     });
   }
 
-  onSubmit() {
-    const formValue = this.registerForm.value;
+  onSubmit($event: {email: string; password: string; firstName: string; lastName: string; confirmation: string; bio: string}) {
+    const formValue = $event;
     const registerRequest: RegisterRequest = {
       email: formValue.email,
       password: formValue.password,

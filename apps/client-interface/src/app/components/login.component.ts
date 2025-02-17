@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 import { ThemeService } from '../theme/theme.service';
 import { AuthStateService } from '../state/auth-state.service';
 import { LoginRequest } from '@optomistic-tanuki/libs/models';
+import { LoginBlockComponent } from '@optomistic-tanuki/auth-ui';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,8 @@ import { take } from 'rxjs/operators';
     ReactiveFormsModule, 
     MatInputModule, 
     MatButtonModule, 
-    MatCardModule
+    MatCardModule,
+    LoginBlockComponent
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
@@ -27,7 +28,6 @@ import { take } from 'rxjs/operators';
 })
 export class LoginComponent implements OnDestroy {
   themeSub: Subscription;
-  loginForm: FormGroup;
   themeStyles: {
     backgroundColor: string;
     color: string;
@@ -42,24 +42,16 @@ export class LoginComponent implements OnDestroy {
         border: `1px solid ${colors.accent}`,
       }
     });
-    this.loginForm = this.fb.group({
-      email: [''],
-      password: [''],
-      mfaToken: ['']
-    });
   }
 
   ngOnDestroy() {
     this.themeSub.unsubscribe();
   }
 
-  onSubmit() {
-    const formVal = this.loginForm.value;
-    const mfaVal = formVal.mfaToken === '' ? undefined : formVal.mfaToken;
+  onSubmit($event: {email: string; password: string;}) {
     const loginRequest: LoginRequest = {
-      email: formVal.email,
-      password: formVal.password,
-      mfa: mfaVal,
+      email: $event.email,
+      password: $event.password,
     }
     this.authStateService.login(loginRequest).then((response) => {
       console.log(response);

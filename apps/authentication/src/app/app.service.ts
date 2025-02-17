@@ -102,7 +102,8 @@ export class AppService {
           email,
         )
       ) {
-        throw new RpcException('Invalid Email');
+        this.l.error(`Invalid Email: ${email}`);
+        throw new RpcException('Invalid Email ' + email);
       }
       const existingUser = await this.userRepo.findOne({ where: { email } });
       if (existingUser) {

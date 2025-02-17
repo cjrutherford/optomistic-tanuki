@@ -1,5 +1,5 @@
 # Use the base image
-FROM optomistic_tanuki/base AS root
+FROM optomistic_tanuki/base AS build
 
 # Set the working directory
 WORKDIR /app
@@ -10,21 +10,20 @@ COPY . .
 # Build the Angular application
 RUN npx nx build client-interface --verbose
 
-# Install serve globally
-
 # Use a lightweight Node.js image
 FROM node:alpine
 
+# Set the working directory
 WORKDIR /app
 
+# Install serve globally
 RUN npm install -g serve
 
 # Copy the built Angular application
-COPY --from=root /app/dist/apps/client-interface /app
+COPY --from=build /app/dist/apps/client-interface /app
 
-
-# Expose port 5000
-EXPOSE 5000
+# Expose port 4200
+EXPOSE 4200
 
 # Start the application using serve
-CMD ["serve", "-s", ".", "-l", "5000"]
+CMD ["serve", "-s", ".", "-l", "0.0.0.0:4200"]

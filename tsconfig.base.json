@@ -17,11 +17,15 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@optomistic-tanuki/auth-tooling": ["libs/auth-tooling/src/index.ts"],
+      "@optomistic-tanuki/auth-ui": ["libs/auth-ui/src/index.ts"],
+      "@optomistic-tanuki/common-ui": ["libs/common-ui/src/index.ts"],
       "@optomistic-tanuki/database": ["libs/database/src/index.ts"],
       "@optomistic-tanuki/encryption": ["libs/encryption/src/index.ts"],
+      "@optomistic-tanuki/form-ui": ["libs/form-ui/src/index.ts"],
       "@optomistic-tanuki/libs/constants": ["libs/constants/src/index.ts"],
       "@optomistic-tanuki/libs/models": ["libs/models/src/index.ts"],
-      "@optomistic-tanuki/logger": ["libs/logger/src/index.ts"]
+      "@optomistic-tanuki/logger": ["libs/logger/src/index.ts"],
+      "@optomistic-tanuki/social-ui": ["libs/social-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
