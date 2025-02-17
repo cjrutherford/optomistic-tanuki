@@ -11,13 +11,19 @@ export default meta;
 type Story = StoryObj<ConfirmBlockComponent>;
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    confirmHeader: 'Confirm Your Email',
+    confirmMessage: 'Please confirm your email address by clicking the link we sent to your email. If you did not receive the email, you can resend it below.',
+  },
 };
 
 export const Heading: Story = {
-  args: {},
+  args: {
+    confirmHeader: 'Confirm Your Email',
+    confirmMessage: 'Please confirm your email address by clicking the link we sent to your email. If you did not receive the email, you can resend it below.',
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText(/confirm-block works!/gi)).toBeTruthy();
+    expect(canvas.getByText(/Confirm Your Email/gi)).toBeTruthy();
   },
 };
