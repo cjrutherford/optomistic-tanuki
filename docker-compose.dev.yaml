@@ -15,7 +15,7 @@ services:
       - ot_client_interface
       - ot_gateway
   build_base:
-    image: optomisitic_tanuki/base
+    image: optomistic_tanuki/base
     env_file:
       - .env
     build:

@@ -31,5 +31,6 @@ export class LoginBlockComponent {
 
   onSubmit() {
     console.log(this.loginForm.value);
+    this.submit.emit(this.loginForm.value);
   }
 }

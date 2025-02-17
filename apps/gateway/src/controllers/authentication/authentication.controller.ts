@@ -43,6 +43,7 @@ export class AuthenticationController {
   @ApiResponse({ status: 201, description: 'User registered successfully.' })
   @ApiResponse({ status: 500, description: 'Internal server error.' })
   async registerUser(@Body() data: RegisterRequest) {
+    console.log("🚀 ~ AuthenticationController ~ registerUser ~ data:", data)
     try {
       const result = await firstValueFrom(
         this.authClient.send({ cmd: AuthCommands.Register }, data),

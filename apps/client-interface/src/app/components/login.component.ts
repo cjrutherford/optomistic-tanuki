@@ -28,7 +28,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnDestroy {
   themeSub: Subscription;
-  loginForm: FormGroup;
   themeStyles: {
     backgroundColor: string;
     color: string;
@@ -43,24 +42,16 @@ export class LoginComponent implements OnDestroy {
         border: `1px solid ${colors.accent}`,
       }
     });
-    this.loginForm = this.fb.group({
-      email: [''],
-      password: [''],
-      mfaToken: ['']
-    });
   }
 
   ngOnDestroy() {
     this.themeSub.unsubscribe();
   }
 
-  onSubmit() {
-    const formVal = this.loginForm.value;
-    const mfaVal = formVal.mfaToken === '' ? undefined : formVal.mfaToken;
+  onSubmit($event: {email: string; password: string;}) {
     const loginRequest: LoginRequest = {
-      email: formVal.email,
-      password: formVal.password,
-      mfa: mfaVal,
+      email: $event.email,
+      password: $event.password,
     }
     this.authStateService.login(loginRequest).then((response) => {
       console.log(response);
