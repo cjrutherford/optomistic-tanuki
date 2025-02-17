@@ -1,0 +1,26 @@
+.text-area-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.text-area-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.text-area {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: var(--accent-shade-lighten-30);
+  box-shadow: 0 0 5px 2px var(--accent-shade-darken-10);
+  resize: vertical;
+  margin-right: 20px;
+}
+
+.text-area:focus {
+  outline: none;
+  border-color: var(--accent-shade-darken-10);
+  box-shadow: 0 0 5px 8px var(--accent-shade-darken-30);
+}
