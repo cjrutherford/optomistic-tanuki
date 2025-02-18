@@ -9,11 +9,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CreatePostDto, PostDto, PostService } from '../../post.service';
 import { AttachmentDto, AttachmentService } from '../../attachment.service';
 import { AuthStateService } from '../../state/auth-state.service';
+import { TextAreaComponent } from '@optomistic-tanuki/form-ui';
+import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   selector: 'app-compose',
   standalone: true,
-  imports: [CommonModule, AttachmentComponent, LinkComponent, MatButtonModule, ReactiveFormsModule],
+  imports: [CommonModule, AttachmentComponent, LinkComponent, MatButtonModule, ReactiveFormsModule, ButtonComponent, CardComponent, TextAreaComponent],
   providers: [ThemeService, PostService, AttachmentService, AuthStateService],
   templateUrl: './compose.component.html',
   styleUrl: './compose.component.scss',

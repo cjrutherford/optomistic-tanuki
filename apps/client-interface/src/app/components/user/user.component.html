@@ -1,10 +1,10 @@
 <div *ngIf="isLoggedIn" style="display: flex; justify-content: center; align-items: center;">
-    <button class="button" (click)="showPanel = !showPanel">Hi {{user.name}}</button>
+    <app-button variant="secondary" class="button" (click)="showPanel = !showPanel">Hi {{user.name}}</app-button>
     <!-- <div *ngIf="showPanel" class="panel"> -->
-    <button class="button" (click)="logout()">Logout</button>
+    <app-button class="button" variant="secondary" (click)="logout()">Logout</app-button>
     <!-- </div> -->
 </div>
 <div *ngIf="!isLoggedIn" style="display: flex; justify-content: center; align-items: center">
-    <button class="button" (click)="login()">Login</button>
-    <button class="button" (click)="register()">Register</button>
+    <app-button class="button" variant="secondary" (click)="login()">Login</app-button>
+    <app-button class="button" variant="secondary" (click)="register()">Register</app-button>
 </div>

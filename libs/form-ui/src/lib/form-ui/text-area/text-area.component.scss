@@ -1,7 +1,6 @@
 .text-area-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
 }
 
 .text-area-label {
@@ -16,7 +15,6 @@
   background-color: var(--accent-shade-lighten-30);
   box-shadow: 0 0 5px 2px var(--accent-shade-darken-10);
   resize: vertical;
-  margin-right: 20px;
 }
 
 .text-area:focus {

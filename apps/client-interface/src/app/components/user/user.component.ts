@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AuthStateService } from '../../state/auth-state.service';
 import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
+import { ButtonComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })

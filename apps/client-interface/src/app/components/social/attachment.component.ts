@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AttachmentDto } from '../../attachment.service';
+import { ButtonComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   selector: 'app-attachment',
@@ -14,7 +15,8 @@ import { AttachmentDto } from '../../attachment.service';
     MatButtonModule,
     MatIconModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ButtonComponent
   ],
   templateUrl: './attachment.component.html',
   styleUrls: ['./attachment.component.scss'],

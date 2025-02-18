@@ -1,4 +1,4 @@
-<button mat-raised-button class="default-button button-default" color="primary" (click)="fileInput.click()">Choose File</button>
+<app-button variant="secondary" (click)="fileInput.click()">Choose File</app-button>
 <input type="file" hidden #fileInput style="display: none;" (change)="onFileSelected($event)">
 <div *ngIf="previewUrl">
   <h3>Preview:</h3>

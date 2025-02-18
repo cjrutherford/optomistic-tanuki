@@ -21,7 +21,7 @@ button {
   }
 
   &.secondary {
-    background-color: var(--secondary-color, #6c757d);
+    background-color: var(--complementary-color, #6c757d);
     color: var(--foreground-color, #fff);
 
     &:hover {
