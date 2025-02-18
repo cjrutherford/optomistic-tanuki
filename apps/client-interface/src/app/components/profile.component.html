@@ -9,34 +9,30 @@
   <img class="profile-picture" [src]="profilePicture" alt="Profile Picture" />
 </mat-card>
 
-<div>
-  <mat-card class="friends">
+<app-card >
+<!-- <div class="friends"> -->
     <div class="filter">
       <h2>Friends</h2>
-      <div class="friend-grid">
-        <div *ngFor="let friend of friends">
-          <app-friends [friend]="friend"></app-friends>
-        </div>
-      </div>
+      <app-grid [columns]="6" [rows]="1">
+          <app-friends *ngFor="let friend of friends" [friend]="friend"></app-friends>
+      </app-grid>
     </div>
-  </mat-card>
-</div>
+  <!-- </div> -->
+</app-card>
 
 <div>
-  <mat-card class="galleries">
+  <app-card>
     <div class="filter">
       <h2>Photo Galleries</h2>
-      <div class="photo-gallery">
-        <div class="gallery-card" *ngFor="let gallery of photoGalleries">
-          <app-gallery [data]="gallery"></app-gallery>
-        </div>
-      </div>
+      <app-grid [columns]="6" [rows]="1">
+          <app-gallery *ngFor="let gallery of photoGalleries" [data]="gallery"></app-gallery>
+      </app-grid>
     </div>
-  </mat-card>
+  </app-card>
 </div>
 
 <div>
-  <mat-card class="posts">
+  <app-card class="posts">
     <div class="filter">
       <h2>Recent Posts</h2>
       <div id="post-container">
@@ -45,5 +41,5 @@
         </div>
       </div>
     </div>
-  </mat-card>
+  </app-card>
 </div>

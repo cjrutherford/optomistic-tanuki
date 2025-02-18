@@ -6,18 +6,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { GalleryComponent } from './profile/gallery/gallery.component';
 import { FriendsComponent } from './profile/friends/friends.component';
 import { PostComponent, PostType } from './social/post.component';
+import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
     CommonModule, 
+    CardComponent,
     MatCardModule, 
     MatListModule, 
     MatIconModule, 
     GalleryComponent,
     FriendsComponent,
     PostComponent,
+    GridComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

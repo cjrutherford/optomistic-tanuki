@@ -1,10 +1,10 @@
-<div *ngIf="isLoggedIn" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+<div *ngIf="isLoggedIn" style="display: flex; justify-content: center; align-items: center;">
     <button class="button" (click)="showPanel = !showPanel">Hi {{user.name}}</button>
     <!-- <div *ngIf="showPanel" class="panel"> -->
     <button class="button" (click)="logout()">Logout</button>
     <!-- </div> -->
 </div>
-<div *ngIf="!isLoggedIn" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+<div *ngIf="!isLoggedIn" style="display: flex; justify-content: center; align-items: center">
     <button class="button" (click)="login()">Login</button>
     <button class="button" (click)="register()">Register</button>
 </div>
