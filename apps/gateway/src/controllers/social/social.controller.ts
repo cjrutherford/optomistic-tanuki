@@ -100,7 +100,7 @@ export class SocialController {
     @ApiTags('post')
     @ApiOperation({ summary: 'Search for posts' })
     @ApiResponse({ status: 200, description: 'The posts have been successfully retrieved.', type: [PostDto] })
-    @Post('posts/find')
+    @Post('post/find')
     async searchPosts(@Body() searchCriteria: SearchPostDto): Promise<PostDto[]> {
         return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.FIND_MANY }, searchCriteria));
     }

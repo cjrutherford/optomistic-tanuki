@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttachmentComponent } from './attachment.component';
 import { LinkComponent } from './link.component';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { ThemeService } from '../../theme/theme.service';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,8 @@ import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
 export class ComposeComponent implements OnInit, OnDestroy {
   @Input() post?: PostDto;
   @Input() attachments: AttachmentDto[] = [];
+  @Output() postCreated = new EventEmitter<PostDto>();
+  @Output() postUpdated = new EventEmitter<PostDto>();
   
   themeSub: Subscription;
   themeStyles: {
@@ -67,9 +69,15 @@ export class ComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.post) {
-      this.postService.updatePost(this.post.id, postDto).subscribe();
+      firstValueFrom(this.postService.updatePost(this.post.id, postDto))
+        .then((post) => {
+          this.postCreated.emit(post);
+        });
     } else {
-      this.postService.createPost(postDto).subscribe();
+      firstValueFrom(this.postService.createPost(postDto))
+        .then((post) => {
+          this.postCreated.emit(post);
+        });
     }
 
 

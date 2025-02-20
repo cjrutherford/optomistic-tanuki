@@ -1,3 +1,4 @@
 <div class="text-area-container">
-  <textarea id="textArea" class="text-area"></textarea>
+  <label class="text-area-label" for="textArea">{{ label }}</label>
+  <textarea id="textArea" class="text-area" (input)="onInput($event)" [value]="value" formControlName="textAreaControl"></textarea>
 </div>

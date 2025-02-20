@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'lib-text-area',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.scss'],
   providers: [
@@ -41,5 +41,9 @@ export class TextAreaComponent implements ControlValueAccessor {
 
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    // Implement this method to handle the disabled state
   }
 }

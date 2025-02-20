@@ -1,5 +1,5 @@
   <div class="feed-container">
-      <app-compose style="width: 100%; padding-left: 1em; margin-right: 1em;"></app-compose>
+      <app-compose (postCreated)="createdPost($event)" style="width: 100%; padding-left: 1em; margin-right: 1em;"></app-compose>
       <div class="post" *ngFor="let post of posts">
         <app-post [content]="post"></app-post>
       </div>
