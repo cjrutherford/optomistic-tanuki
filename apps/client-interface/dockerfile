@@ -1,5 +1,5 @@
 # Use the base image
-FROM optomistic_tanuki/base AS build
+FROM optomistic_tanuki/base:latest AS build
 
 # Set the working directory
 WORKDIR /app
