@@ -10,6 +10,7 @@ COPY . .
 # Build the Angular application
 RUN npx nx build client-interface --verbose
 
+# FROM nginx:latest
 # Use a lightweight Node.js image
 FROM node:alpine
 
@@ -20,10 +21,12 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copy the built Angular application
-COPY --from=build /app/dist/apps/client-interface /app
+# COPY --from=build /app/dist/apps/client-interface /usr/share/nginx/html
+COPY --from=build /app/dist/apps/client-interface/browser /app
 
 # Expose port 4200
-EXPOSE 4200
+EXPOSE 80
 
 # Start the application using serve
-CMD ["serve", "-s", ".", "-l", "0.0.0.0:4200"]
+# CMD ["nginx", "-g", "daemon off;" ]
+CMD ["serve", "-s", ".", "-l", "80"]
