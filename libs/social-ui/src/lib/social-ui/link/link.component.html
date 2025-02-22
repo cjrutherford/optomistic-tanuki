@@ -1,0 +1,12 @@
+<app-card class="links-container">
+  <div *ngIf="links.length > 0">
+    <app-grid [columns]="1" [rows]="links.length">
+      <div *ngFor="let link of links">
+        <a [href]="link.url" target="_blank">{{ link.url }}</a>
+        <app-button variant="danger" (click)="removeLink(link)">X</app-button>
+      </div>
+    </app-grid>
+  </div>
+  <input class="link-input" [(ngModel)]="linkValue" placeholder="Enter link" />
+  <app-button  style="margin-left: 15px;" variant="success" (click)="addLink()">Add Link</app-button>
+</app-card>

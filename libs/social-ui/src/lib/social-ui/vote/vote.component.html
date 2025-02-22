@@ -1,1 +1,6 @@
-<p>vote works!</p>
+<div>
+  <app-button [variant]="voteState === 1 ? 'success': 'danger'" (click)="upvote()" [class.active]="voteState === 1">⬆️</app-button>
+  <app-button [variant]="voteState === 0 ? 'success': 'danger'" (click)="cancelVote()" [class.active]="voteState === 0">😑</app-button>
+  <app-button [variant]="voteState === -1 ? 'success': 'danger'" (click)="downvote()" [class.active]="voteState === -1">⬇️</app-button>
+</div>
+

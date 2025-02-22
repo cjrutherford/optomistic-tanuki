@@ -10,6 +10,7 @@ import { ThemeService } from './theme/theme.service';
 import { AuthStateService } from './state/auth-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   standalone: true,
@@ -21,6 +22,8 @@ import { map } from 'rxjs/operators';
     MatListModule,
     MatIconModule,
     ToolbarComponent,
+    GridComponent,
+    CardComponent,
   ],
   providers: [ThemeService],
   selector: 'app-root',

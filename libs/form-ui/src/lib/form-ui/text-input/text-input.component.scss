@@ -25,9 +25,10 @@
 
 .text-input-container input {
   height: 20px;
-  width: 100%;
+  width: 99%;
+  margin: 10px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 2px solid var(--accent-shade-darken-50);
   color: var(--foreground-color);
   border-radius: 4px;
   background-color: var(--accent-shade-lighten-30);
@@ -35,5 +36,5 @@
 
 .text-input-container input:focus {
   border-color: var(--accent-shade-darken-10);
-  box-shadow: 0 0 5px 2px var(--accent-shade-darken-30);
+  box-shadow: 0 0 5px 4px var(--accent-shade-darken-30);
 }

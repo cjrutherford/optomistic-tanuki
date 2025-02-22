@@ -1,7 +1,7 @@
   <div class="feed-container">
-      <app-compose (postCreated)="createdPost($event)" style="width: 100%; padding-left: 1em; margin-right: 1em;"></app-compose>
+      <lib-compose style="width: 100%; padding-left: 1em; margin-right: 1em;"></lib-compose>
       <div class="post" *ngFor="let post of posts">
-        <app-post [content]="post"></app-post>
+        <lib-post [content]="post"></lib-post>
       </div>
   </div>
   <!-- <app-pattern></app-pattern> -->

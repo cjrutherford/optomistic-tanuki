@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './accordion.component.scss',
 })
 export class AccordionComponent {
-  @Input() sections: { heading: string, content: string }[] = [];
+  @Input() sections: { heading: string, content: string, subItems?: { heading: string, content: string }[] }[] = [];
   expandedIndex: number = 0;
 
   toggleSection(index: number) {
