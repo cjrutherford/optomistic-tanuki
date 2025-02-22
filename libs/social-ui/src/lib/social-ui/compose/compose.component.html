@@ -1,0 +1,32 @@
+<app-card>
+    <h3>What's on your mind?</h3>
+    <form [formGroup]="composeForm">
+        <lib-text-input
+            type="text"
+            label=""
+            placeholder="Enter title"
+            formControlName="title"
+        ></lib-text-input>
+        <lib-text-area
+            label=""
+            placeholder="What's on your mind?"
+            formControlName="content"
+        >
+        </lib-text-area>
+        <app-grid
+            [columns]="2"
+            [rows]="1"
+            [style]="{ 'margin-top': '1em' }">
+        <lib-attachment (attachmentsChange)="onAttachmentChange($event)"></lib-attachment>
+        <lib-link [links]="links" (linksChange)="onLinksChange($event)"></lib-link>
+    </app-grid>
+    <app-button
+        style="margin-top: 1em; margin-left: 15px;"
+        [disabled]="!composeForm.valid"
+        (click)="onSubmit()"
+        label="Post"
+        variant="success"
+        >Post!
+    </app-button>   
+    </form>
+</app-card>

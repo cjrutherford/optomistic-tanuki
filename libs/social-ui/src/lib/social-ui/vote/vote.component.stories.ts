@@ -10,8 +10,26 @@ const meta: Meta<VoteComponent> = {
 export default meta;
 type Story = StoryObj<VoteComponent>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {},
+};
+
+export const Upvoted: Story = {
+  args: {
+    voteState: 1,
+  },
+};
+
+export const Downvoted: Story = {
+  args: {
+    voteState: -1,
+  },
+};
+
+export const Cancelled: Story = {
+  args: {
+    voteState: 0,
+  },
 };
 
 export const Heading: Story = {

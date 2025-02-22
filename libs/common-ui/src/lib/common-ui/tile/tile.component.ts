@@ -5,7 +5,7 @@ import { CardComponent } from '../card/card.component';
 @Component({
   selector: 'app-tile',
   standalone: true,
-  imports: [CommonModule, CardComponent],
+  imports: [CommonModule],
   template: `
     <div class="tile">
       <ng-content></ng-content>

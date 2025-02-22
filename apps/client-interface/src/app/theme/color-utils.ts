@@ -1,6 +1,4 @@
 export function generateColorShades(color: string): [string, string][] {
-  // Dummy implementation for generating color shades
-  // In a real implementation, you would generate shades based on the input color
   return [
     ['lighten-90', lighten(color, 0.9)],
     ['lighten-70', lighten(color, 0.7)],
@@ -36,6 +34,42 @@ function darken(color: string, amount: number): string {
   r = Math.max(0, Math.floor(r * (1 - amount)));
   g = Math.max(0, Math.floor(g * (1 - amount)));
   b = Math.max(0, Math.floor(b * (1 - amount)));
+
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
+export function generateSuccessColor(color: string): string {
+  let r = parseInt(color.slice(1, 3), 16);
+  let g = parseInt(color.slice(3, 5), 16);
+  let b = parseInt(color.slice(5, 7), 16);
+
+  r = Math.max(0, r - 40);
+  g = Math.min(255, g + 50);
+  b = Math.min(255, b + 10);
+
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
+export function generateDangerColor(color: string): string {
+  let r = parseInt(color.slice(1, 3), 16);
+  let g = parseInt(color.slice(3, 5), 16);
+  let b = parseInt(color.slice(5, 7), 16);
+
+  r = Math.min(255, r + 70);
+  g = Math.max(0, g - 50);
+  b = Math.max(0, b - 50);
+
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}
+
+export function generateWarningColor(color: string): string {
+  let r = parseInt(color.slice(1, 3), 16);
+  let g = parseInt(color.slice(3, 5), 16);
+  let b = parseInt(color.slice(5, 7), 16);
+
+  r = Math.min(255, r + 80);
+  g = Math.min(255, g + 10);
+  b = Math.max(0, b - 60);
 
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
 }

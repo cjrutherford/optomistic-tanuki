@@ -1,0 +1,11 @@
+<app-card class="attachments-container">
+  <app-grid [columns]="6" [rows]="(attachments.length / 6) + 1">
+    <div class="attachment-item" *ngFor="let attachment of attachments">
+      {{ attachment.name }}
+      <app-button variant="danger" (click)="removeAttachment(attachment)">Remove</app-button>
+    </div>
+  </app-grid>
+  <input class="attachment-input" #newAttachment type="file" accept=".txt,.pdf,.doc,.docx,.xls,.xlsx" />
+  <br />
+  <app-button style="margin-left: 15px;" variant="success" (click)="addAttachment(newAttachment!.files![0]); newAttachment.value=''">Add Attachment</app-button>
+</app-card>

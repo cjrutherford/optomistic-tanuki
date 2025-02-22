@@ -17,7 +17,12 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <app-toolbar (navToggle)="toggleNav()"></app-toolbar>
-        <router-outlet></router-outlet>
+        <app-grid [columns]="3" [rows]="1">
+            <router-outlet></router-outlet>
+            <app-card>
+                Hello Right
+            </app-card>
+        </app-grid>
     </mat-sidenav-content>
 </mat-sidenav-container>
 

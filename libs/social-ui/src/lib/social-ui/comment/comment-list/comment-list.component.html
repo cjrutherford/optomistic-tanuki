@@ -1,0 +1,12 @@
+<div class="comments-container">
+    <app-grid [columns]="1" [rows]="comments.length">
+        <app-card *ngFor="let comment of comments" >
+            <div class="comment">
+                <p><strong>{{ comment.username }}</strong></p>
+                <p>{{ comment.text }}</p>
+                <p><small>{{ comment.date | date:'short' }}</small></p>
+            </div>
+            <otui-accordion [sections]="replySections"></otui-accordion>
+        </app-card>
+    </app-grid>
+</div>

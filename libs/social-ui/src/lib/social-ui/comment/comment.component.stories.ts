@@ -10,9 +10,6 @@ const meta: Meta<CommentComponent> = {
 export default meta;
 type Story = StoryObj<CommentComponent>;
 
-export const Primary: Story = {
-  args: {},
-};
 
 export const Heading: Story = {
   args: {},

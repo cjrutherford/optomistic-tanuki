@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ButtonComponent {
   @Input() disabled: boolean = false;
-  @Input() variant: 'primary' | 'secondary' | 'outlined' | 'text' = 'primary';
+  @Input() variant: 'primary' | 'secondary' | 'outlined' | 'text' | 'warning' | 'danger' | 'success' = 'primary';
   @Output() action = new EventEmitter<void>();
 
   onClick() {

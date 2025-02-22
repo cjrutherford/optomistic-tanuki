@@ -1,11 +1,7 @@
-<mat-card class="feed-container" infinite-scroll (scrolled)="onScroll()">
-  <mat-card-header class="compose-header">
-      <app-compose style="width: 95%; padding-left: 2em"></app-compose>
-  </mat-card-header>
-    <mat-card-content class="post-list">
-        <div class="post" *ngFor="let post of posts">
-            <app-post [content]="post"></app-post>
-        </div>
-    </mat-card-content>
-    <!-- <app-pattern></app-pattern> -->
-</mat-card>
+  <div class="feed-container">
+      <lib-compose style="width: 100%; padding-left: 1em; margin-right: 1em;"></lib-compose>
+      <div class="post" *ngFor="let post of posts">
+        <lib-post [content]="post"></lib-post>
+      </div>
+  </div>
+  <!-- <app-pattern></app-pattern> -->

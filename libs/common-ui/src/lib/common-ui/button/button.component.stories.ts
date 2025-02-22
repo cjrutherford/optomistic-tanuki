@@ -95,6 +95,57 @@ export const Disabled: Story = {
   },
 };
 
+export const Success: Story = {
+  args: {
+    disabled: false,
+    variant: 'success',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<app-button [disabled]="disabled" variant="success">Success</app-button>`,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+    await expect(button).toHaveTextContent('Success');
+    await expect(button).not.toBeDisabled();
+  },
+};
+
+export const Danger: Story = {
+  args: {
+    disabled: false,
+    variant: 'danger',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<app-button [disabled]="disabled" variant="danger">Danger</app-button>`,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+    await expect(button).toHaveTextContent('Danger');
+    await expect(button).not.toBeDisabled();
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    disabled: false,
+    variant: 'warning',
+  },
+  render: (args) => ({
+    props: args,
+    template: `<app-button [disabled]="disabled" variant="warning">Warning</app-button>`,
+  }),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button');
+    await expect(button).toHaveTextContent('Warning');
+    await expect(button).not.toBeDisabled();
+  },
+};
+
 export const LightMode: Story = {
   args: {
     disabled: false,

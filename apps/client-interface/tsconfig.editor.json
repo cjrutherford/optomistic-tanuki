@@ -1,6 +1,15 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "../../libs/common-ui/src/lib/common-ui/button.component.spec.ts"],
+  "include": [
+    "src/**/*.ts",
+    "../../libs/common-ui/src/lib/common-ui/button.component.spec.ts"
+  ],
   "compilerOptions": {},
-  "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "**/*.stories.ts",
+    "**/*.stories.js"
+  ]
 }

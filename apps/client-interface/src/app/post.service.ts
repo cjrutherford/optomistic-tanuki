@@ -14,6 +14,8 @@ export interface PostDto {
   content: string;
   attachments?: string[];
   userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface UpdatePostDto {

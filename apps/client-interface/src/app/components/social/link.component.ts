@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'; // Import MatIconModule
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ButtonComponent } from '@optomistic-tanuki/common-ui';
 
 @Component({
   selector: 'app-link',
@@ -23,6 +24,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatCardModule,
     MatIconModule,
     MatDialogModule,
+    ButtonComponent,
   ],
   templateUrl: './link.component.html',
   styleUrl: './link.component.scss',

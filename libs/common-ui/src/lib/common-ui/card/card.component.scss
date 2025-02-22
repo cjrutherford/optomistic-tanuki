@@ -1,10 +1,10 @@
 .card {
-    border: 1px solid var(--accent-shade-lighten-50, #b1baec);
+    border: 4px solid var(--accent-shade-darken-50, #b1baec);
     border-radius: 4px;
     margin: 10px;
     padding: 20px;
     box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.1);
-    background-color: var(--accent-shade-darken-10, #5969c3);
+    background: var(--accent-gradient-dark, #5969c3);
     color: var(--foreground-color, #fff);
 }
 

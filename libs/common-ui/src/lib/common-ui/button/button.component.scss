@@ -9,35 +9,85 @@ button {
   &.primary {
     background-color: var(--accent-color, #007bff);
     color: var(--foreground-color, #fff);
+    box-shadow: 2px 2px 5px 6px var(--accent-gradient-dark);
+    border: 3px solid var(--accent-shade-darken-10, #0056b3);
 
     &:hover {
-      background-color: var(--accent-shade-1, #0056b3);
+      background-color: var(--accent-shade-darken-30, #0056b3);
     }
 
     &:disabled {
-      background-color: var(--accent-shade-2, #cccccc);
+      background-color: var(--accent-shade-lighten-70, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+
+  &.warning {
+    background-color: var(--warning-color, #ffc107);
+    color: var(--foreground-color, #000);
+    box-shadow: 2px 2px 5px 6px var(--warning-gradient-dark);
+    border: 3px solid var(--warning-shade-darken-10, #e0a800);
+
+    &:hover {
+      background-color: var(--warning-shade-darken-30, #e0a800);
+    }
+
+    &:disabled {
+      background-color: var(--warning-shade-lighten-70, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+  
+  &.danger {
+    background-color: var(--danger-color, #dc3545);
+    color: var(--foreground-color, #fff);
+
+    &:hover {
+      background-color: var(--danger-shade-darken-30, #c82333);
+    }
+
+    &:disabled {
+      background-color: var(--danger-shade-lighten-70, #cccccc);
+      cursor: not-allowed;
+    }
+  }
+  &.success {
+    background-color: var(--success-color, #28a745);
+    color: var(--foreground-color, #fff);
+    box-shadow: 2px 2px 5px 6px var(--success-gradient-dark);
+    border: 3px solid var(--success-shade-darken-10, #218838);
+
+    &:hover {
+      background-color: var(--success-shade-darken-30, #218838);
+    }
+
+    &:disabled {
+      background-color: var(--success-shade-lighten-70, #cccccc);
       cursor: not-allowed;
     }
   }
 
   &.secondary {
-    background-color: var(--secondary-color, #6c757d);
+    background-color: var(--complementary-color, #6c757d);
     color: var(--foreground-color, #fff);
+    box-shadow: 2px 2px 5px 6px var(--complementary-gradient-dark);
+    border: 3px solid var(--complementary-shade-darken-10, #5a6268);
 
     &:hover {
-      background-color: var(--secondary-shade-1, #5a6268);
+      background-color: var(--complementary-shade-darken-30, #5a6268);
     }
 
     &:disabled {
-      background-color: var(--secondary-shade-2, #cccccc);
+      background-color: var(--secondary-shade-lighten-70, #cccccc);
       cursor: not-allowed;
     }
   }
 
   &.outlined {
     background-color: transparent;
-    border: 1px solid var(--accent-color, #007bff);
+    border: 3px solid var(--accent-shade-darken-10, #007bff);
     color: var(--accent-color, #007bff);
+    box-shadow: 2px 2px 5px 6px var(--accent-gradient-dark);
 
     &:hover {
       background-color: var(--accent-color, #007bff);
@@ -45,8 +95,8 @@ button {
     }
 
     &:disabled {
-      border-color: var(--accent-shade-2, #cccccc);
-      color: var(--accent-shade-2, #cccccc);
+      border-color: var(--accent-shade-darken-30, #cccccc);
+      color: var(--accent-shade-lighten-70, #cccccc);
       cursor: not-allowed;
     }
   }
@@ -56,12 +106,12 @@ button {
     color: var(--accent-color, #007bff);
 
     &:hover {
-      background-color: var(--accent-shade-1, #0056b3);
+      background-color: var(--accent-shade-darken-30, #0056b3);
       color: var(--foreground-color, #fff);
     }
 
     &:disabled {
-      color: var(--accent-shade-2, #cccccc);
+      color: var(--accent-shade-lighten-70, #cccccc);
       cursor: not-allowed;
     }
   }
@@ -76,10 +126,28 @@ button {
     color: var(--foreground-color, #fff);
   }
 
-  &.fast-cycle-mode {
-    background: var(--gradient-fastCycle);
+  &.primary.fast-cycle-mode {
+    background: var(--accent-gradient-fastCycle);
     color: var(--foreground-color, #fff);
   }
+  &.secondary.fast-cycle-mode {
+    background: var(--complementary-gradient-fastCycle);
+    color: var(--foreground-color, #fff);
+  }
+
+  &.warning.fast-cycle-mode {
+    background: var(--warning-gradient-fastCycle);
+    color: var(--foreground-color, #000);
+  }
+  &.danger.fast-cycle-mode {
+    background: var(--danger-gradient-fastCycle);
+    color: var(--foreground-color, #fff);
+  }
+  &.success.fast-cycle-mode {
+    background: var(--success-gradient-fastCycle);
+    color: var(--foreground-color, #fff);
+  }
+
 }
 
 button {

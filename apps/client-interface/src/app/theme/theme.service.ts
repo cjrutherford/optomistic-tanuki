@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { generateColorShades, generateComplementaryColor } from './color-utils'; // Import a utility function to generate complementary color
+import { BehaviorSubject } from 'rxjs';
+import { generateColorShades, generateComplementaryColor, generateDangerColor, generateWarningColor, generateSuccessColor } from './color-utils';
 
 @Injectable({
   providedIn: 'root',
@@ -14,20 +14,20 @@ export class ThemeService {
     foreground: string;
     accent: string;
     accentShades: [string, string][];
-    gradients: { [key: string]: string };
-    complementary: string; // Add a new property for complementary color
-    complementaryShades: [string, string][]; // Add a new property for complementary color shades
-    complementaryGradients: { [key: string]: string }; // Add a new property for complementary gradients
-  }> = new BehaviorSubject({
-    background: this.theme === 'light' ? '#fff' : '#333',
-    foreground: this.theme === 'light' ? '#333' : '#fff',
-    accent: this.accentColor,
-    accentShades: generateColorShades(this.accentColor),
-    gradients: this.generateGradients(generateColorShades(this.accentColor)),
-    complementary: generateComplementaryColor(this.accentColor), // Initialize with generated complementary color
-    complementaryShades: generateColorShades(generateComplementaryColor(this.accentColor)), // Initialize with generated complementary shades
-    complementaryGradients: this.generateGradients(generateColorShades(generateComplementaryColor(this.accentColor))), // Initialize with generated complementary gradients
-  });
+    accentGradients: { [key: string]: string };
+    complementary: string;
+    complementaryShades: [string, string][];
+    complementaryGradients: { [key: string]: string };
+    success: string;
+    successShades: [string, string][];
+    successGradients: { [key: string]: string };
+    danger: string;
+    dangerShades: [string, string][];
+    dangerGradients: { [key: string]: string };
+    warning: string;
+    warningShades: [string, string][];
+    warningGradients: { [key: string]: string };
+  }> = new BehaviorSubject(this.generateThemeColors());
 
   constructor() {
     this.loadTheme();
@@ -39,54 +39,13 @@ export class ThemeService {
     localStorage.setItem('theme', theme);
     document.documentElement.style.setProperty('--background-color', theme === 'light' ? '#fff' : '#333');
     document.documentElement.style.setProperty('--foreground-color', theme === 'light' ? '#333' : '#fff');
-    const gradients = this.generateGradients(generateColorShades(this.accentColor));
-    this.applyGradientsToDocument(gradients);
-    const complementaryGradients = this.generateGradients(generateColorShades(generateComplementaryColor(this.accentColor)));
-    this.applyGradientsToDocument(complementaryGradients, 'complementary');
-    this.themeColors.next({
-      background: theme === 'light' ? '#fff' : '#333',
-      foreground: theme === 'light' ? '#333' : '#fff',
-      accent: this.accentColor,
-      accentShades: generateColorShades(this.accentColor),
-      gradients,
-      complementary: generateComplementaryColor(this.accentColor), // Update with generated complementary color
-      complementaryShades: generateColorShades(generateComplementaryColor(this.accentColor)), // Update with generated complementary shades
-      complementaryGradients, // Update with generated complementary gradients
-    });
-    this.theme$.next(theme);
+    this.applyThemeColors();
   }
 
   setAccentColor(color: string) {
     this.accentColor = color;
-    const shades = generateColorShades(color);
-    shades.forEach(([index, shade]) => {
-      document.documentElement.style.setProperty(`--accent-shade-${index}`, shade);
-    });
-    document.documentElement.style.setProperty('--accent-color', color);
     localStorage.setItem('accentColor', color);
-    localStorage.setItem('accentShades', JSON.stringify(shades)); // Store shades in local storage
-    const gradients = this.generateGradients(shades);
-    this.applyGradientsToDocument(gradients);
-    const complementaryColor = generateComplementaryColor(color);
-    const complementaryShades = generateColorShades(complementaryColor);
-    const complementaryGradients = this.generateGradients(complementaryShades);
-    this.applyGradientsToDocument(complementaryGradients, 'complementary');
-    complementaryShades.forEach(([index, shade]) => {
-      document.documentElement.style.setProperty(`--complementary-shade-${index}`, shade);
-    });
-    document.documentElement.style.setProperty('--complementary-color', complementaryColor);
-    localStorage.setItem('complementaryColor', complementaryColor);
-    localStorage.setItem('complementaryShades', JSON.stringify(complementaryShades)); // Store complementary shades in local storage
-    this.themeColors.next({
-      background: this.theme === 'light' ? '#fff' : '#333',
-      foreground: this.theme === 'light' ? '#333' : '#fff',
-      accent: color,
-      accentShades: shades,
-      gradients,
-      complementary: complementaryColor, // Update with generated complementary color
-      complementaryShades, // Update with generated complementary shades
-      complementaryGradients, // Update with generated complementary gradients
-    });
+    this.applyThemeColors();
   }
 
   getTheme(): 'light' | 'dark' {
@@ -104,58 +63,88 @@ export class ThemeService {
   private loadTheme() {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' || 'light';
     const savedAccentColor = localStorage.getItem('accentColor') || '#3f51b5';
-    const savedAccentShades = localStorage.getItem('accentShades') ? JSON.parse(localStorage.getItem('accentShades')!) : generateColorShades(savedAccentColor);
-    const savedComplementaryColor = localStorage.getItem('complementaryColor') || generateComplementaryColor(savedAccentColor);
-    const savedComplementaryShades = localStorage.getItem('complementaryShades') ? JSON.parse(localStorage.getItem('complementaryShades')!) : generateColorShades(savedComplementaryColor);
-    const savedComplementaryGradients = this.generateGradients(savedComplementaryShades);
-    this.applyGradientsToDocument(savedComplementaryGradients, 'complementary');
-    if (savedTheme) {
-      this.theme = savedTheme;
-      this.theme$.next(savedTheme);
-      document.documentElement.style.setProperty('--background-color', savedTheme === 'light' ? '#fff' : '#333');
-      document.documentElement.style.setProperty('--foreground-color', savedTheme === 'light' ? '#333' : '#fff');
-    }
-    if (savedAccentColor) {
-      this.accentColor = savedAccentColor;
-      if (savedAccentShades) {
-        const shades: [string, string][] = savedAccentShades;
-        shades.forEach(([index, shade]) => {
-          document.documentElement.style.setProperty(`--accent-shade-${index}`, shade);
-        });
-        const gradients = this.generateGradients(shades);
-        this.applyGradientsToDocument(gradients);
-        const complementaryShades: [string, string][] = savedComplementaryShades;
-        complementaryShades.forEach(([index, shade]) => {
-          document.documentElement.style.setProperty(`--complementary-shade-${index}`, shade);
-        });
-        document.documentElement.style.setProperty('--complementary-color', savedComplementaryColor);
-        this.themeColors.next({
-          background: this.theme === 'light' ? '#fff' : '#333',
-          foreground: this.theme === 'light' ? '#333' : '#fff',
-          accent: savedAccentColor,
-          accentShades: shades,
-          gradients,
-          complementary: savedComplementaryColor, // Update with saved complementary color
-          complementaryShades, // Update with saved complementary shades
-          complementaryGradients: savedComplementaryGradients, // Update with saved complementary gradients
-        });
-      } else {
-        this.setAccentColor(savedAccentColor);
-      }
-    } else {
-      const gradients = this.generateGradients(generateColorShades(this.accentColor));
-      this.applyGradientsToDocument(gradients);
-      this.themeColors.next({
-        background: this.theme === 'light' ? '#fff' : '#333',
-        foreground: this.theme === 'light' ? '#333' : '#fff',
-        accent: this.accentColor,
-        accentShades: generateColorShades(this.accentColor),
-        gradients,
-        complementary: generateComplementaryColor(this.accentColor), // Initialize with generated complementary color
-        complementaryShades: generateColorShades(generateComplementaryColor(this.accentColor)), // Initialize with generated complementary shades
-        complementaryGradients: this.generateGradients(generateColorShades(generateComplementaryColor(this.accentColor))), // Initialize with generated complementary gradients
-      });
-    }
+    this.theme = savedTheme;
+    this.accentColor = savedAccentColor;
+    this.applyThemeColors();
+  }
+
+  private generateThemeColors() {
+    const accentShades = generateColorShades(this.accentColor);
+    const complementaryColor = generateComplementaryColor(this.accentColor);
+    const complementaryShades = generateColorShades(complementaryColor);
+    const successColor = generateSuccessColor(this.accentColor);
+    const successShades = generateColorShades(successColor);
+    const dangerColor = generateDangerColor(this.accentColor);
+    const dangerShades = generateColorShades(dangerColor);
+    const warningColor = generateWarningColor(this.accentColor);
+    const warningShades = generateColorShades(warningColor);
+
+    return {
+      background: this.theme === 'light' ? '#fff' : '#333',
+      foreground: this.theme === 'light' ? '#333' : '#fff',
+      accent: this.accentColor,
+      accentShades,
+      accentGradients: this.generateGradients(accentShades),
+      complementary: complementaryColor,
+      complementaryShades,
+      complementaryGradients: this.generateGradients(complementaryShades),
+      success: successColor,
+      successShades,
+      successGradients: this.generateGradients(successShades),
+      danger: dangerColor,
+      dangerShades,
+      dangerGradients: this.generateGradients(dangerShades),
+      warning: warningColor,
+      warningShades,
+      warningGradients: this.generateGradients(warningShades),
+    };
+  }
+
+  private applyThemeColors() {
+    const themeColors = this.generateThemeColors();
+    this.themeColors.next(themeColors);
+    document.documentElement.style.setProperty('--background-color', themeColors.background);
+    document.documentElement.style.setProperty('--foreground-color', themeColors.foreground);
+    document.documentElement.style.setProperty('--accent-color', themeColors.accent);
+
+    themeColors.accentShades.forEach(([index, shade]) => {
+      document.documentElement.style.setProperty(`--accent-shade-${index}`, shade);
+    });
+    Object.keys(themeColors.accentGradients).forEach(subKey => {
+      document.documentElement.style.setProperty(`--accent-gradient-${subKey}`, themeColors.accentGradients[subKey]);
+    });
+
+    document.documentElement.style.setProperty('--complementary-color', themeColors.complementary);
+    themeColors.complementaryShades.forEach(([index, shade]) => {
+      document.documentElement.style.setProperty(`--complementary-shade-${index}`, shade);
+    });
+    Object.keys(themeColors.complementaryGradients).forEach(subKey => {
+      document.documentElement.style.setProperty(`--complementary-gradient-${subKey}`, themeColors.complementaryGradients[subKey]);
+    });
+
+    document.documentElement.style.setProperty('--success-color', themeColors.success);
+    themeColors.successShades.forEach(([index, shade]) => {
+      document.documentElement.style.setProperty(`--success-shade-${index}`, shade);
+    });
+    Object.keys(themeColors.successGradients).forEach(subKey => {
+      document.documentElement.style.setProperty(`--success-gradient-${subKey}`, themeColors.successGradients[subKey]);
+    });
+
+    document.documentElement.style.setProperty('--danger-color', themeColors.danger);
+    themeColors.dangerShades.forEach(([index, shade]) => {
+      document.documentElement.style.setProperty(`--danger-shade-${index}`, shade);
+    });
+    Object.keys(themeColors.dangerGradients).forEach(subKey => {
+      document.documentElement.style.setProperty(`--danger-gradient-${subKey}`, themeColors.dangerGradients[subKey]);
+    });
+
+    document.documentElement.style.setProperty('--warning-color', themeColors.warning);
+    themeColors.warningShades.forEach(([index, shade]) => {
+      document.documentElement.style.setProperty(`--warning-shade-${index}`, shade);
+    });
+    Object.keys(themeColors.warningGradients).forEach(subKey => {
+      document.documentElement.style.setProperty(`--warning-gradient-${subKey}`, themeColors.warningGradients[subKey]);
+    });
   }
 
   private generateGradients(shades: [string, string][]): { [key: string]: string } {
@@ -165,11 +154,5 @@ export class ThemeService {
       dark: `linear-gradient(135deg, ${shades[5][1]}, ${shades[6][1]}, ${shades[7][1]}, ${shades[8][1]}, ${shades[9][1]})`,
       fastCycle: `linear-gradient(45deg, ${cycles.map(_ => shades.map(([_, shade]) => shade)).join(', ')})`,
     };
-  }
-
-  private applyGradientsToDocument(gradients: { [key: string]: string }, prefix = '') {
-    Object.keys(gradients).forEach(key => {
-      document.documentElement.style.setProperty(`--${prefix ? `${prefix}-` : ''}gradient-${key}`, gradients[key]);
-    });
   }
 }

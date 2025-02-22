@@ -1,1 +1,32 @@
-<p>post works!</p>
+<app-card class="post-container" [ngClass]="'background-gradient-' + theme">
+  <div class="post-header">
+    <div class="title">{{ content.title }}</div>
+    <div class="subtitle">{{ content.createdAt | date }}</div>
+  </div>
+  <div class="content">
+    <div class="post-content">{{ content.content }}</div>
+    <div class="post-attachment" *ngIf="attachments.length > 0">
+      <h3>Attachments</h3>
+      <app-grid [columns]="6" [rows]="attachmentRows"  class="attachment">
+        <!-- Display attachment details here -->
+        <app-tile *ngFor="let attachment of attachments" (click)="downloadAttachment(attachment.url)" target="_blank">{{ attachment.name }}</app-tile>
+      </app-grid>
+    </div>
+    <div class="post-link" *ngIf="links.length > 0">
+      <h3>Links</h3>
+      <app-grid [columns]="1" [rows]="links.length">
+          <app-tile *ngFor="let link of links" class="link">
+            <!-- Display link details here -->
+            <a [href]="link.url" target="_blank">{{ link.title }}</a>
+          </app-tile>
+      </app-grid>
+    </div>
+    <div class="actions">
+      <app-button variant="success" class="button-default">Like</app-button>
+      <app-button variant="success" class="button-default">Share</app-button>
+      <lib-vote></lib-vote>
+      <lib-comment></lib-comment>
+    </div>
+  </div>
+  <lib-comment-list></lib-comment-list>
+</app-card>
