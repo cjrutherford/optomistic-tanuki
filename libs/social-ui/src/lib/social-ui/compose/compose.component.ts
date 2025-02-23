@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttachmentComponent } from '../attachment/attachment.component';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
@@ -8,7 +8,14 @@ import {
 } from '@optomistic-tanuki/form-ui';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LinkComponent } from '../link/link.component';
-import { GridComponent } from "../../../../../common-ui/src/lib/common-ui/grid/grid.component";
+import { GridComponent } from "@optomistic-tanuki/common-ui";
+import { CreatePostDto, UpdatePostDto, CreateAttachmentDto,  } from '../../models';
+
+export declare type ComposeCompleteEvent = {
+  post: CreatePostDto | UpdatePostDto;
+  attachments: CreateAttachmentDto[];
+  links: { url: string }[];
+};
 
 @Component({
   selector: 'lib-compose',
@@ -29,6 +36,7 @@ import { GridComponent } from "../../../../../common-ui/src/lib/common-ui/grid/g
 })
 export class ComposeComponent {
   composeForm: FormGroup;
+  @Output() postSubmitted: EventEmitter<ComposeCompleteEvent> = new EventEmitter<ComposeCompleteEvent>();
 
   constructor(private readonly formBuilder: FormBuilder) {}
   
@@ -62,5 +70,28 @@ export class ComposeComponent {
   onLinksChange(event: { all: { url: string }[], added?: { url: string }, removed?: { url: string } }): void {
     console.log('Link changes:', event);
     this.composeForm.patchValue({ links: event.all });
+  }
+
+  onPostSubmit(): void {
+    if (this.composeForm.valid) {
+      const postData: CreatePostDto = {
+        title: this.composeForm.value.title,
+        content: this.composeForm.value.content,
+      };
+      const attachments: CreateAttachmentDto[] = this.composeForm.value.attachments.map((file: File) => ({
+        url: URL.createObjectURL(file),
+        name: file.name,
+        type: file.type,
+        postId: 'post-id-placeholder', // Replace with actual post ID
+      }));
+      const links = this.composeForm.value.links.map((link: { url: string }) => ({ url: link.url }));
+      this.postSubmitted.emit({ post: postData, attachments, links });
+      console.log('Post submitted:', postData);
+      console.log('Attachments:', attachments); 
+      console.log('Links:', links);
+      this.composeForm.reset();
+    } else {
+      console.log('Form is invalid');
+    }
   }
 }

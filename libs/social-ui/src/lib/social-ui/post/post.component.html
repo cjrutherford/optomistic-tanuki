@@ -22,11 +22,11 @@
       </app-grid>
     </div>
     <div class="actions">
-      <app-button variant="success" class="button-default">Like</app-button>
-      <app-button variant="success" class="button-default">Share</app-button>
+      <app-button variant="success">Like</app-button>
+      <app-button variant="success">Share</app-button>
       <lib-vote></lib-vote>
-      <lib-comment></lib-comment>
+      <lib-comment (commentAdded)="onCommentAdd($event)"></lib-comment>
     </div>
   </div>
-  <lib-comment-list></lib-comment-list>
+  <lib-comment-list [comments]="comments"></lib-comment-list>
 </app-card>

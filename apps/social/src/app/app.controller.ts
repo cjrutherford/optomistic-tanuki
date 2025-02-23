@@ -79,6 +79,7 @@ export class AppController {
 
   @MessagePattern({ cmd: CommentCommands.CREATE })
   async createComment(data: CreateCommentDto) {
+    console.log("🚀 ~ AppController ~ createComment ~ data:", data)
     return await this.commentService.create(data);
   }
 

@@ -1,18 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { VoteDto, CreateVoteDto } from '@optomistic-tanuki/social-ui';
 
-export interface CreateVoteDto {
-  value: number;
-  postId: string;
-}
-
-export interface VoteDto {
-  id: string;
-  value: number;
-  postId: string;
-  userId: string;
-}
 
 @Injectable({
   providedIn: 'root'

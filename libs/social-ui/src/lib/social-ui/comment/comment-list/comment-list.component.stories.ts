@@ -14,34 +14,16 @@ export const Primary: Story = {
   args: {
     comments: [
       {
-        username: 'user1',
+        userId: 'user1',
         id: '1',
-        text: 'This is the first comment.',
-        responses: [
-          {
-            username: 'user2',
-            id: '2',
-            text: 'This is a reply to the first comment.',
-            responses: [
-              {
-                username: 'user1',
-                id: '3',
-                text: 'This is a reply to the reply.',
-                responses: [],
-                date: new Date(),
-              },
-            ],
-            date: new Date(),
-          },
-        ],
-        date: new Date(),
+        content: 'This is the first comment.',
+        postId: '1',
       },
       {
-        username: 'user3',
+        userId: 'user3',
         id: '4',
-        text: 'This is the second comment.',
-        responses: [],
-        date: new Date(),
+        content: 'This is the second comment.',
+        postId: '1',
       },
     ],
   },

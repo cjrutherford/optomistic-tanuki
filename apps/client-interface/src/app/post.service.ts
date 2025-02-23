@@ -1,34 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CreatePostDto, PostDto, UpdatePostDto, SearchPostDto } from '@optomistic-tanuki/social-ui';
 
-export interface CreatePostDto {
-  title: string;
-  content: string;
-  attachments?: string[];
-}
 
-export interface PostDto {
-  id: string;
-  title: string;
-  content: string;
-  attachments?: string[];
-  userId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface UpdatePostDto {
-  title?: string;
-  content?: string;
-  attachments?: string[];
-}
-
-export interface SearchPostDto {
-  title?: string;
-  content?: string;
-  userId?: string;
-}
 
 @Injectable({
   providedIn: 'root'
