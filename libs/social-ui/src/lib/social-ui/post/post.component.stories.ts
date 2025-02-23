@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { PostComponent, PostType } from './post.component';
+import { PostComponent } from './post.component';
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { PostDto } from '../../models';
 
 const meta: Meta<PostComponent> = {
   component: PostComponent,
@@ -10,26 +11,25 @@ const meta: Meta<PostComponent> = {
 export default meta;
 type Story = StoryObj<PostComponent>;
 
-const samplePost: PostType = {
+const samplePost: PostDto = {
   id: '1',
+  userId: '1',
   title: 'Sample Post',
   content: 'This is a sample post content.',
-  attachment: '',
+  attachments: [],
   comments: [
-    { user: 'User1', comment: 'Great post!' },
-    { user: 'User2', comment: 'Thanks for sharing.' }
+    { userId: 'User1', content: 'Great post!', id: '1', postId: '1' },
+    { userId: 'User2', content: 'Thanks for sharing.', id: '2', postId: '1' },
   ],
   createdAt: new Date(),
-  updatedAt: new Date(),
-  votes: { upvotes: 10, downvotes: 2 }
 };
 
 export const Primary: Story = {
   args: {
     content: samplePost,
     attachments: [
-      { name: 'Attachment1', url: 'http://example.com/attachment1' },
-      { name: 'Attachment2', url: 'http://example.com/attachment2' }
+      { id: '1', type: 'image', postId: '1', userId: '1', name: 'Attachment1', url: 'http://example.com/attachment1' },
+      { id: '2', type: 'image', postId: '1', userId: '1', name: 'Attachment2', url: 'http://example.com/attachment2' }
     ],
     links: [
       { title: 'Link1', url: 'http://example.com/link1' },

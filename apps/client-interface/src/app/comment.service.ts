@@ -1,28 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CommentDto, UpdateCommentDto, CreateCommentDto, SearchCommentDto } from '@optomistic-tanuki/social-ui';
 
-export interface CreateCommentDto {
-  content: string;
-  postId: string;
-}
-
-export interface CommentDto {
-  id: string;
-  content: string;
-  postId: string;
-  userId: string;
-}
-
-export interface UpdateCommentDto {
-  content?: string;
-}
-
-export interface SearchCommentDto {
-  content?: string;
-  postId?: string;
-  userId?: string;
-}
 
 @Injectable({
   providedIn: 'root'

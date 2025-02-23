@@ -3,14 +3,19 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { Comment } from "../../entities/comment.entity";
 import { Repository, FindOneOptions, FindManyOptions } from "typeorm";
 import { CreateCommentDto, UpdateCommentDto } from "@optomistic-tanuki/libs/models";
+import { RpcException } from "@nestjs/microservices";
 
 @Injectable()
 export class CommentService {
     constructor(@Inject(getRepositoryToken(Comment)) private readonly commentRepo: Repository<Comment>) {}
 
     async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-        const comment = await this.commentRepo.create(createCommentDto);
-        return await this.commentRepo.save(comment);
+        try {
+            const comment = await this.commentRepo.create(createCommentDto);
+            return await this.commentRepo.save(comment);
+        } catch (error) {
+            throw new RpcException(error.message);
+        }
     }
 
     async findAll(options?: FindManyOptions<Comment>): Promise<Comment[]> {

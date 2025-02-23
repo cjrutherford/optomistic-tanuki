@@ -1,30 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AttachmentDto, CreateAttachmentDto, UpdateAttachmentDto, SearchAttachmentDto } from '@optomistic-tanuki/social-ui';
 
-export interface CreateAttachmentDto {
-  url: string;
-  postId: string;
-}
-
-export interface AttachmentDto {
-  id: string;
-  url: string;
-  name: string;
-  type: Blob["type"];
-  postId: string;
-  userId: string;
-}
-
-export interface UpdateAttachmentDto {
-  url?: string;
-}
-
-export interface SearchAttachmentDto {
-  url?: string;
-  postId?: string;
-  userId?: string;
-}
 
 @Injectable({
   providedIn: 'root'

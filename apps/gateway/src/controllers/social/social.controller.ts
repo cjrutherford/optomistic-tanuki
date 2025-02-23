@@ -46,9 +46,12 @@ export class SocialController {
     @ApiResponse({ status: 201, description: 'The comment has been successfully created.', type: CommentDto })
     @Post('comment')
     async comment(@User() user, @Body() commentDto: CreateCommentDto) {
-        console.log(user);
-        commentDto.userId = user.userid;
-        return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.CREATE }, commentDto));
+        const finalComment: CreateCommentDto = {
+            ...commentDto,
+            userId: user.userId,
+        };
+        console.log("🚀 ~ SocialController ~ comment ~ commentDto:", finalComment)
+        return await firstValueFrom(this.socialClient.send({ cmd: CommentCommands.CREATE }, finalComment));
     }
     
     @UseGuards(AuthGuard)
