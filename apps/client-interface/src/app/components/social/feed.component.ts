@@ -20,6 +20,8 @@ import { ComposeCompleteEvent } from 'libs/social-ui/src/lib/social-ui/compose/c
 import { AttachmentService } from '../../attachment.service';
 import { firstValueFrom } from 'rxjs';
 import { CommentService } from '../../comment.service';
+import { ProfileService } from '../../profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feed',
@@ -51,6 +53,8 @@ export class FeedComponent {
     private readonly postService: PostService,
     private readonly attachmentService: AttachmentService,
     private readonly commentService: CommentService,
+    private readonly profileService: ProfileService,
+    private readonly router: Router,
   ) {
     this.themeService.themeColors$.subscribe((colors) => {
       this.themeStyles = {
@@ -62,7 +66,11 @@ export class FeedComponent {
   }
 
   ngOnInit() {
-    this.postService.searchPosts({}).subscribe((posts) => (this.posts = posts));
+    if(this.profileService.currentUserProfile()){
+      this.postService.searchPosts({}).subscribe((posts) => (this.posts = posts));
+    } else {
+      this.router.navigate(['/profile'])
+    }
   }
   posts: PostDto[] = [];
 

@@ -1,0 +1,436 @@
+<style>
+  :root {
+    --background-color: #333;
+    --foreground-color: #fff;
+    --accent-color: #4596d3;
+    --accent-shade-lighten-90: #ecf4fa;
+    --accent-shade-lighten-70: #c7dff1;
+    --accent-shade-lighten-50: #a2cae9;
+    --accent-shade-lighten-30: #7cb5e0;
+    --accent-shade-lighten-10: #57a0d7;
+    --accent-shade-standard: #4596d3;
+    --accent-shade-darken-10: #3e87bd;
+    --accent-shade-darken-30: #306993;
+    --accent-shade-darken-50: #224b69;
+    --accent-shade-darken-70: #142d3f;
+    --accent-shade-darken-90: #060e15;
+    --accent-gradient-light: linear-gradient(
+      135deg,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7
+    );
+    --accent-gradient-dark: linear-gradient(
+      135deg,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f
+    );
+    --accent-gradient-fastCycle: linear-gradient(
+      45deg,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f,
+      #060e15,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f,
+      #060e15,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f,
+      #060e15,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f,
+      #060e15,
+      #ecf4fa,
+      #c7dff1,
+      #a2cae9,
+      #7cb5e0,
+      #57a0d7,
+      #4596d3,
+      #3e87bd,
+      #306993,
+      #224b69,
+      #142d3f,
+      #060e15
+    );
+    --complementary-color: #ba692c;
+    --complementary-shade-lighten-90: #f8f0e9;
+    --complementary-shade-lighten-70: #ead2bf;
+    --complementary-shade-lighten-50: #dcb495;
+    --complementary-shade-lighten-30: #ce966b;
+    --complementary-shade-lighten-10: #c07841;
+    --complementary-shade-standard: #ba692c;
+    --complementary-shade-darken-10: #a75e27;
+    --complementary-shade-darken-30: #82491e;
+    --complementary-shade-darken-50: #5d3416;
+    --complementary-shade-darken-70: #371f0d;
+    --complementary-shade-darken-90: #120a04;
+    --complementary-gradient-light: linear-gradient(
+      135deg,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841
+    );
+    --complementary-gradient-dark: linear-gradient(
+      135deg,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d
+    );
+    --complementary-gradient-fastCycle: linear-gradient(
+      45deg,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d,
+      #120a04,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d,
+      #120a04,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d,
+      #120a04,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d,
+      #120a04,
+      #f8f0e9,
+      #ead2bf,
+      #dcb495,
+      #ce966b,
+      #c07841,
+      #ba692c,
+      #a75e27,
+      #82491e,
+      #5d3416,
+      #371f0d,
+      #120a04
+    );
+    --success-color: #1dc8dd;
+    --success-shade-lighten-90: #e8f9fb;
+    --success-shade-lighten-70: #bbeef4;
+    --success-shade-lighten-50: #8ee3ee;
+    --success-shade-lighten-30: #60d8e7;
+    --success-shade-lighten-10: #33cde0;
+    --success-shade-standard: #1dc8dd;
+    --success-shade-darken-10: #1ab4c6;
+    --success-shade-darken-30: #148c9a;
+    --success-shade-darken-50: #0e646e;
+    --success-shade-darken-70: #083c42;
+    --success-shade-darken-90: #021316;
+    --success-gradient-light: linear-gradient(
+      135deg,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0
+    );
+    --success-gradient-dark: linear-gradient(
+      135deg,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42
+    );
+    --success-gradient-fastCycle: linear-gradient(
+      45deg,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42,
+      #021316,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42,
+      #021316,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42,
+      #021316,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42,
+      #021316,
+      #e8f9fb,
+      #bbeef4,
+      #8ee3ee,
+      #60d8e7,
+      #33cde0,
+      #1dc8dd,
+      #1ab4c6,
+      #148c9a,
+      #0e646e,
+      #083c42,
+      #021316
+    );
+    --danger-color: #8b64a1;
+    --danger-shade-lighten-90: #f3eff5;
+    --danger-shade-lighten-70: #dcd0e2;
+    --danger-shade-lighten-50: #c5b1d0;
+    --danger-shade-lighten-30: #ad92bd;
+    --danger-shade-lighten-10: #9673aa;
+    --danger-shade-standard: #8b64a1;
+    --danger-shade-darken-10: #7d5a90;
+    --danger-shade-darken-30: #614670;
+    --danger-shade-darken-50: #453250;
+    --danger-shade-darken-70: #291e30;
+    --danger-shade-darken-90: #0d0910;
+    --danger-gradient-light: linear-gradient(
+      135deg,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa
+    );
+    --danger-gradient-dark: linear-gradient(
+      135deg,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30
+    );
+    --danger-gradient-fastCycle: linear-gradient(
+      45deg,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30,
+      #0d0910,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30,
+      #0d0910,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30,
+      #0d0910,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30,
+      #0d0910,
+      #f3eff5,
+      #dcd0e2,
+      #c5b1d0,
+      #ad92bd,
+      #9673aa,
+      #8b64a1,
+      #7d5a90,
+      #614670,
+      #453250,
+      #291e30,
+      #0d0910
+    );
+    --warning-color: #95a097;
+    --warning-shade-lighten-90: #f4f5f4;
+    --warning-shade-lighten-70: #dfe2df;
+    --warning-shade-lighten-50: #cacfcb;
+    --warning-shade-lighten-30: #b4bcb6;
+    --warning-shade-lighten-10: #9fa9a1;
+    --warning-shade-standard: #95a097;
+    --warning-shade-darken-10: #869087;
+    --warning-shade-darken-30: #687069;
+    --warning-shade-darken-50: #4a504b;
+    --warning-shade-darken-70: #2c302d;
+    --warning-shade-darken-90: #0e0f0f;
+    --warning-gradient-light: linear-gradient(
+      135deg,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1
+    );
+    --warning-gradient-dark: linear-gradient(
+      135deg,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d
+    );
+    --warning-gradient-fastCycle: linear-gradient(
+      45deg,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d,
+      #0e0f0f,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d,
+      #0e0f0f,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d,
+      #0e0f0f,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d,
+      #0e0f0f,
+      #f4f5f4,
+      #dfe2df,
+      #cacfcb,
+      #b4bcb6,
+      #9fa9a1,
+      #95a097,
+      #869087,
+      #687069,
+      #4a504b,
+      #2c302d,
+      #0e0f0f
+    );
+  }
+</style>
