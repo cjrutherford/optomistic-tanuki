@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ProfileDto, CreateProfileDto, UpdateProfileDto } from '@optomistic-tanuki/profile-ui';
-
-
+import { firstValueFrom } from 'rxjs';
+import { AuthStateService } from './state/auth-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ import { ProfileDto, CreateProfileDto, UpdateProfileDto } from '@optomistic-tanu
 export class ProfileService {
   currentUserProfiles = signal<ProfileDto[]>([]);
   currentUserProfile = signal<ProfileDto | null>(null);
-  constructor(private readonly http: HttpClient) { }
+  constructor(private readonly http: HttpClient, private readonly authState: AuthStateService) { }
 
-  selectProfile(id: string) {
-    const profile = this.currentUserProfiles().find(p => p.id === id);
+  selectProfile(_p: ProfileDto) {
+    const profile = this.currentUserProfiles().find(p => p.id === _p.id);
     if (profile) {
       this.currentUserProfile.set(profile);
       localStorage.setItem('selectedProfile', JSON.stringify(profile));
@@ -28,47 +28,57 @@ export class ProfileService {
     return this.currentUserProfile();
   }
 
-  getAllProfiles() {
-    return this.http.get<ProfileDto[]>('/api/profiles').subscribe(profiles => {
-      this.currentUserProfiles.set(profiles);
-      localStorage.setItem('profiles', JSON.stringify(profiles));
-    });
+  async getAllProfiles() {
+    const profiles = await firstValueFrom(this.http.get<ProfileDto[]>('/api/profile'));
+    this.currentUserProfiles.set(profiles);
+    localStorage.setItem('profiles', JSON.stringify(profiles));
   }
 
-  getProfileById(id: string) {
-    return this.http.get<ProfileDto>(`/api/profiles/${id}`).subscribe(profile => {
-      this.currentUserProfile.set(profile);
-      localStorage.setItem('selectedProfile', JSON.stringify(profile));
-    });
+  async getProfileById(id: string) {
+    const profile = await firstValueFrom(this.http.get<ProfileDto>(`/api/profile/${id}`));
+    this.currentUserProfile.set(profile);
+    localStorage.setItem('selectedProfile', JSON.stringify(profile));
   }
 
-  createProfile(profile: CreateProfileDto) {
-    return this.http.post<ProfileDto>('/api/profiles', profile).subscribe(newProfile => {
-      this.currentUserProfiles.update(profiles => [...profiles, newProfile]);
-      localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
+  async createProfile(profile: CreateProfileDto) {
+    const originalProfilePic = profile.profilePic;
+    const originalCoverPic = profile.coverPic;
+    profile.profilePic = '';
+    profile.coverPic = '';
+    profile.userId = this.authState.getDecodedTokenValue()?.userId;
+    const newProfile = await firstValueFrom(this.http.post<ProfileDto>('/api/profile', profile));
+    const picUpdate = await firstValueFrom(this.http.put<ProfileDto>(
+      `/api/profile/${newProfile.id}`, 
+      { profilePic: originalProfilePic },
+    ));
+    const coverUpdate = await firstValueFrom(this.http.put<ProfileDto>(`/api/profile/${picUpdate.id}`, { coverPic: originalCoverPic }));
+    this.currentUserProfiles.update(profiles => {
+      const updatedProfiles = [...profiles, coverUpdate];
+      return updatedProfiles.filter((profile, index, self) => 
+      index === self.findIndex(p => p.id === profile.id)
+      );
     });
+    localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
   }
 
-  updateProfile(id: string, profile: UpdateProfileDto) {
-    return this.http.put<ProfileDto>(`/api/profiles/${id}`, profile).subscribe(updatedProfile => {
-      this.currentUserProfiles.update(profiles => profiles.map(p => p.id === id ? updatedProfile : p));
-      localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
-      if (this.currentUserProfile()?.id === id) {
-        this.currentUserProfile.set(updatedProfile);
-        localStorage.setItem('selectedProfile', JSON.stringify(updatedProfile));
-      }
-    });
+  async updateProfile(id: string, profile: UpdateProfileDto) {
+    const updatedProfile = await firstValueFrom(this.http.put<ProfileDto>(`/api/profiles/${id}`, profile));
+    this.currentUserProfiles.update(profiles => profiles.map(p => p.id === id ? updatedProfile : p));
+    localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
+    if (this.currentUserProfile()?.id === id) {
+      this.currentUserProfile.set(updatedProfile);
+      localStorage.setItem('selectedProfile', JSON.stringify(updatedProfile));
+    }
   }
 
-  deleteProfile(id: string) {
-    return this.http.delete<void>(`/api/profiles/${id}`).subscribe(() => {
-      this.currentUserProfiles.update(profiles => profiles.filter(p => p.id !== id));
-      localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
-      if (this.currentUserProfile()?.id === id) {
-        this.currentUserProfile.set(null);
-        localStorage.removeItem('selectedProfile');
-      }
-    });
+  async deleteProfile(id: string) {
+    await firstValueFrom(this.http.delete<void>(`/api/profiles/${id}`));
+    this.currentUserProfiles.update(profiles => profiles.filter(p => p.id !== id));
+    localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
+    if (this.currentUserProfile()?.id === id) {
+      this.currentUserProfile.set(null);
+      localStorage.removeItem('selectedProfile');
+    }
   }
 
   loadProfilesFromLocalStorage() {

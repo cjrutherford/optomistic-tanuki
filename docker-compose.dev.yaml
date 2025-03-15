@@ -1,6 +1,9 @@
 networks:
   ot_network:
     driver: bridge
+x-global-environment: &x-global-environment
+  environment:
+    NX_DAEMON: true
 
 services:
   nginx:
@@ -88,6 +91,7 @@ services:
     ports:
       - 4200:4200
       - 5000:5000
+    <<: *x-global-environment
   ot_authentication:
     container_name: ot_authentication
     # image: optomistic_tanuki/authentication
@@ -103,6 +107,7 @@ services:
     volumes:
       - ./:/app/
     command: ["sh", "-c", "npx nx serve authentication"]
+    <<: *x-global-environment
   ot_gateway:
     container_name: ot_gateway
     # image: optomistic_tanuki/gateway
@@ -124,6 +129,7 @@ services:
     command: ["sh", "-c", "npx nx serve gateway"]
     ports:
       - 3000:3000
+    <<: *x-global-environment
   ot_profile:
     container_name: ot_profile
     # image: optomisitic_tanuki/profile
@@ -139,6 +145,7 @@ services:
     volumes:
       - ./:/app/
     command: ["sh", "-c", "npx nx serve profile"]
+    <<: *x-global-environment
   ot_social:
     container_name: ot_social
     # image: optomisitic_tanuki/social
@@ -154,6 +161,7 @@ services:
     volumes:
       - ./:/app/
     command: ["sh", "-c", "npx nx serve social"]
+    <<: *x-global-environment
   ot_tasks:
     container_name: ot_tasks
     # image: optomisitic_tanuki/tasks
@@ -169,3 +177,4 @@ services:
     volumes:
       - ./:/app/
     command: ["sh", "-c", "npx nx serve tasks"]
+    <<: *x-global-environment

@@ -13,8 +13,10 @@ type Story = StoryObj<BannerComponent>;
 export const Primary: Story = {
   args: {
     profileName: 'John Doe',
-    profileImage: 'https://placehold.co/100x100',
-    backgroundImage: 'https://placehold.co/800x200',
+    profileImage:
+      'https://pics.craiyon.com/2025-03-08/hk2UObNST0a0srW-lcG9jg.webp',
+    backgroundImage:
+      'https://pics.craiyon.com/2024-09-03/hIBoUeS-RzS_7_l7acYhgA.webp',
   },
 };
 

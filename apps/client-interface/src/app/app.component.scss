@@ -5,7 +5,6 @@
   @extend .background-gradient-dark, .border-default, .shadow-default;
   display: flex;
   flex-direction: column;
-  height: 100vh;
 }
 :root {
   @include mat.sidenav-overrides(

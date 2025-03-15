@@ -1,17 +1,22 @@
-<app-card>
+<app-card style="overflow-x: scroll; overflow-y: none;">
+    <h6>Profiles:</h6>
     <app-grid [columns]="10">
     @for (p of profiles; track p.id) {
-            <app-tile [class.active]="p.id === internalSelectedProfile()?.id">
+            <app-tile class="real-profile" [class.active]="p.id === internalSelectedProfile()?.id">
                 <h2>{{p.profileName}}</h2>
                 <lib-profile-photo src="{{p.profilePic}}" alt="{{p.profileName}}'s picture" />
-                <p>{{p.bio}}</p>
-                <app-button (click)="selectProfile(p.id)">Select Profile</app-button>
+                @if (p.id === currentSelectedProfile?.id) {
+                    <app-button variant="warning" (click)="selectProfile(p.id)">Selected</app-button>
+                } 
+                @else {
+                    <app-button variant="outlined" (click)="selectProfile(p.id)">Select</app-button>
+                }
             </app-tile>
         }
-        <app-tile>
-            <h2>Add New Profile</h2>
+        <app-tile class="add-profile">
+            <h2>New Profile</h2>
             <lib-profile-photo src="https://placehold.co/100x100" alt="Add new profile" />
-            <app-button (click)="addNewProfile()">Add Profile</app-button>
+            <app-button (click)="addNewProfile()">+</app-button>
         </app-tile>
     </app-grid>
 </app-card>
@@ -19,10 +24,11 @@
 <ng-template #profileDialog>
     <app-card>
         <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-          <h2>Create New Profile</h2>
+          <h2>New Profile</h2>
           <lib-text-input label="Profile Name" formControlName="profileName"></lib-text-input>
           <lib-image-upload (imageUpload)="imageUploaded($event)"></lib-image-upload>
           <lib-text-input label="Bio" formControlName="bio"></lib-text-input>
+          <lib-image-upload (imageUpload)="coverUploaded($event)"></lib-image-upload>
           <app-button variant="success" type="submit">Submit</app-button>
           <app-button variant="warning" type="button" (click)="onCancel()">Cancel</app-button>
         </form>

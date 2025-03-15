@@ -6,6 +6,7 @@ import { ImageUploadComponent, TextAreaComponent, TextInputComponent } from '@op
 import { ProfileDto } from '../models';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
+import { CreateProfileDto } from '@optomistic-tanuki/libs/models';
 
 @Component({
   selector: 'lib-profile-selector',
@@ -26,9 +27,11 @@ import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
   templateUrl: './profile-selector.component.html',
   styleUrl: './profile-selector.component.scss',
 })
-export class ProfileUiComponent {
+export class ProfileSelectorComponent {
   @Input() profiles: ProfileDto[] = [];
+  @Input() currentSelectedProfile: ProfileDto | null = null;
   @Output() selectedProfile: EventEmitter<ProfileDto> = new EventEmitter<ProfileDto>();
+  @Output() profileCreated: EventEmitter<CreateProfileDto> = new EventEmitter<CreateProfileDto>();
   @ViewChild('profileDialog') profileDialog: TemplateRef<any>;
   internalSelectedProfile = signal<ProfileDto | null>(null);
 
@@ -40,6 +43,7 @@ export class ProfileUiComponent {
       profileName: this.fb.control(''),
       description: this.fb.control(''),
       profilePic: this.fb.control(''),
+      coverPic: this.fb.control(''),
       bio: this.fb.control('')
     });
   }
@@ -56,6 +60,10 @@ export class ProfileUiComponent {
     this.profileForm.patchValue({ profilePic: file });
   }
 
+  coverUploaded(file: string) {
+    this.profileForm.patchValue({ coverPic: file });
+  }
+
   addNewProfile() {
     this.dialog.closeAll()
     this.dialog.open(this.profileDialog);
@@ -63,8 +71,26 @@ export class ProfileUiComponent {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      const newProfile: ProfileDto = this.profileForm.value;
-      this.profiles.push(newProfile);
+      const newProfile: CreateProfileDto = {
+        name: this.profileForm.value.profileName,
+        description: this.profileForm.value.description,
+        userId: 'currentUserId', // Replace with actual user ID
+        profilePic: this.profileForm.value.profilePic || 'defaultProfilePic.png',
+        coverPic: this.profileForm.value.coverPic || 'defaultCoverPic.png',
+        bio: this.profileForm.value.bio || '',
+        location: '',
+        occupation: '',
+        interests: '',
+        skills: '',
+      };
+      const createdProfile: ProfileDto = {
+        ...newProfile,
+        profileName: newProfile.name,
+        id: Math.random().toString(36).substring(2, 15), // Mock ID generation
+        created_at: new Date(),
+      };
+      this.profileCreated.emit(newProfile);
+      this.profiles.push(createdProfile);
       this.profileForm.reset();
       this.dialog.closeAll();
     }

@@ -1,8 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output, HostListener } from '@angular/core';
 
 @Component({
   selector: 'lib-image-upload',
   standalone: true,
+  imports: [CommonModule],
   template: `
     <div class="upload-container" [class.dragover]="isDragOver">
       <input type="file" accept="image/*" (change)="handleImageChange($event)" />

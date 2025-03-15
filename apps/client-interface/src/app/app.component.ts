@@ -11,6 +11,8 @@ import { AuthStateService } from './state/auth-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
+import { ProfileSelectorComponent } from '@optomistic-tanuki/profile-ui';
+import { ProfileService } from './profile.service';
 
 @Component({
   standalone: true,
@@ -24,6 +26,7 @@ import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
     ToolbarComponent,
     GridComponent,
     CardComponent,
+    ProfileSelectorComponent,
   ],
   providers: [ThemeService],
   selector: 'app-root',
@@ -36,8 +39,17 @@ export class AppComponent {
   accent: string;
   backgroundGradient: string; 
   currentUrl$: Observable<string>; 
+  profileService: ProfileService;
+  authState: AuthStateService;
 
-  constructor(private readonly themeService: ThemeService, private readonly authState: AuthStateService, private router: Router) {
+  constructor(
+    private readonly themeService: ThemeService, 
+    _authState: AuthStateService,
+    _profileService: ProfileService,
+    private router: Router
+  ) {
+    this.profileService = _profileService;
+    this.authState = _authState;
     this.themeService.theme$.subscribe((theme) => {
       this.backgroundGradient = 'background-gradient-' + theme;
     });
@@ -47,6 +59,14 @@ export class AppComponent {
   }
   title = 'client-interface';
   isNavExpanded = false;
+
+  ngOnInit() {
+    this.profileService.getAllProfiles();
+    const selectedProfile = localStorage.getItem('selectedProfile');
+    if (selectedProfile) {
+      this.profileService.selectProfile(JSON.parse(selectedProfile));
+    }
+  }
 
   toggleNav() {
     if(!this.authState.isAuthenticated) return

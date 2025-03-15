@@ -14,7 +14,6 @@ import { Project } from '../projects/entities/project.entity';
 import { ProjectsController } from '../projects/projects.controller';
 import { Timeline } from '../timelines/entities/timeline.entity';
 import { TimelinesController } from '../timelines/timelines.controller';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GoalService } from './goal.service';
 import loadDatabase from './loadDatabase';
@@ -35,7 +34,6 @@ import { TimelineService } from './timeline.service';
     LoggerModule,
   ],
   controllers: [
-    AppController,
     ProfilesController,
     GoalsController,
     ProjectsController,
