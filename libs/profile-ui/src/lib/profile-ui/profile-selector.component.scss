@@ -1,0 +1,32 @@
+.active {
+    box-shadow: 2px 2px 5px var(--accent-gradient-dark);
+}
+
+.real-profile {
+    max-height: 200px;
+    overflow: none;
+    h2 {
+        font-size: 12px;
+        margin: 0;
+    }
+    button {
+        font-size: 10px;
+    }
+}
+
+.add-profile {
+    max-height: 300px;
+    overflow: none;
+    h2 {
+        font-size: 15px;
+        margin: 0;
+    }
+
+    p {
+        font-size: 8px;
+    }
+
+    button {
+        font-size: 10px;
+    }
+}

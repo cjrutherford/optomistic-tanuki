@@ -4,6 +4,9 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GoalCommands, ProfileCommands, ProjectCommands, ServiceTokens, TimelineCommands } from '@optomistic-tanuki/libs/constants';
 import { CreateGoalDto, CreateProfileDto, CreateProjectDto, CreateTimelineDto, UpdateGoalDto, UpdateProfileDto, UpdateProjectDto, UpdateTimelineDto } from '@optomistic-tanuki/libs/models';
 import { AuthGuard } from '../../auth/auth.guard';
+import { User, UserDetails } from '../../decorators/user.decorator';
+import { FindManyOptions } from 'typeorm';
+import { ProfileDto } from 'libs/profile-ui/src/lib/models';
 
 @ApiTags('profile')
 @Controller('profile')
@@ -17,6 +20,16 @@ export class ProfileController {
     @Post()
     createProfile(@Body() createProfileDto: CreateProfileDto) {
         return this.client.send({ cmd: ProfileCommands.Create }, createProfileDto);
+    }
+
+    @UseGuards(AuthGuard)
+    @ApiOperation({ summary: 'Get all profiles' })
+    @ApiResponse({ status: 200, description: 'The profiles have been successfully retrieved.' })
+    @ApiResponse({ status: 404, description: 'Profiles not found.' })
+    @Get()
+    getAllProfiles(@User() user: UserDetails, @Param('query') query: Partial<ProfileDto>) {
+        return this.client.send({ cmd: ProfileCommands.GetAll }, { userId: user.userId, query });
+
     }
 
     @UseGuards(AuthGuard)

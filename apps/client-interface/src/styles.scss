@@ -6,7 +6,25 @@ html, body {
     height: 100%; 
 }
 
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 12px;
+}
 
+::-webkit-scrollbar-track {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 10px;
+    border: 3px solid var(--complementary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-shade-lighten-30);
+}
 
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {

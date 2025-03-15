@@ -21,11 +21,22 @@ export class ProfileService {
     }
 
     async create(profile: CreateProfileDto): Promise<Profile> {
-        return await this.profileRepository.save(profile);
+        const newProfile: Partial<Profile> = {
+            userId: profile.userId,
+            profileName: profile.name,
+            profilePic: profile.profilePic,
+            coverPic: profile.coverPic,
+            bio: profile.bio,
+            location: profile.location,
+            occupation: profile.occupation,
+            interests: profile.interests,
+            skills: profile.skills,
+        };
+        return await this.profileRepository.save(newProfile);
     }
 
     async update(id: string, profile: UpdateProfileDto): Promise<Profile> {
-        await this.profileRepository.update(id, profile);
+        await this.profileRepository.update(id, {...profile});
         return await this.profileRepository.findOne({where: { id }});
     }
 }
