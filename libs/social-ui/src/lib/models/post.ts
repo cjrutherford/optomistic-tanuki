@@ -6,6 +6,7 @@ export interface CreatePostDto {
     title: string;
     content: string;
     attachments?: string[];
+    profileId: string;
   }
   
   export interface PostDto {
@@ -29,4 +30,5 @@ export interface CreatePostDto {
     title?: string;
     content?: string;
     userId?: string;
+    profileId?: string;
   }

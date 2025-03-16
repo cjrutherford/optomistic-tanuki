@@ -77,6 +77,7 @@ export class ComposeComponent {
       const postData: CreatePostDto = {
         title: this.composeForm.value.title,
         content: this.composeForm.value.content,
+        profileId: '', // this will be added in the feed component
       };
       const attachments: CreateAttachmentDto[] = this.composeForm.value.attachments.map((file: File) => ({
         url: URL.createObjectURL(file),

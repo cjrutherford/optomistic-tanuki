@@ -15,4 +15,10 @@ export class PostDto {
 
     @ApiProperty({ description: 'The date the post was last updated' })
     updatedAt: Date;
+
+    @ApiProperty({ description: 'The ID of the user who created the post' })
+    userId: string;
+
+    @ApiProperty({ description: 'The ID of the profile associated with the post' })
+    profileId: string;
 }

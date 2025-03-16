@@ -9,4 +9,7 @@ export class CreatePostDto {
 
     @ApiProperty({ description: 'The ID of the user' })
     userId: string;
+
+    @ApiProperty({ description: 'The ID of the profile' })
+    profileId: string;
 }

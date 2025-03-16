@@ -30,6 +30,15 @@ export class ProfileService {
 
   async getAllProfiles() {
     const profiles = await firstValueFrom(this.http.get<ProfileDto[]>('/api/profile'));
+    for(const p of profiles) {
+      const pic = await firstValueFrom(this.http.get<{profilePic: string}>(`/api/profile/${p.id}/photo`));
+      p.profilePic = pic.profilePic;
+      const cover = await firstValueFrom(this.http.get<{coverPic: string}>(`/api/profile/${p.id}/cover`));
+      p.coverPic = cover.coverPic
+      if (p.id === this.currentUserProfile()?.id) {
+        this.currentUserProfile.set(p);
+      }
+    }
     this.currentUserProfiles.set(profiles);
     localStorage.setItem('profiles', JSON.stringify(profiles));
   }

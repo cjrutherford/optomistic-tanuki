@@ -17,7 +17,10 @@ export class Post {
     content: string;
 
     @Column()
-    userId: string; // this should be the profile of the user. not the user.
+    profileId: string;
+
+    @Column()
+    userId: string; 
 
     @OneToMany(() => Vote, vote => vote.post)
     votes: Vote[];

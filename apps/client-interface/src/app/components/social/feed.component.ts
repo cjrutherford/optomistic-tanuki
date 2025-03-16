@@ -66,8 +66,9 @@ export class FeedComponent {
   }
 
   ngOnInit() {
-    if(this.profileService.currentUserProfile()){
-      this.postService.searchPosts({}).subscribe((posts) => (this.posts = posts));
+    const currentProfile = this.profileService.currentUserProfile();
+    if(currentProfile){
+      this.postService.searchPosts({ profileId: currentProfile.id }).subscribe((posts) => (this.posts = posts));
     } else {
       this.router.navigate(['/profile'])
     }
@@ -76,8 +77,15 @@ export class FeedComponent {
 
   createdPost(postData: ComposeCompleteEvent) {
     const { post, attachments, links } = postData;
+    const currentProfile = this.profileService.currentUserProfile();
+    if (!currentProfile) {
+      console.error('No current profile found');
+      return;
+    }
+    const finalPost: CreatePostDto = post as CreatePostDto;
+    finalPost.profileId = currentProfile.id;
     this.postService
-      .createPost(post as CreatePostDto)
+      .createPost(finalPost)
       .subscribe(async (newPost) => {
         if (attachments.length > 0) {
           for (const atta of attachments) {
