@@ -15,3 +15,4 @@ export { PostDto } from './post.dto';
 export { CommentDto } from './comment.dto';
 export { AttachmentDto } from './attachment.dto';
 export { VoteDto } from './vote.dto';
+export { UpdateFollowDto, QueryFollowsDto } from './follow.dto'
