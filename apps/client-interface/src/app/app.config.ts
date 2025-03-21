@@ -7,6 +7,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AuthStateService } from './state/auth-state.service';
 import { AuthenticationService } from './authentication.service';
 import { AuthInterceptor } from './http.interceptor';
+import { QuillModule } from 'ngx-quill';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes), provideAnimationsAsync(),
     provideHttpClient(withInterceptors([AuthInterceptor])),
+    importProvidersFrom(QuillModule.forRoot()),
     AuthStateService, AuthenticationService,
   ],
 };

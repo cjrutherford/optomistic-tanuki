@@ -1,7 +1,16 @@
 h3 {
     margin: 10px;
 }
-
+.editor {
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    ::ng-deep .ql-editor {
+        height: 100%;
+    }
+    ::ng-deep .ql-container {
+        height: 100%;
+    }
+}
 button { 
     margin: 10px;
     margin-left: 15px;

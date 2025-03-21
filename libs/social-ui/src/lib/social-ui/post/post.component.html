@@ -4,7 +4,7 @@
     <div class="subtitle">{{ content.createdAt | date }}</div>
   </div>
   <div class="content">
-    <div class="post-content">{{ content.content }}</div>
+    <div class="post-content" [innerHTML]="content.content"></div>
     <div class="post-attachment" *ngIf="attachments.length > 0">
       <h3>Attachments</h3>
       <app-grid [columns]="6" [rows]="attachmentRows"  class="attachment">

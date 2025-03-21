@@ -76,6 +76,7 @@ export class FeedComponent {
   posts: PostDto[] = [];
 
   createdPost(postData: ComposeCompleteEvent) {
+    console.log('create called.')
     const { post, attachments, links } = postData;
     const currentProfile = this.profileService.currentUserProfile();
     if (!currentProfile) {

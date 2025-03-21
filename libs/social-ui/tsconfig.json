@@ -8,7 +8,16 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "typeRoots": [
+      "../../node_modules/@types",
+      "../../node_modules/@angular",
+      "./src/lib/types"
+    ],
+    "types": [
+      "node",
+      "jest"
+    ],
   },
   "files": [],
   "include": [],
