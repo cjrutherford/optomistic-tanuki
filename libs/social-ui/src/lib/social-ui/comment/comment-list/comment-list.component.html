@@ -2,8 +2,7 @@
     <app-grid [columns]="1" [rows]="comments.length">
         <app-card *ngFor="let comment of comments" >
             <div class="comment">
-                <p><strong>{{ comment.userId }}</strong></p>
-                <p>{{ comment.content }}</p>
+                <div class="comment-content" [innerHTML]="comment.content"></div>
             </div>
         </app-card>
     </app-grid>

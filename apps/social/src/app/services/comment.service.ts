@@ -4,13 +4,25 @@ import { Comment } from "../../entities/comment.entity";
 import { Repository, FindOneOptions, FindManyOptions } from "typeorm";
 import { CreateCommentDto, UpdateCommentDto } from "@optomistic-tanuki/libs/models";
 import { RpcException } from "@nestjs/microservices";
+import { Post } from "../../entities/post.entity";
 
 @Injectable()
 export class CommentService {
-    constructor(@Inject(getRepositoryToken(Comment)) private readonly commentRepo: Repository<Comment>) {}
+    constructor(
+        @Inject(getRepositoryToken(Comment)) private readonly commentRepo: Repository<Comment>,
+        @Inject(getRepositoryToken(Post)) private readonly postRepo: Repository<Post>,
+    ) {}
 
     async create(createCommentDto: CreateCommentDto): Promise<Comment> {
         try {
+            const post = await this.postRepo.findOne({ where: { id: createCommentDto.postId } });
+            if (!post) {
+                throw new RpcException('Post not found');
+            }
+            const commentToCreate: Partial<Comment> = {
+                ...createCommentDto,
+                post,
+            };
             const comment = await this.commentRepo.create(createCommentDto);
             return await this.commentRepo.save(comment);
         } catch (error) {

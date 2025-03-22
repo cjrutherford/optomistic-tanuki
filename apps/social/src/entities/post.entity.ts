@@ -67,7 +67,5 @@ export function postSearchDtoToFindManyOptions(searchDto: SearchPostDto): FindMa
         where.attachments = { type: searchDto.attachmentType as AttachmentType };
     }
     searchOptions.where = where;
-    searchOptions.relations = ['votes', 'comments', 'links', 'attachments'];
-
     return searchOptions;
 }

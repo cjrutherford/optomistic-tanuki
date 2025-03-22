@@ -134,8 +134,9 @@ export class FeedComponent {
   //   );
   // }
 
-  commented(newComment: CreateCommentDto) {
+  commented(newComment: CreateCommentDto, postIndex: number) {
     console.log('🚀 ~ FeedComponent ~ commented ~ newComment:', newComment);
+    newComment.postId = this.posts[postIndex].id;
     this.commentService.createComment(newComment).subscribe({
       next: (comment) => {
         const post = this.posts.find((p) => p.id === newComment.postId);
