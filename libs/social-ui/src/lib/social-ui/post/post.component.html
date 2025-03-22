@@ -1,5 +1,11 @@
 <app-card class="post-container" [ngClass]="'background-gradient-' + theme">
   <div class="post-header">
+    @if (profile) {
+      <div class="post-profile">
+        <lib-profile-photo [src]="profile.avatar" [alt]="profile.name"></lib-profile-photo>
+        {{profile.name}}
+      </div>
+    }
     <div class="title">{{ content.title }}</div>
     <div class="subtitle">{{ content.createdAt | date }}</div>
   </div>

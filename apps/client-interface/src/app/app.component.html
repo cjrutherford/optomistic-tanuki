@@ -17,8 +17,8 @@
     </mat-sidenav>
     <mat-sidenav-content style="overflow: hidden;">
         <app-toolbar (navToggle)="toggleNav()"></app-toolbar>
-        <app-grid [columns]="6" [rows]="1">
-            <div class="left" style="grid-column: 1 / 2; grid-row: 1 / 2;">
+        <app-grid [columns]="3" [rows]="1">
+            <div class="left" >
             @if(authState.isAuthenticated) {
                 <lib-profile-selector
                     [profiles]="profileService.getCurrentUserProfiles()"
@@ -28,10 +28,10 @@
                 ></lib-profile-selector>
             }
             </div>
-            <div class="center" style="grid-column: 2 / 6; grid-row: 1 / 2;">
+            <div class="center" >
                 <router-outlet></router-outlet>
             </div>
-            <div class="right" style="grid-column: 6 / 7; grid-row: 1 / 2;">
+            <div class="right" >
                 <!-- <app-card>
                     Hello Right
                 </app-card> -->

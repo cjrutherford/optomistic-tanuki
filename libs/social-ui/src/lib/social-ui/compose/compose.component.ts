@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttachmentComponent } from '../attachment/attachment.component';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
@@ -44,6 +44,8 @@ export declare type ComposeCompleteEvent = {
   // encapsulation: ViewEncapsulation.Emulated,
 })
 export class ComposeComponent {
+  @ViewChild('quillEditor') quillEditor: any;
+  isDragOver: boolean = false;
   composeForm: FormGroup;
   @Output() postSubmitted: EventEmitter<ComposeCompleteEvent> = new EventEmitter<ComposeCompleteEvent>();
   title: string = '';
@@ -146,6 +148,50 @@ export class ComposeComponent {
   ngOnInit() {
   }
 
+    onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragOver = false;
+    const files = event.dataTransfer?.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      fileArray.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const quill = this.quillEditor?.quillEditor as Quill;
+          if (file.type.startsWith('image/')) {
+            quill.insertEmbed(
+              quill.getSelection()?.index || 0,
+              'image',
+              e.target.result,
+            );
+          } else if (file.type.startsWith('video/')) {
+            quill.insertEmbed(
+              quill.getSelection()?.index || 0,
+              'video',
+              e.target.result,
+            );
+          } else {
+            const link = `<a href="${e.target.result}" target="_blank">${file.name}</a>`;
+            quill.clipboard.dangerouslyPasteHTML(
+              quill.getSelection()?.index || 0,
+              link,
+            );
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
   parseImages(doc: Document): CreateAttachmentDto[] {
     const images = doc.querySelectorAll('img');
     const attachments: CreateAttachmentDto[] = [];

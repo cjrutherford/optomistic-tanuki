@@ -15,6 +15,7 @@ export interface CreatePostDto {
     content: string;
     attachments?:AttachmentDto[];
     userId: string;
+    profileId: string;
     createdAt: Date;
     links?: { url: string }[];
     comments?: CommentDto[];

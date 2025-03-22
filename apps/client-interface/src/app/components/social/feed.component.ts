@@ -22,6 +22,8 @@ import { firstValueFrom } from 'rxjs';
 import { CommentService } from '../../comment.service';
 import { ProfileService } from '../../profile.service';
 import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
+import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.component';
 
 @Component({
   selector: 'app-feed',
@@ -68,12 +70,31 @@ export class FeedComponent {
   ngOnInit() {
     const currentProfile = this.profileService.currentUserProfile();
     if(currentProfile){
-      this.postService.searchPosts({ profileId: currentProfile.id }).subscribe((posts) => (this.posts = posts));
+      this.postService.searchPosts({ profileId: currentProfile.id }).subscribe((posts) => {
+        this.posts = posts;
+        this.loadProfiles(posts);
+      });
     } else {
       this.router.navigate(['/profile'])
     }
   }
   posts: PostDto[] = [];
+  profiles: { [key: string]: PostProfileStub } = {};
+
+
+  private loadProfiles(posts: PostDto[]) {
+    const profileIds = [...new Set(posts.map((post) => post.profileId))];
+    profileIds.forEach((profileId) => {
+      this.profileService.getDisplayProfile(profileId).subscribe((profile) => {
+        this.profiles[profileId] = {
+          id: profile.id,
+          name: profile.profileName,
+          avatar: profile.profilePic,
+        };
+      });
+    }
+    );
+  }
 
   createdPost(postData: ComposeCompleteEvent) {
     console.log('create called.')
@@ -102,6 +123,16 @@ export class FeedComponent {
         this.posts.unshift(newPost);
       });
   }
+
+  // getProfile(profileId: string): Observable<{ id: string; name: string; avatar: string; }> {
+  //   return this.profileService.getDisplayProfile(profileId).pipe(
+  //     map(rawProfile => ({
+  //       id: rawProfile.id,
+  //       name: rawProfile.profileName,
+  //       avatar: rawProfile.profilePic,
+  //     } as PostProfileStub))
+  //   );
+  // }
 
   commented(newComment: CreateCommentDto) {
     console.log('🚀 ~ FeedComponent ~ commented ~ newComment:', newComment);

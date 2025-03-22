@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ProfileDto, CreateProfileDto, UpdateProfileDto } from '@optomistic-tanuki/profile-ui';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable, switchMap, forkJoin } from 'rxjs';
 import { AuthStateService } from './state/auth-state.service';
 
 @Injectable({
@@ -106,4 +106,23 @@ export class ProfileService {
     localStorage.setItem('selectedProfile', JSON.stringify(this.currentUserProfile()));
   }
 
+
+  getDisplayProfile(id: string) {
+    return this.http.get<ProfileDto>(`/api/profile/${id}`).pipe(
+      switchMap(profile =>
+      forkJoin({
+        profilePic: this.http.get<{ profilePic: string }>(`/api/profile/${id}/photo`).pipe(map(res => res.profilePic)),
+        coverPic: this.http.get<{ coverPic: string }>(`/api/profile/${id}/cover`).pipe(map(res => res.coverPic))
+      }).pipe(
+        map(({ profilePic, coverPic }) => {
+        profile.profilePic = profilePic;
+        profile.coverPic = coverPic;
+        return profile;
+        })
+      )
+      )
+    );
+  }
+
 }
+

@@ -44,7 +44,6 @@
     "quill-cursors": "^4.0.4",
     "quill-image-compress": "^2.0.3",
     "quill-image-resize": "^3.0.9",
-    "quill-image-resize-module": "^3.0.0",
     "quill-magic-url": "^4.2.0",
     "quill-placeholder-module": "^0.3.1",
     "reflect-metadata": "^0.1.13",
