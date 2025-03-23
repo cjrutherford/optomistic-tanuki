@@ -6,12 +6,28 @@ import { AttachmentService } from './services/attachment.service';
 import { CommentService } from './services/comment.service';
 import { VoteService } from './services/vote.service';
 import { MessagePattern, Payload, RpcException } from '@nestjs/microservices';
-import { AttachmentCommands, CommentCommands, LinkCommands, PostCommands, VoteCommands } from '@optomistic-tanuki/libs/constants';
-import { CreateAttachmentDto, CreateCommentDto, CreateLinkDto, CreatePostDto, SearchAttachmentDto, SearchCommentDto, SearchPostDto, UpdateAttachmentDto, UpdateCommentDto, UpdateLinkDto, UpdatePostDto } from '@optomistic-tanuki/libs/models';
+import { AttachmentCommands, CommentCommands, LinkCommands, PostCommands, VoteCommands, FollowCommands } from '@optomistic-tanuki/libs/constants';
+import { 
+  CreateAttachmentDto, 
+  CreateCommentDto, 
+  CreateLinkDto, 
+  CreatePostDto, 
+  QueryFollowsDto, 
+  SearchAttachmentDto, 
+  SearchCommentDto, 
+  SearchPostDto, 
+  SearchPostOptions, 
+  UpdateAttachmentDto, 
+  UpdateCommentDto, 
+  UpdateFollowDto, 
+  UpdateLinkDto, 
+  UpdatePostDto 
+} from '@optomistic-tanuki/libs/models';
 import { postSearchDtoToFindManyOptions } from '../entities/post.entity';
 import { transformSearchCommentDtoToFindOptions } from '../entities/comment.entity';
 import { Attachment, toFindOptions } from '../entities/attachment.entity';
-import { FindManyOptions, FindOneOptions, FindOptions } from 'typeorm';
+import { FindManyOptions, FindOneOptions, FindOptions, In } from 'typeorm';
+import FollowService from './services/follow.service';
 
 @Controller()
 export class AppController {
@@ -20,6 +36,7 @@ export class AppController {
     private readonly voteService: VoteService,
     private readonly attachmentService: AttachmentService,
     private readonly commentService: CommentService,
+    private readonly followService: FollowService,
   ) { }
 
   @MessagePattern({ cmd: PostCommands.CREATE })
@@ -29,9 +46,39 @@ export class AppController {
   }
 
   @MessagePattern({ cmd: PostCommands.FIND_MANY })
-  async findAllPosts(@Payload() data: SearchPostDto) {
+  async findAllPosts(@Payload('criteria') data: SearchPostDto, @Payload('opts') opts?: SearchPostOptions) {
     const searchOptions = postSearchDtoToFindManyOptions(data);
-    return await this.postService.findAll(searchOptions);
+    if(opts) {
+      if(opts.limit) {
+        searchOptions.take = opts.limit;
+      }
+      if(opts.offset) {
+        searchOptions.skip = opts.offset;
+      }
+      if(opts.orderBy) {
+        searchOptions.order = { [opts.orderBy]: opts.orderDirection || 'ASC' };
+      }
+    }
+    const posts = await this.postService.findAll(searchOptions);
+    const postIds = posts.map(post => post.id);
+    for (const post of posts) {
+
+      const votes = await this.voteService.findAll({ where: { post: { id: post.id } } });
+
+      const comments = await this.commentService.findAll({ where: { post: { id: post.id } } });
+
+      const attachments = await this.attachmentService.findAll({ where: { post: { id: post.id } } });
+
+      const links = []; // Assuming links are not implemented yet
+
+      post.votes = votes || [];
+      post.comments = comments || [];
+      post.attachments = attachments || [];
+      post.links = links || [];
+
+    }
+
+    return posts;
   }
 
   @MessagePattern({ cmd: PostCommands.FIND })
@@ -151,6 +198,41 @@ export class AppController {
   @MessagePattern({ cmd: LinkCommands.FIND_MANY })
   async findAllLinks(@Payload() options: FindOptions) {
     throw new Error('Link Object Not Implemented')
+  }
+
+  @MessagePattern({ cmd: FollowCommands.FOLLOW })
+  async follow(@Payload() data: UpdateFollowDto){
+    return await this.followService.follow(data.followerId, data.followeeId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.UNFOLLOW })
+  async unfollow(@Payload() data: UpdateFollowDto){
+    return await this.followService.unfollow(data.followerId, data.followeeId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.GET_FOLLOWERS })
+  async getFollowers(@Payload() data: QueryFollowsDto){
+    return await this.followService.getFollowers(data.followeeId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.GET_FOLLOWING })
+  async getFollowing(@Payload() data: QueryFollowsDto){
+    return await this.followService.getFollowing(data.followerId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.GET_MUTUALS })
+  async getMutuals(@Payload() data: QueryFollowsDto){
+    return await this.followService.getMutuals(data.followerId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.GET_FOLLOWER_COUNT })
+  async getFollowerCount(@Payload() data: QueryFollowsDto){
+    return await this.followService.getFollowerCount(data.followeeId);
+  }
+
+  @MessagePattern({ cmd: FollowCommands.GET_FOLLOWING_COUNT })
+  async getFollowingCount(@Payload() data: QueryFollowsDto){
+    return await this.followService.getFollowingCount(data.followerId);
   }
 
 }

@@ -1,6 +1,6 @@
 <app-card style="overflow-x: scroll; overflow-y: none;">
-    <h6>Profiles:</h6>
-    <app-grid [columns]="10">
+    <h6>Your Profiles:</h6>
+    <app-grid [columns]="10" style="overflow-x: scroll; overflow-y: none;">
     @for (p of profiles; track p.id) {
             <app-tile class="real-profile" [class.active]="p.id === internalSelectedProfile()?.id">
                 <h2>{{p.profileName}}</h2>

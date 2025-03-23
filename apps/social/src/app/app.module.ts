@@ -18,6 +18,8 @@ import { PostService } from './services/post.service';
 import { LinkService } from './services/link.service';
 import { CommentService } from './services/comment.service';
 import { AttachmentService } from './services/attachment.service';
+import FollowEntity from '../entities/Follow.entity';
+import FollowService from './services/follow.service';
 
 @Module({
   imports: [
@@ -38,6 +40,7 @@ import { AttachmentService } from './services/attachment.service';
     LinkService,
     CommentService,
     AttachmentService,
+    FollowService,
     {
       provide: getRepositoryToken(Post),
       useFactory: (ds: DataSource) => ds.getRepository(Post),
@@ -57,6 +60,10 @@ import { AttachmentService } from './services/attachment.service';
     },{
       provide: getRepositoryToken(Link),
       useFactory: (ds: DataSource) => ds.getRepository(Link),
+      inject: ['SOCIAL_CONNECTION'],
+    },{
+      provide: getRepositoryToken(FollowEntity),
+      useFactory: (ds: DataSource) => ds.getRepository(FollowEntity),
       inject: ['SOCIAL_CONNECTION'],
     }
   ],

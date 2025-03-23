@@ -1,8 +1,13 @@
 <ng-template #commentDialog>
     <app-card>
-        <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <form (ngSubmit)="onSubmit()">
           <h2>Leave a Comment</h2>
-          <lib-text-input label="Leave a comment" formControlName="comment"></lib-text-input>
+          <quill-editor
+            [(ngModel)]="comment"
+            [ngModelOptions]="{ standalone: true }"
+            [modules]="modules"
+            placeholder="Leave a comment"
+          ></quill-editor>
           <app-button variant="success" type="submit">Submit</app-button>
           <app-button variant="warning" type="button" (click)="onCancel()">Cancel</app-button>
         </form>

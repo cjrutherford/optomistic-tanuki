@@ -3,7 +3,9 @@ export const ProfileCommands = {
     Update: 'Update:Profile',
     Delete: 'Delete:Profile',
     Get: 'Get:Profile',
-    GetAll: 'GetAll:Profile'
+    GetAll: 'GetAll:Profile',
+    GetPhoto: 'Get:ProfilePhoto',
+    GetCover: 'Get:ProfileCover',
 }
 
 export const ProjectCommands = {

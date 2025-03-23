@@ -22,6 +22,8 @@ import { firstValueFrom } from 'rxjs';
 import { CommentService } from '../../comment.service';
 import { ProfileService } from '../../profile.service';
 import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
+import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.component';
 
 @Component({
   selector: 'app-feed',
@@ -66,18 +68,55 @@ export class FeedComponent {
   }
 
   ngOnInit() {
-    if(this.profileService.currentUserProfile()){
-      this.postService.searchPosts({}).subscribe((posts) => (this.posts = posts));
+    const currentProfile = this.profileService.currentUserProfile();
+    if(currentProfile){
+      this.postService.searchPosts({ profileId: currentProfile.id }, {orderBy: 'createdAt', orderDirection: 'desc'}).subscribe((posts) => {
+        this.posts = posts;
+        this.loadProfiles(posts);
+      });
     } else {
       this.router.navigate(['/profile'])
     }
   }
   posts: PostDto[] = [];
+  profiles: { [key: string]: PostProfileStub } = {};
+
+
+  private loadProfiles(posts: PostDto[]) {
+    const profileIds: string[] = [
+      ...new Set(
+        posts
+          .flatMap((post) => [
+            post.profileId,
+            ...(post.comments?.map((comment) => comment.profileId) || []),
+          ])
+          .filter((x): x is string => !!x)
+      ),
+    ];
+    profileIds.forEach((profileId) => {
+      this.profileService.getDisplayProfile(profileId).subscribe((profile) => {
+        this.profiles[profileId] = {
+          id: profile.id,
+          name: profile.profileName,
+          avatar: profile.profilePic,
+        };
+      });
+    }
+    );
+  }
 
   createdPost(postData: ComposeCompleteEvent) {
+    console.log('create called.')
     const { post, attachments, links } = postData;
+    const currentProfile = this.profileService.currentUserProfile();
+    if (!currentProfile) {
+      console.error('No current profile found');
+      return;
+    }
+    const finalPost: CreatePostDto = post as CreatePostDto;
+    finalPost.profileId = currentProfile.id;
     this.postService
-      .createPost(post as CreatePostDto)
+      .createPost(finalPost)
       .subscribe(async (newPost) => {
         if (attachments.length > 0) {
           for (const atta of attachments) {
@@ -94,8 +133,11 @@ export class FeedComponent {
       });
   }
 
-  commented(newComment: CreateCommentDto) {
+
+  commented(newComment: CreateCommentDto, postIndex: number) {
     console.log('🚀 ~ FeedComponent ~ commented ~ newComment:', newComment);
+    newComment.postId = this.posts[postIndex].id;
+    newComment.profileId = this.profileService.currentUserProfile()!.id;
     this.commentService.createComment(newComment).subscribe({
       next: (comment) => {
         const post = this.posts.find((p) => p.id === newComment.postId);

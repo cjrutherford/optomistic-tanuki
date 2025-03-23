@@ -7,6 +7,7 @@ import { Vote } from "../entities/vote.entity";
 import { Comment } from "../entities/comment.entity";
 import { Attachment } from "../entities/attachment.entity";
 import { Link } from "../entities/link.entity";
+import FollowEntity from "../entities/Follow.entity";
 
 const config = yaml.load(fs.readFileSync(path.resolve(__dirname, '../assets/config.yaml'), 'utf8')) as Record<string, any>;
 const { database: {
@@ -18,7 +19,7 @@ const { database: {
     database
 }} = config;
 
-const entities = [Post, Vote, Comment, Attachment, Link];
+const entities = [Post, Vote, Comment, Attachment, Link, FollowEntity];
 
 const staticSource =  new DataSource({
     type: 'postgres', 

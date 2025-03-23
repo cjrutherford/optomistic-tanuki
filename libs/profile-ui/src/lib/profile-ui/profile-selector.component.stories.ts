@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { ProfileUiComponent } from './profile-selector.component';
+import { ProfileSelectorComponent } from './profile-selector.component';
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<ProfileUiComponent> = {
-  component: ProfileUiComponent,
-  title: 'ProfileUiComponent',
+const meta: Meta<ProfileSelectorComponent> = {
+  component: ProfileSelectorComponent,
+  title: 'ProfileSelectorComponent',
 };
 export default meta;
-type Story = StoryObj<ProfileUiComponent>;
+type Story = StoryObj<ProfileSelectorComponent>;
 
 export const Primary: Story = {
   args: {},

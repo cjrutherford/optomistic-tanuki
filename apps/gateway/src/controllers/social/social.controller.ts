@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post, Put, Delete, UseGuards } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { AttachmentCommands, CommentCommands, PostCommands, ServiceTokens, VoteCommands } from "@optomistic-tanuki/libs/constants";
-import { AttachmentDto, CommentDto, CreateAttachmentDto, CreateCommentDto, CreatePostDto, CreateVoteDto, PostDto, SearchAttachmentDto, SearchCommentDto, SearchPostDto, UpdateAttachmentDto, UpdateCommentDto, UpdatePostDto, VoteDto } from "@optomistic-tanuki/libs/models";
+import { AttachmentDto, CommentDto, CreateAttachmentDto, CreateCommentDto, CreatePostDto, CreateVoteDto, PostDto, SearchAttachmentDto, SearchCommentDto, SearchPostDto, SearchPostOptions, UpdateAttachmentDto, UpdateCommentDto, UpdatePostDto, VoteDto } from "@optomistic-tanuki/libs/models";
 import { Get, Param } from "@nestjs/common";
 import { firstValueFrom } from 'rxjs';
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
@@ -104,8 +104,8 @@ export class SocialController {
     @ApiOperation({ summary: 'Search for posts' })
     @ApiResponse({ status: 200, description: 'The posts have been successfully retrieved.', type: [PostDto] })
     @Post('post/find')
-    async searchPosts(@Body() searchCriteria: SearchPostDto): Promise<PostDto[]> {
-        return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.FIND_MANY }, searchCriteria));
+    async searchPosts(@Body('criteria') searchCriteria: SearchPostDto, @Body('opts') opts?: SearchPostOptions): Promise<PostDto[]> {
+        return await firstValueFrom(this.socialClient.send({ cmd: PostCommands.FIND_MANY }, {criteria: searchCriteria, opts: opts}));
     }
 
     @UseGuards(AuthGuard)

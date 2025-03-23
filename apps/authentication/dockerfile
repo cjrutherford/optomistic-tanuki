@@ -11,7 +11,7 @@ COPY . .
 # Build the authentication service
 RUN npx nx build authentication
 
-FROM node:lts-bookworm-slim
+FROM node:lts-alpine
 WORKDIR /app
 
 COPY --from=builder /app/dist/apps/authentication /app/dist/apps/authentication

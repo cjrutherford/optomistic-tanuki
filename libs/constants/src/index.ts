@@ -11,7 +11,8 @@ export {
     CommentCommands,
     AttachmentCommands,
     VoteCommands,
-    LinkCommands
+    LinkCommands,
+    FollowCommands
 } from './lib/libs/social';
 
 export {

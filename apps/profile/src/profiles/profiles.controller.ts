@@ -22,12 +22,32 @@ export class ProfilesController {
 
     @MessagePattern({ cmd: ProfileCommands.GetAll })
     async getAllProfiles(@Payload() query: FindManyOptions<Profile>) {
-        return await this.profileService.findAll(query);
+        return await this.profileService.findAll({...query, select: {
+            id: true,
+            profileName: true,
+            bio: true,
+            location: true,
+            occupation: true,
+            interests: true,
+            skills: true,
+            created_at: true,
+            userId: true,
+        }});
     }
 
     @MessagePattern({ cmd: ProfileCommands.Update })
     async updateProfile(@Payload() data: UpdateProfileDto) {
         return await this.profileService.update(data.id, data);
+    }
+
+    @MessagePattern({ cmd: ProfileCommands.GetPhoto })
+    async getProfilePhoto(@Payload() id: string) {
+        return await this.profileService.findOne( id , { select: { profilePic: true } });
+    }
+
+    @MessagePattern({ cmd: ProfileCommands.GetCover })
+    async getProfileCoverPhoto(@Payload() id: string) {
+        return await this.profileService.findOne( id , { select: { coverPic: true } });
     }
 
 }

@@ -20,13 +20,19 @@ export class AuthGuard implements CanActivate {
 
   }
 
-  canActivate(): boolean {
+  async canActivate(): Promise<boolean> {
     if (this.isAuthenticated) {
-      const selectedProfile = this.profileService.getCurrentUserProfile();
-      // if(!selectedProfile) {
-      //   this.router.navigate(['/profile']);
-      // }
-      return true;
+      try {
+        await this.profileService.getAllProfiles();
+        const selectedProfile = localStorage.getItem('selectedProfile');
+        if (selectedProfile) {
+          this.profileService.selectProfile(JSON.parse(selectedProfile));
+        }
+        return true;
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+        return false;
+      }
     }
     // If the user is not authenticated, navigate to the login page
     this.router.navigate(['/login']);

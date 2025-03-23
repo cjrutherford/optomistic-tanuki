@@ -16,6 +16,9 @@ export class Comment {
     @Column()
     userId: string; // Changed from relation to user ID string
 
+    @Column()
+    profileId: string;
+
     @ManyToOne(() => Post, post => post.comments)
     post: Post;
 

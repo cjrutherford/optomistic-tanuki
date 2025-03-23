@@ -46,6 +46,8 @@ export class AuthStateService {
 
   logout() {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('profiles');
+    localStorage.removeItem('selectedProfile');
     this.tokenSubject.next(null);
     this.isAuthenticatedSubject.next(false);
     this.decodedTokenSubject.next(null);

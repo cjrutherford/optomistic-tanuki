@@ -18,6 +18,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   return next(clonedRequest).pipe(
     catchError((error) => {
       if (error.status === 401) {
+        authStateService.logout();
         router.navigate(['/login']);
       }
       return throwError(error);

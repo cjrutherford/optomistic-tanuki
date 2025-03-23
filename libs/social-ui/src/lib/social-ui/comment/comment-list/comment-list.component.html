@@ -1,9 +1,15 @@
 <div class="comments-container">
     <app-grid [columns]="1" [rows]="comments.length">
-        <app-card *ngFor="let comment of comments" >
+        <app-card *ngFor="let comment of comments; let i" >
             <div class="comment">
-                <p><strong>{{ comment.userId }}</strong></p>
-                <p>{{ comment.content }}</p>
+                <div class="comment-heading">
+                    @if (getProfile(comment.profileId)) {
+                        <lib-profile-photo [src]="getProfile(comment.profileId)!.avatar" [alt]="getProfile(comment.profileId)!.name"></lib-profile-photo>
+                        <span class="comment-author">{{ getProfile(comment.profileId)!.name }}</span>
+                    }
+                </div>
+                <div class="comment-content" [innerHTML]="comment.content"></div>
+                <lib-comment (commentAdded)="addComment($event, comment.id, comment.postId)"></lib-comment>
             </div>
         </app-card>
     </app-grid>

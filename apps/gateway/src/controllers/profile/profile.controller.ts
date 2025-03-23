@@ -33,6 +33,26 @@ export class ProfileController {
     }
 
     @UseGuards(AuthGuard)
+    @ApiTags('profile')
+    @ApiOperation({ summary: 'Get a profile photo' })
+    @ApiResponse({ status: 200, description: 'The profile photo has been successfully retrieved.' })
+    @ApiResponse({ status: 404, description: 'Profile not found.' })
+    @Get(':id/photo')
+    getProfilePhoto(@Param('id') id: string) {
+        return this.client.send({ cmd: ProfileCommands.GetPhoto }, id);
+    }
+
+    @UseGuards(AuthGuard)
+    @ApiTags('profile')
+    @ApiOperation({ summary: 'Get a profile cover photo' })
+    @ApiResponse({ status: 200, description: 'The profile cover photo has been successfully retrieved.' })
+    @ApiResponse({ status: 404, description: 'Profile not found.' })
+    @Get(':id/cover')
+    getProfileCoverPhoto(@Param('id') id: string) {
+        return this.client.send({ cmd: ProfileCommands.GetCover }, id);
+    }
+
+    @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Get a profile by ID' })
     @ApiResponse({ status: 200, description: 'The profile has been successfully retrieved.' })
     @ApiResponse({ status: 404, description: 'Profile not found.' })

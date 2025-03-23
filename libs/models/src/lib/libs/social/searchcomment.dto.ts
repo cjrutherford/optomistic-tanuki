@@ -11,6 +11,9 @@ export class SearchCommentDto {
     userId?: string;
 
     @ApiPropertyOptional()
+    profileId?: string;
+
+    @ApiPropertyOptional()
     postId?: string;
 
     @ApiPropertyOptional({ description: 'Treated as the minimum score of the comment (upvotes - downvotes)'})

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -61,11 +61,20 @@ export class AppComponent {
   isNavExpanded = false;
 
   ngOnInit() {
-    this.profileService.getAllProfiles();
-    const selectedProfile = localStorage.getItem('selectedProfile');
-    if (selectedProfile) {
-      this.profileService.selectProfile(JSON.parse(selectedProfile));
-    }
+    this.profileService.getAllProfiles().then(_ => {
+      const selectedProfile = localStorage.getItem('selectedProfile');
+      if (selectedProfile) {
+        this.profileService.selectProfile(JSON.parse(selectedProfile));
+      }
+    
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd && this.router.url === '/') {
+          if (!this.authState.isAuthenticated) {
+            this.router.navigate(['/login']); 
+          }
+        }
+      });
+    });
   }
 
   toggleNav() {

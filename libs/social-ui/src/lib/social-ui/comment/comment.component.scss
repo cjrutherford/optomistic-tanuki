@@ -1,1 +1,24 @@
 /* Add any styles from the client-interface project here */
+::ng-deep .ql-container {
+    border: none;
+    background-color: var(--background-color);
+    color: var(--foreground-color);
+    font-family: 'Roboto', sans-serif;
+  }
+
+  ::ng-deep .ql-editor {
+    min-height: 100px;
+    padding: 1rem;
+    background-color: var(--accent-color);
+    color: var(--foreground-color);
+  }
+
+  ::ng-deep .ql-toolbar {
+    border: none;
+    background-color: var(--accent-shade-lighten-30);
+    color: var(--foreground-color);
+  }
+
+  ::ng-deep .ql-toolbar button:hover {
+    background-color: var(--accent-shade-darken-10);
+  }

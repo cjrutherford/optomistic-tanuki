@@ -16,7 +16,7 @@ services:
       - ot_gateway
     restart: always
   build_base:
-    image: optomisitic_tanuki/base
+    image: optomistic_tanuki/base
     env_file:
       - .env
     build:
@@ -27,7 +27,7 @@ services:
       - ot_network
     restart: "no"
   migration_runner:
-    image: optomisitic_tanuki/base
+    image: optomistic_tanuki/base
     depends_on:
       - build_base
       - db
@@ -72,7 +72,7 @@ services:
     networks:
       - ot_network
   ot_client_interface:
-    image: optomisitic_tanuki/client_interface
+    image: optomistic_tanuki/client_interface
     container_name: ot_client_interface
     build:
       dockerfile: ./apps/client-interface/dockerfile

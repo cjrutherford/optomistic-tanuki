@@ -39,3 +39,16 @@ export class SearchPostDto {
     attachmentType?: string;
 }
 
+export class SearchPostOptions {
+    @ApiPropertyOptional()
+    orderBy?: 'createdAt' | 'updatedAt';
+
+    @ApiPropertyOptional()
+    orderDirection?: 'asc' | 'desc';
+
+    @ApiPropertyOptional()
+    limit?: number;
+
+    @ApiPropertyOptional()
+    offset?: number;
+}

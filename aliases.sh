@@ -7,3 +7,4 @@ dcd-reload() {
   docker system prune -f
   dcd up -d --build
 }
+alias pgconnect="PGPASSWORD=postgres psql -h localhost -U postgres"

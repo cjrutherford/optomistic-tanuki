@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ProfileDto, CreateProfileDto, UpdateProfileDto } from '@optomistic-tanuki/profile-ui';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable, switchMap, forkJoin } from 'rxjs';
 import { AuthStateService } from './state/auth-state.service';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { AuthStateService } from './state/auth-state.service';
 })
 export class ProfileService {
   currentUserProfiles = signal<ProfileDto[]>([]);
+  allProfiles = signal<ProfileDto[]>([]);
   currentUserProfile = signal<ProfileDto | null>(null);
   constructor(private readonly http: HttpClient, private readonly authState: AuthStateService) { }
 
@@ -30,7 +31,17 @@ export class ProfileService {
 
   async getAllProfiles() {
     const profiles = await firstValueFrom(this.http.get<ProfileDto[]>('/api/profile'));
-    this.currentUserProfiles.set(profiles);
+    for(const p of profiles) {
+      const pic = await firstValueFrom(this.http.get<{profilePic: string}>(`/api/profile/${p.id}/photo`));
+      p.profilePic = pic.profilePic;
+      const cover = await firstValueFrom(this.http.get<{coverPic: string}>(`/api/profile/${p.id}/cover`));
+      p.coverPic = cover.coverPic
+      if (p.id === this.currentUserProfile()?.id) {
+        this.currentUserProfile.set(p);
+      }
+    }
+    this.allProfiles.set(profiles);
+    this.currentUserProfiles.set(profiles.filter(p => p.userId === this.authState.getDecodedTokenValue()?.userId));
     localStorage.setItem('profiles', JSON.stringify(profiles));
   }
 
@@ -52,12 +63,12 @@ export class ProfileService {
       { profilePic: originalProfilePic },
     ));
     const coverUpdate = await firstValueFrom(this.http.put<ProfileDto>(`/api/profile/${picUpdate.id}`, { coverPic: originalCoverPic }));
-    this.currentUserProfiles.update(profiles => {
-      const updatedProfiles = [...profiles, coverUpdate];
-      return updatedProfiles.filter((profile, index, self) => 
-      index === self.findIndex(p => p.id === profile.id)
-      );
-    });
+    // this.currentUserProfiles.update(profiles => {
+    //   const updatedProfiles = [...profiles, coverUpdate];
+    //   return updatedProfiles.filter((profile, index, self) => 
+    //   index === self.findIndex(p => p.id === profile.id)
+    //   );
+    // });
     localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
   }
 
@@ -97,4 +108,23 @@ export class ProfileService {
     localStorage.setItem('selectedProfile', JSON.stringify(this.currentUserProfile()));
   }
 
+
+  getDisplayProfile(id: string) {
+    return this.http.get<ProfileDto>(`/api/profile/${id}`).pipe(
+      switchMap(profile =>
+      forkJoin({
+        profilePic: this.http.get<{ profilePic: string }>(`/api/profile/${id}/photo`).pipe(map(res => res.profilePic)),
+        coverPic: this.http.get<{ coverPic: string }>(`/api/profile/${id}/cover`).pipe(map(res => res.coverPic))
+      }).pipe(
+        map(({ profilePic, coverPic }) => {
+          profile.profilePic = profilePic;
+          profile.coverPic = coverPic;
+          return profile;
+        })
+      )
+      )
+    );
+  }
+
 }
+
