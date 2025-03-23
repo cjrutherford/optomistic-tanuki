@@ -4,11 +4,21 @@ networks:
 
 services:
   nginx:
-    image: nginx:latest
+    image: lscr.io/linuxserver/swag
     volumes:
-      - ./defaultnginx.conf:/etc/nginx/conf.d/default.conf
+      - ./production.nginx.conf:/config/nginx/site-confs/default.conf
     ports:
-      - "8081:80"
+      - "80:80"
+      - "443:443"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - URL=ot.christopherrutherford.net
+      - CERTPROVIDER=letsencrypt
+      - VALIDATION=http
+      - EMAIL=postlomein+ot.christopherrutherford.net@gmail.com
+      - STAGING=false
     networks:
       - ot_network
     depends_on:
