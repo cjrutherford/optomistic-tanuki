@@ -8,7 +8,7 @@
             </div>
             <div class="form">
                 <form class="inputs" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                    <lib-text-input
+                    <!-- <lib-text-input
                         formControlName="firstName"
                         [label]="'First Name'"
                         [type]="'text'"
@@ -16,8 +16,8 @@
                     <lib-text-input
                         formControlName="lastName"
                         [label]="'Last Name'"
-                        [type]="'text'"
-                    ></lib-text-input>
+                        [type]="'text'" -->
+                    <!-- ></lib-text-input> -->
                     <lib-text-input
                         formControlName="email"
                         [label]="'Email'"
@@ -33,12 +33,12 @@
                         [label]="'Confirm Password'"
                         [type]="'password'"
                     ></lib-text-input>
-                    <div class="bio-container">
+                    <!-- <div class="bio-container">
                         <label for="bio">Bio</label>
                         <lib-text-area
                             formControlName="bio"
                         ></lib-text-area>
-                    </div>
+                    </div> -->
                     <div class="actions">
                         <app-button mat-raised-button color="primary" type="submit">
                             Register

@@ -33,37 +33,43 @@ export class Post {
 
     @OneToMany(() => Attachment, attachment => attachment.post)
     attachments: Attachment[];
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    createdAt: Date;
+
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+    updatedAt: Date;
 }
 
 export function postSearchDtoToFindManyOptions(searchDto: SearchPostDto): FindManyOptions<Post> {
     const searchOptions: FindManyOptions<Post> = {};
     const where: FindOptionsWhere<Post> = {};
 
-    if (searchDto.title) {
+    if (searchDto?.title) {
         where.title = Like(`%${searchDto.title}%`);
     }
 
-    if (searchDto.content) {
+    if (searchDto?.content) {
         where.content = Like(`%${searchDto.content}%`);
     }
 
-    if (searchDto.userId) {
+    if (searchDto?.userId) {
         where.userId = searchDto.userId;
     }
 
-    if (searchDto.commentContent) {
+    if (searchDto?.commentContent) {
         where.comments = { content: Like(`%${searchDto.commentContent}%`) };
     }
 
-    if (searchDto.linkUrl) {
+    if (searchDto?.linkUrl) {
         where.links = { url: Like(`%${searchDto.linkUrl}%`) };
     }
 
-    if (searchDto.attachmentUrl) {
+    if (searchDto?.attachmentUrl) {
         where.attachments = { filePath: Like(`%${searchDto.attachmentUrl}%`) };
     }
 
-    if (searchDto.attachmentType) {
+    if (searchDto?.attachmentType) {
         where.attachments = { type: searchDto.attachmentType as AttachmentType };
     }
     searchOptions.where = where;
