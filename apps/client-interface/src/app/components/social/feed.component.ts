@@ -70,7 +70,7 @@ export class FeedComponent {
   ngOnInit() {
     const currentProfile = this.profileService.currentUserProfile();
     if(currentProfile){
-      this.postService.searchPosts({ profileId: currentProfile.id }).subscribe((posts) => {
+      this.postService.searchPosts({ profileId: currentProfile.id }, {orderBy: 'createdAt', orderDirection: 'desc'}).subscribe((posts) => {
         this.posts = posts;
         this.loadProfiles(posts);
       });
@@ -83,7 +83,16 @@ export class FeedComponent {
 
 
   private loadProfiles(posts: PostDto[]) {
-    const profileIds = [...new Set(posts.map((post) => post.profileId))];
+    const profileIds: string[] = [
+      ...new Set(
+        posts
+          .flatMap((post) => [
+            post.profileId,
+            ...(post.comments?.map((comment) => comment.profileId) || []),
+          ])
+          .filter((x): x is string => !!x)
+      ),
+    ];
     profileIds.forEach((profileId) => {
       this.profileService.getDisplayProfile(profileId).subscribe((profile) => {
         this.profiles[profileId] = {
@@ -124,15 +133,6 @@ export class FeedComponent {
       });
   }
 
-  // getProfile(profileId: string): Observable<{ id: string; name: string; avatar: string; }> {
-  //   return this.profileService.getDisplayProfile(profileId).pipe(
-  //     map(rawProfile => ({
-  //       id: rawProfile.id,
-  //       name: rawProfile.profileName,
-  //       avatar: rawProfile.profilePic,
-  //     } as PostProfileStub))
-  //   );
-  // }
 
   commented(newComment: CreateCommentDto, postIndex: number) {
     console.log('🚀 ~ FeedComponent ~ commented ~ newComment:', newComment);

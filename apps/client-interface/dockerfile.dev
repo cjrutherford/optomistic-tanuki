@@ -1,7 +1,7 @@
 # Use the base image
 FROM node:lts-alpine
 
-ENV NX_DAEMON_DISABLE=true
+ENV NX_DAEMON_DISABLE=false
 
 # Set the working directory
 WORKDIR /app

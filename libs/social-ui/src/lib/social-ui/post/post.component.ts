@@ -24,6 +24,7 @@ import {
 } from '../../models';
 import { ProfilePhotoComponent } from '@optomistic-tanuki/profile-ui';
 import Quill from 'quill';
+import { In } from 'typeorm';
 
 export declare type PostProfileStub = {
   id: string;
@@ -55,6 +56,7 @@ export class PostComponent implements OnInit {
     name: 'unknown',
     avatar: 'https://placehold.co/300x300',
   };
+  @Input() availableProfiles: {[key: string]: PostProfileStub} = {};
   theme: 'light' | 'dark' = 'light';
   constructor() {}
   ngOnInit() {}

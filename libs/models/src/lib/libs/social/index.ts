@@ -8,7 +8,7 @@ export { CreateCommentDto } from './createcomment.dto';
 export { UpdateCommentDto } from './updatecomment.dto';
 export { CreateVoteDto } from './createvote.dto';
 export { UpdateVoteDto } from './updatevote.dto';
-export { SearchPostDto } from './searchpost.dto';
+export { SearchPostDto, SearchPostOptions } from './searchpost.dto';
 export { SearchCommentDto } from './searchcomment.dto';
 export { SearchAttachmentDto } from './searchAttachment.dto';
 export { PostDto } from './post.dto';

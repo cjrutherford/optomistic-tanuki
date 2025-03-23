@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CreatePostDto, PostDto, UpdatePostDto, SearchPostDto } from '@optomistic-tanuki/social-ui';
+import { CreatePostDto, PostDto, UpdatePostDto, SearchPostDto, SearchPostOptions } from '@optomistic-tanuki/social-ui';
 
 
 
@@ -29,7 +29,7 @@ export class PostService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  searchPosts(searchCriteria: SearchPostDto): Observable<PostDto[]> {
+  searchPosts(searchCriteria: SearchPostDto, opts?: SearchPostOptions): Observable<PostDto[]> {
     return this.http.post<PostDto[]>(`${this.baseUrl}/find`, searchCriteria);
   }
 }

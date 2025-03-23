@@ -9,6 +9,7 @@ import { AuthStateService } from './state/auth-state.service';
 })
 export class ProfileService {
   currentUserProfiles = signal<ProfileDto[]>([]);
+  allProfiles = signal<ProfileDto[]>([]);
   currentUserProfile = signal<ProfileDto | null>(null);
   constructor(private readonly http: HttpClient, private readonly authState: AuthStateService) { }
 
@@ -39,7 +40,8 @@ export class ProfileService {
         this.currentUserProfile.set(p);
       }
     }
-    this.currentUserProfiles.set(profiles);
+    this.allProfiles.set(profiles);
+    this.currentUserProfiles.set(profiles.filter(p => p.userId === this.authState.getDecodedTokenValue()?.userId));
     localStorage.setItem('profiles', JSON.stringify(profiles));
   }
 

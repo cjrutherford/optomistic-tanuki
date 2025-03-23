@@ -33,3 +33,10 @@ export interface CreatePostDto {
     userId?: string;
     profileId?: string;
   }
+
+  export interface SearchPostOptions {
+    orderBy?: 'createdAt' | 'updatedAt';
+    orderDirection?: 'asc' | 'desc';
+    limit?: number;
+    offset?: number;
+  }

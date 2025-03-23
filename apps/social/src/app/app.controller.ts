@@ -16,6 +16,7 @@ import {
   SearchAttachmentDto, 
   SearchCommentDto, 
   SearchPostDto, 
+  SearchPostOptions, 
   UpdateAttachmentDto, 
   UpdateCommentDto, 
   UpdateFollowDto, 
@@ -45,8 +46,19 @@ export class AppController {
   }
 
   @MessagePattern({ cmd: PostCommands.FIND_MANY })
-  async findAllPosts(@Payload() data: SearchPostDto) {
+  async findAllPosts(@Payload('criteria') data: SearchPostDto, @Payload('opts') opts?: SearchPostOptions) {
     const searchOptions = postSearchDtoToFindManyOptions(data);
+    if(opts) {
+      if(opts.limit) {
+        searchOptions.take = opts.limit;
+      }
+      if(opts.offset) {
+        searchOptions.skip = opts.offset;
+      }
+      if(opts.orderBy) {
+        searchOptions.order = { [opts.orderBy]: opts.orderDirection || 'ASC' };
+      }
+    }
     const posts = await this.postService.findAll(searchOptions);
     const postIds = posts.map(post => post.id);
     for (const post of posts) {

@@ -11,6 +11,7 @@ export interface CreateCommentDto {
     postId: string;
     userId: string;
     parentId?: string;
+    profileId: string;
   }
   
   export interface UpdateCommentDto {
