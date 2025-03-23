@@ -83,7 +83,8 @@ export class AppController {
 
   @MessagePattern({ cmd: PostCommands.FIND })
   async findOnePost(@Payload('id') id: string, @Payload('options') options?: SearchPostDto) {
-    const search = postSearchDtoToFindManyOptions(options);
+    console.log("🚀 ~ AppController ~ findOnePost ~ options:", options)
+    const search = options ? postSearchDtoToFindManyOptions(options) : {};
     return await this.postService.findOne(id, search);
   }
 
