@@ -3,11 +3,14 @@ import { AuthGuard } from './guards/auth.guard'; // Import the AuthGuard
 
 export const appRoutes: Route[] = [
     {
+        path: '',
+        loadComponent: () => import('./components/landing.component').then(m => m.LandingComponent),
+    },{
         path: 'register',
-        loadComponent: () => import('./components/register.component').then(m => m.RegisterComponent)
+        loadComponent: () => import('./components/register.component').then(m => m.RegisterComponent),
     },{
         path: 'login',
-        loadComponent: () => import('./components/login.component').then(m => m.LoginComponent)
+        loadComponent: () => import('./components/login.component').then(m => m.LoginComponent),
     },{
         path: 'feed',
         loadComponent: () => import('./components/social/feed.component').then(m => m.FeedComponent),

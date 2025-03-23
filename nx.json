@@ -27,10 +27,17 @@
         "previewTargetName": "preview"
       }
     },
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
     {
       "plugin": "@nx/jest/plugin",
-      "options": { "targetName": "test" },
+      "options": {
+        "targetName": "test"
+      },
       "exclude": [
         "apps/gateway-e2e/**/*",
         "apps/authentication-e2e/**/*",
@@ -40,7 +47,12 @@
         "apps/tasks-e2e/**/*"
       ]
     },
-    { "plugin": "@nx/playwright/plugin", "options": { "targetName": "e2e" } },
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    },
     {
       "plugin": "@nx/storybook/plugin",
       "options": {
@@ -57,9 +69,15 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "e2e-ci--**/*": { "dependsOn": ["^build"] },
-    "server": { "cache": true },
-    "build-storybook": { "cache": true }
+    "e2e-ci--**/*": {
+      "dependsOn": ["^build"]
+    },
+    "server": {
+      "cache": true
+    },
+    "build-storybook": {
+      "cache": true
+    }
   },
   "generators": {
     "@nx/angular:application": {
@@ -68,7 +86,12 @@
       "style": "scss",
       "unitTestRunner": "jest"
     },
-    "@nx/angular:component": { "style": "css" },
-    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" }
+    "@nx/angular:component": {
+      "style": "css"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    }
   }
 }
