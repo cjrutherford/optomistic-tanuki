@@ -8,6 +8,9 @@ export class VoteDto {
     @ApiProperty({ description: 'ID of the user who cast the vote' })
     userId: string;
 
+    @ApiProperty({ description: 'ID of the profile associated with the vote' })
+    profileId: string;
+
     @ApiProperty({ description: 'ID of the item being voted on' })
     itemId: string;
 

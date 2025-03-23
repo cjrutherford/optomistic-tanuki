@@ -10,6 +10,9 @@ export class CommentDto {
     @ApiProperty({ description: 'The identifier of the user who made the comment' })
     userId: string;
 
+    @ApiProperty({ description: 'The identifier of the profile associated with the comment' })
+    profileId: string;
+
     @ApiProperty({ description: 'The identifier of the post the comment belongs to' })
     postId: string;
 

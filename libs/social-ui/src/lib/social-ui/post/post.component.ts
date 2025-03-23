@@ -80,11 +80,22 @@ export class PostComponent implements OnInit {
     return Math.ceil(this.attachments.length / 6);
   }
 
+  onCommentReply($event: any) {
+    console.log('🚀 ~ PostComponent ~ onCommentReply ~ $event:', $event);
+    const comment: CreateCommentDto = {
+      content: $event.content,
+      postId: this.content.id,
+      profileId: '',
+      parentId: $event.parentId,
+    };
+    this.newCommentAdded.emit(comment);
+  }
   onCommentAdd($event: string) {
     console.log('🚀 ~ PostComponent ~ onCommentAdd ~ $event:', $event);
     const comment: CreateCommentDto = {
       content: $event,
       postId: this.content.id,
+      profileId: '',
     };
     this.newCommentAdded.emit(comment);
   }

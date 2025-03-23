@@ -61,12 +61,12 @@ export class ProfileService {
       { profilePic: originalProfilePic },
     ));
     const coverUpdate = await firstValueFrom(this.http.put<ProfileDto>(`/api/profile/${picUpdate.id}`, { coverPic: originalCoverPic }));
-    this.currentUserProfiles.update(profiles => {
-      const updatedProfiles = [...profiles, coverUpdate];
-      return updatedProfiles.filter((profile, index, self) => 
-      index === self.findIndex(p => p.id === profile.id)
-      );
-    });
+    // this.currentUserProfiles.update(profiles => {
+    //   const updatedProfiles = [...profiles, coverUpdate];
+    //   return updatedProfiles.filter((profile, index, self) => 
+    //   index === self.findIndex(p => p.id === profile.id)
+    //   );
+    // });
     localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
   }
 
@@ -115,9 +115,9 @@ export class ProfileService {
         coverPic: this.http.get<{ coverPic: string }>(`/api/profile/${id}/cover`).pipe(map(res => res.coverPic))
       }).pipe(
         map(({ profilePic, coverPic }) => {
-        profile.profilePic = profilePic;
-        profile.coverPic = coverPic;
-        return profile;
+          profile.profilePic = profilePic;
+          profile.coverPic = coverPic;
+          return profile;
         })
       )
       )

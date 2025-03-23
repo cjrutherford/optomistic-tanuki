@@ -14,16 +14,20 @@ export class CommentService {
     ) {}
 
     async create(createCommentDto: CreateCommentDto): Promise<Comment> {
+        console.log('Creating comment');
         try {
+            console.log('finding post')
             const post = await this.postRepo.findOne({ where: { id: createCommentDto.postId } });
             if (!post) {
+                console.log('post not found')
                 throw new RpcException('Post not found');
             }
+            console.log('post found', post)
             const commentToCreate: Partial<Comment> = {
                 ...createCommentDto,
                 post,
             };
-            const comment = await this.commentRepo.create(createCommentDto);
+            const comment = await this.commentRepo.create(commentToCreate);
             return await this.commentRepo.save(comment);
         } catch (error) {
             throw new RpcException(error.message);

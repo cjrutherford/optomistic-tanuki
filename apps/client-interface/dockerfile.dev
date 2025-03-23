@@ -1,5 +1,5 @@
 # Use the base image
-FROM node:lts-bookworm-slim
+FROM node:lts-alpine
 
 ENV NX_DAEMON_DISABLE=true
 

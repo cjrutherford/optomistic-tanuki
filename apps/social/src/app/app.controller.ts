@@ -50,33 +50,22 @@ export class AppController {
     const posts = await this.postService.findAll(searchOptions);
     const postIds = posts.map(post => post.id);
     for (const post of posts) {
-      console.log(`Processing post with ID: ${post.id}`);
 
-      console.log(`Fetching votes for post ID: ${post.id}`);
       const votes = await this.voteService.findAll({ where: { post: { id: post.id } } });
-      console.log(`Votes fetched for post ID: ${post.id}`, votes);
 
-      console.log(`Fetching comments for post ID: ${post.id}`);
       const comments = await this.commentService.findAll({ where: { post: { id: post.id } } });
-      console.log(`Comments fetched for post ID: ${post.id}`, comments);
 
-      console.log(`Fetching attachments for post ID: ${post.id}`);
       const attachments = await this.attachmentService.findAll({ where: { post: { id: post.id } } });
-      console.log(`Attachments fetched for post ID: ${post.id}`, attachments);
 
-      console.log(`Fetching links for post ID: ${post.id}`);
       const links = []; // Assuming links are not implemented yet
-      console.log(`Links fetched for post ID: ${post.id}`, links);
 
       post.votes = votes || [];
       post.comments = comments || [];
       post.attachments = attachments || [];
       post.links = links || [];
 
-      console.log(`Post updated with related data for post ID: ${post.id}`, post);
     }
 
-    console.log("Final Posts: ", posts);
     return posts;
   }
 

@@ -9,4 +9,7 @@ export class CreateCommentDto {
 
   @ApiProperty({ description: 'ID of the post' })
   postId: string;
+
+  @ApiProperty({ description: 'ID of the profile' })
+  profileId: string;
 }

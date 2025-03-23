@@ -34,5 +34,5 @@
       <lib-comment (commentAdded)="onCommentAdd($event)"></lib-comment>
     </div>
   </div>
-  <lib-comment-list [comments]="comments"></lib-comment-list>
+  <lib-comment-list (commentAdded)="onCommentReply($event)" [comments]="comments"></lib-comment-list>
 </app-card>

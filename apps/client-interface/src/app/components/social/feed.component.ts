@@ -137,6 +137,7 @@ export class FeedComponent {
   commented(newComment: CreateCommentDto, postIndex: number) {
     console.log('🚀 ~ FeedComponent ~ commented ~ newComment:', newComment);
     newComment.postId = this.posts[postIndex].id;
+    newComment.profileId = this.profileService.currentUserProfile()!.id;
     this.commentService.createComment(newComment).subscribe({
       next: (comment) => {
         const post = this.posts.find((p) => p.id === newComment.postId);
