@@ -1,6 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { getRepositoryToken, InjectRepository } from '@nestjs/typeorm';
+import { timingSafeEqual } from 'crypto';
 import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { SaltedHashService } from '@optomistic-tanuki/encryption';
@@ -93,8 +94,8 @@ export class AppService {
     bio: string,
   ) {
     try {
-      this.l.log('Registering user: Password: ' + ` ${password}  Confirm: ${confirm}`);
-      if (password !== confirm) {
+      timingSafeEqual(password, confirm);
+      if (timingSafeEqual(password, confirm)) {
         throw new RpcException('Passwords do not match');
       }
       if (
