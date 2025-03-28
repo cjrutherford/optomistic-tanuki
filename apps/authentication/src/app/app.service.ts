@@ -94,8 +94,9 @@ export class AppService {
     bio: string,
   ) {
     try {
-      timingSafeEqual(password, confirm);
-      if (timingSafeEqual(password, confirm)) {
+      const passwordBuffer = Buffer.from(password);
+      const confirmBuffer = Buffer.from(confirm);
+      if (!timingSafeEqual(passwordBuffer, confirmBuffer)) {
         throw new RpcException('Passwords do not match');
       }
       if (
