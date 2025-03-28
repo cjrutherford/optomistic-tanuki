@@ -1,0 +1,18 @@
+---
+- nodejs-extensions:
+  - .ts
+  - .js
+  ignore-rules:
+  - pug_jade_templates
+  ignore-extensions:
+  - .test.ts
+  - .spec.ts
+  - .json
+  ignore-paths:
+  - __MACOSX
+  - skip_dir
+  - node_modules
+  - dist
+  severity-filter:
+  - WARNING
+  - ERROR
