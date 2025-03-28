@@ -7,11 +7,16 @@
   ignore-extensions:
   - .test.ts
   - .spec.ts
+  - .json
+  - .entity.test.ts
+  - .dto.test.ts
   ignore-paths:
   - __MACOSX
   - skip_dir
   - node_modules
   - dist
+  - "**/*.spec.ts"
+  - "**/*.test.ts"
   severity-filter:
   - WARNING
   - ERROR

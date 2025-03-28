@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModu
 @Component({
   selector: 'lib-text-area',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, FormsModule],
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.scss'],
   providers: [

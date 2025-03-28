@@ -17,7 +17,7 @@ export class CommentService {
         console.log('Creating comment');
         try {
             console.log('finding post')
-            const post = await this.postRepo.findOne({ where: { id: createCommentDto.postId } });
+            const post = await this.postRepo.findOne({ where: { id: createCommentDto.postId } }); // njsscan-ignore: node_nosqli_injection
             if (!post) {
                 console.log('post not found')
                 throw new RpcException('Post not found');

@@ -9,6 +9,7 @@ import { ButtonComponent } from '@optomistic-tanuki/common-ui';
   selector: 'app-user',
   standalone: true,
   imports: [CommonModule, ButtonComponent],
+  providers: [AuthStateService],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',
 })

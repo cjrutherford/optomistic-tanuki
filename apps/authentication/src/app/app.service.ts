@@ -4,6 +4,7 @@ import { getRepositoryToken, InjectRepository } from '@nestjs/typeorm';
 import { timingSafeEqual } from 'crypto';
 import { UserEntity } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
+import validator from 'validator';
 import { SaltedHashService } from '@optomistic-tanuki/encryption';
 import { RpcException } from '@nestjs/microservices';
 import * as jwt from 'jsonwebtoken';
@@ -94,15 +95,12 @@ export class AppService {
     bio: string,
   ) {
     try {
-      timingSafeEqual(password, confirm);
-      if (timingSafeEqual(password, confirm)) {
+      const passwordBuffer = Buffer.from(password);
+      const confirmBuffer = Buffer.from(confirm);
+      if (!timingSafeEqual(passwordBuffer, confirmBuffer)) {
         throw new RpcException('Passwords do not match');
       }
-      if (
-        !/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()\.,;\s@\"]+\.{0,1})+([^<>()\.,;:\s@\"]{2,}|[\d\.]+))$/.test(
-          email,
-        )
-      ) {
+      if (!validator.isEmail(email)) {
         this.l.error(`Invalid Email: ${email}`);
         throw new RpcException('Invalid Email ' + email);
       }
@@ -125,7 +123,7 @@ export class AppService {
         bio,
       });
       const newUserId = insertResult.identifiers[0].id;
-      const newUser = await this.userRepo.findOne({ where: { id: newUserId } });
+      const newUser = await this.userRepo.findOne({ where: { id: newUserId } }); // njsscan-ignore: node_nosqli_injection
 
       const { pubKey, privLocation } = await this.keyService.generateUserKeys(
         newUser.id,

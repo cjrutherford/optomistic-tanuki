@@ -9,6 +9,7 @@ RegisterRequest,
 ResetPasswordRequest, 
 ValidateTokenRequest 
 } from '@optomistic-tanuki/libs/models';
+import { Logger } from '@nestjs/common';
 
 describe('AppController', () => {
 let appController: AppController;
@@ -18,6 +19,7 @@ beforeEach(async () => {
   const app: TestingModule = await Test.createTestingModule({
     controllers: [AppController],
     providers: [
+      Logger,
       {
         provide: AppService,
         useValue: {

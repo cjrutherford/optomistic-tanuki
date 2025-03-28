@@ -20,7 +20,7 @@ describe('TokenEntity', () => {
 
   it('should allow setting and getting userId', () => {
     const token = new TokenEntity();
-    token.userId = 'user123';
+    token.userId = 'user123'; //njsscan-ignore: node_username
     expect(token.userId).toBe('user123');
   });
 

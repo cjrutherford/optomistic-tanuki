@@ -15,7 +15,12 @@ describe('ProfileController', () => {
         {
           provide: 'PROFILE_SERVICE',
           useValue: {
-            send: jest.fn()
+            send: jest.fn().mockImplementation(() => of({})),
+          }
+        },{
+          provide: 'AUTHENTICATION_SERVICE',
+          useValue: {
+            send: jest.fn().mockImplementation(() => of({})),
           }
         }
       ]

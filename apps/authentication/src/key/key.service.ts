@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AsymmetricService } from '@optomistic-tanuki/encryption';
 
 import { writeFile } from 'fs/promises';
@@ -7,6 +7,7 @@ import { existsSync, mkdirSync } from 'fs';
 
 @Injectable()
 export class KeyService {
+  private readonly logger = new Logger('Authentication Service | Key -> KeyService')
   constructor(private readonly keyService: AsymmetricService){}
 
   async generateUserKeys(userId: string, hash: string) {
@@ -23,7 +24,8 @@ export class KeyService {
     // RETURN URL FOR PRIVATE KEY.
     return { pubKey, privLocation }
     } catch (e) {
-      console.error(e);
+      this.logger.error(`Unable to generate user keys for ${userId}`)
+      throw new Error('Failed to generate keys.')
     }
   }
 }

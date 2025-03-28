@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators';
 import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
 import { ProfileSelectorComponent } from '@optomistic-tanuki/profile-ui';
 import { ProfileService } from './profile.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -25,7 +26,6 @@ import { ProfileService } from './profile.service';
     MatIconModule,
     ToolbarComponent,
     GridComponent,
-    CardComponent,
     ProfileSelectorComponent,
   ],
   providers: [ThemeService],
@@ -41,6 +41,8 @@ export class AppComponent {
   currentUrl$: Observable<string>; 
   profileService: ProfileService;
   authState: AuthStateService;
+  themeSub: Subscription;
+  urlSub: Subscription;
 
   constructor(
     private readonly themeService: ThemeService, 
@@ -50,7 +52,7 @@ export class AppComponent {
   ) {
     this.profileService = _profileService;
     this.authState = _authState;
-    this.themeService.theme$.subscribe((theme) => {
+    this.themeSub = this.themeService.theme$().subscribe((theme) => {
       this.backgroundGradient = 'background-gradient-' + theme;
     });
     this.currentUrl$ = this.router.events.pipe(
@@ -61,20 +63,24 @@ export class AppComponent {
   isNavExpanded = false;
 
   ngOnInit() {
+    this.urlSub = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd && this.router.url === '/') {
+        if (!this.authState.isAuthenticated) {
+          this.router.navigate(['/login']); 
+        }
+      }
+    });
+
     this.profileService.getAllProfiles().then(_ => {
       const selectedProfile = localStorage.getItem('selectedProfile');
       if (selectedProfile) {
         this.profileService.selectProfile(JSON.parse(selectedProfile));
       }
-    
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd && this.router.url === '/') {
-          if (!this.authState.isAuthenticated) {
-            this.router.navigate(['/login']); 
-          }
-        }
-      });
     });
+  }
+  ngOnDestroy() {
+    this.themeSub.unsubscribe();
+    this.urlSub.unsubscribe();
   }
 
   toggleNav() {

@@ -6,9 +6,9 @@ import { generateColorShades, generateComplementaryColor, generateDangerColor, g
   providedIn: 'root',
 })
 export class ThemeService {
-  private theme: 'light' | 'dark' = 'light';
+  private _theme: 'light' | 'dark' = 'light';
   private accentColor = '#3f51b5';
-  theme$: BehaviorSubject<'light' | 'dark'> = new BehaviorSubject(this.theme);
+  theme: BehaviorSubject<'light' | 'dark'> = new BehaviorSubject(this._theme);
   private themeColors: BehaviorSubject<{
     background: string;
     foreground: string;
@@ -33,9 +33,12 @@ export class ThemeService {
     this.loadTheme();
   }
 
+  theme$() {
+    return this.theme.asObservable();
+  }
   setTheme(theme: 'light' | 'dark') {
-    this.theme = theme;
-    this.theme$.next(theme);
+    this._theme = theme;
+    this.theme.next(theme);
     localStorage.setItem('theme', theme);
     document.documentElement.style.setProperty('--background-color', theme === 'light' ? '#fff' : '#333');
     document.documentElement.style.setProperty('--foreground-color', theme === 'light' ? '#333' : '#fff');
@@ -49,7 +52,7 @@ export class ThemeService {
   }
 
   getTheme(): 'light' | 'dark' {
-    return this.theme;
+    return this._theme;
   }
 
   getAccentColor(): string {
@@ -63,7 +66,7 @@ export class ThemeService {
   private loadTheme() {
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' || 'light';
     const savedAccentColor = localStorage.getItem('accentColor') || '#3f51b5';
-    this.theme = savedTheme;
+    this._theme = savedTheme;
     this.accentColor = savedAccentColor;
     this.applyThemeColors();
   }
@@ -80,8 +83,8 @@ export class ThemeService {
     const warningShades = generateColorShades(warningColor);
 
     return {
-      background: this.theme === 'light' ? '#fff' : '#333',
-      foreground: this.theme === 'light' ? '#333' : '#fff',
+      background: this._theme === 'light' ? '#fff' : '#333',
+      foreground: this._theme === 'light' ? '#333' : '#fff',
       accent: this.accentColor,
       accentShades,
       accentGradients: this.generateGradients(accentShades),
