@@ -37,10 +37,10 @@ describe('AuthenticationService', () => {
   });
 
   it('should register a user', () => {
-    const mockRegisterRequest: RegisterRequest = { username: 'test', password: 'password' };
+    const mockRegisterRequest: RegisterRequest = { fn: 'test', ln: 'user', password: 'password', confirm: 'password', email: "test@user.com", bio: '' };
     service.register(mockRegisterRequest).subscribe();
 
-    const req = httpMock.expectOne('/api/register');
+    const req = httpMock.expectOne('/api/authentication/register');
     expect(req.request.method).toBe('POST');
     req.flush({});
   });

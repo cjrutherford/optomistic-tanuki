@@ -3,10 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { GalleryComponent } from './profile/gallery/gallery.component';
-import { FriendsComponent } from './profile/friends/friends.component';
-import { PostComponent, PostType } from './social/post.component';
-import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
 import { BannerComponent } from '@optomistic-tanuki/profile-ui';
 import { ProfileService } from '../profile.service';
 
@@ -15,14 +11,9 @@ import { ProfileService } from '../profile.service';
   standalone: true,
   imports: [
     CommonModule, 
-    CardComponent,
     MatCardModule, 
     MatListModule, 
     MatIconModule, 
-    GalleryComponent,
-    FriendsComponent,
-    PostComponent,
-    GridComponent,
     BannerComponent,
   ],
   templateUrl: './profile.component.html',

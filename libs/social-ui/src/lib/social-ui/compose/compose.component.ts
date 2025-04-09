@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, importProvidersFrom, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AttachmentComponent } from '../attachment/attachment.component';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LinkComponent } from '../link/link.component';
-import { GridComponent } from "@optomistic-tanuki/common-ui";
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatePostDto, UpdatePostDto, CreateAttachmentDto, AttachmentDto } from '../../models';
 import { QuillEditorComponent, QuillModule, QuillModules } from 'ngx-quill';
 import { TextInputComponent } from '@optomistic-tanuki/form-ui';
@@ -32,12 +29,10 @@ export declare type ComposeCompleteEvent = {
     CommonModule,
     CardComponent,
     ButtonComponent,
-    AttachmentComponent,
     ReactiveFormsModule,
-    LinkComponent,
-    GridComponent,
     QuillEditorComponent,
     TextInputComponent,
+    QuillModule,
   ],
   templateUrl: './compose.component.html',
   styleUrls: ['./compose.component.scss'],

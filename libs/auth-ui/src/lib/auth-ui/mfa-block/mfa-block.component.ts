@@ -15,7 +15,7 @@ export class MfaBlockComponent {
   mfaForm: FormGroup;
   @Input() onboarding = false;
   @Input() qrCodeUrl = '';
-  @Output() submit = new EventEmitter<string>();
+  @Output() submitMfa = new EventEmitter<string>();
 
   constructor(private fb: FormBuilder) {
     this.mfaForm = this.fb.group({

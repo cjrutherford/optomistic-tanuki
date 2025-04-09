@@ -56,7 +56,7 @@ export class ProfileService {
     const originalCoverPic = profile.coverPic;
     profile.profilePic = '';
     profile.coverPic = '';
-    profile.userId = this.authState.getDecodedTokenValue()?.userId;
+    profile.userId = this.authState.getDecodedTokenValue()!.userId;
     const newProfile = await firstValueFrom(this.http.post<ProfileDto>('/api/profile', profile));
     const picUpdate = await firstValueFrom(this.http.put<ProfileDto>(
       `/api/profile/${newProfile.id}`, 

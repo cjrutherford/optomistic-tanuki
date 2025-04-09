@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ToggleComponent } from '../theme/theme.component';
 import { ThemeService } from '../theme/theme.service';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { UserComponent } from './user/user.component';
 
 @Component({
@@ -24,7 +24,7 @@ export class ToolbarComponent implements OnDestroy {
     border: string;
   };
   constructor(private readonly themeService:ThemeService) {
-    this.themeService.themeColors$.subscribe((colors) => {
+    this.themeSub = this.themeService.themeColors$.pipe(filter(v => !!v)).subscribe((colors) => {
       this.themeStyles = {
         backgroundColor: colors.background,
         color: colors.foreground,
