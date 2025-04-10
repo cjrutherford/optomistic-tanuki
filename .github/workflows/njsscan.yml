@@ -16,7 +16,7 @@ jobs:
         python-version: '3.12'
     - name: nodejsscan scan
       id: njsscan
-      uses: ajinabraham/njsscan-action@master
+      uses: ajinabraham/njsscan-action@v1.0.0
       with:
         args: '. -c .njsscan --sarif --output results.sarif || true'
     - name: Upload njsscan report
