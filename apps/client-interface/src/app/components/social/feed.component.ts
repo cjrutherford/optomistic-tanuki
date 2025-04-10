@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,13 +13,12 @@ import {
 } from '@optomistic-tanuki/social-ui';
 import { ThemeService } from '../../theme/theme.service';
 import { PostService } from '../../post.service';
-import { ComposeCompleteEvent } from 'libs/social-ui/src/lib/social-ui/compose/compose.component';
 import { AttachmentService } from '../../attachment.service';
-import { filter, firstValueFrom, pipe, Subject, takeUntil } from 'rxjs';
+import { filter, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { CommentService } from '../../comment.service';
 import { ProfileService } from '../../profile.service';
 import { Router } from '@angular/router';
-import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.component';
+import { PostProfileStub, ComposeCompleteEvent } from '@optomistic-tanuki/social-ui';
 
 @Component({
   selector: 'app-feed',
@@ -37,7 +36,7 @@ import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.comp
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent {
+export class FeedComponent implements OnInit, OnDestroy {
   themeStyles: {
     backgroundColor: string;
     color: string;

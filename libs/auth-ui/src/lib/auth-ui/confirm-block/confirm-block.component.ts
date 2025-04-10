@@ -10,8 +10,8 @@ import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
   styleUrls: ['./confirm-block.component.scss'],
 })
 export class ConfirmBlockComponent {
-  confirmHeader: string = 'Confirm Your Email';
-  confirmMessage: string = 'Please confirm your email address by clicking the link we sent to your email. If you did not receive the email, you can resend it below.';
+  confirmHeader = 'Confirm Your Email';
+  confirmMessage = 'Please confirm your email address by clicking the link we sent to your email. If you did not receive the email, you can resend it below.';
 
   onResend() {
     // Logic to resend the confirmation email

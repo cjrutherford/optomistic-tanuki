@@ -17,7 +17,7 @@ export const Primary: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="primary">Primary</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="primary">Primary</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -34,7 +34,7 @@ export const Secondary: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="secondary">Secondary</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="secondary">Secondary</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -51,7 +51,7 @@ export const Outlined: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="outlined">Outlined</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="outlined">Outlined</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -68,7 +68,7 @@ export const Text: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="text">Text</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="text">Text</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -85,7 +85,7 @@ export const Disabled: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="primary">Disabled</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="primary">Disabled</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -102,7 +102,7 @@ export const Success: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="success">Success</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="success">Success</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -119,7 +119,7 @@ export const Danger: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="danger">Danger</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="danger">Danger</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -136,7 +136,7 @@ export const Warning: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="warning">Warning</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="warning">Warning</otui-button>`,
   }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -153,7 +153,7 @@ export const LightMode: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="primary" class="light-mode">Light Mode</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="primary" class="light-mode">Light Mode</otui-button>`,
   }),
 };
 
@@ -164,7 +164,7 @@ export const DarkMode: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="primary" class="dark-mode">Dark Mode</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="primary" class="dark-mode">Dark Mode</otui-button>`,
   }),
 };
 
@@ -175,7 +175,7 @@ export const FastCycleMode: Story = {
   },
   render: (args) => ({
     props: args,
-    template: `<app-button [disabled]="disabled" variant="primary" class="fast-cycle-mode">Fast Cycle Mode</app-button>`,
+    template: `<otui-button [disabled]="disabled" variant="primary" class="fast-cycle-mode">Fast Cycle Mode</otui-button>`,
   }),
 };
 

@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from "@nestjs/swagger";
-import { FindManyOptions } from 'typeorm';
 
 export declare type TaskStatusString = 'draft' | 'published' | 'archived' | 'deleted' | 'public';
 

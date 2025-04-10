@@ -30,6 +30,6 @@ export class PostService {
   }
 
   searchPosts(searchCriteria: SearchPostDto, opts?: SearchPostOptions): Observable<PostDto[]> {
-    return this.http.post<PostDto[]>(`${this.baseUrl}/find`, searchCriteria);
+    return this.http.post<PostDto[]>(`${this.baseUrl}/find`, { criteria: searchCriteria, opts });
   }
 }

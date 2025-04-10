@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardComponent } from '../card/card.component';
 
 @Component({
-  selector: 'app-tile',
+  selector: 'otui-tile',
   standalone: true,
   imports: [CommonModule],
   template: `

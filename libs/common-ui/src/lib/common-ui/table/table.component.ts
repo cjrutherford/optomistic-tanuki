@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component, Input, TemplateRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component'; // Add this import
 
@@ -9,28 +9,28 @@ export interface TableRowAction {
 
 export interface TableCell {
   heading?: string;
-  value?: string | TemplateRef<any>;
+  value?: string | TemplateRef<HTMLElement>;
   isBadge?: boolean;
   customStyles?: { [key: string]: string };
   isSpacer?: boolean;
 }
 
 @Component({
-  selector: 'app-table',
+  selector: 'otui-table',
   standalone: true,
   imports: [CommonModule, ButtonComponent], // Add ButtonComponent to imports
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   @Input() cells: TableCell[] = [];
-  @Input() rowIndex: number = 0;
+  @Input() rowIndex = 0;
   @Input() rowActions?: TableRowAction[];
   @Input() tableStyles: { [key: string]: string } = {};
   @Input() spacer?: boolean = false;
 
-  cellTemplates: (TemplateRef<any> | null)[] = []; 
-  showActions: boolean = false;
+  cellTemplates: (TemplateRef<HTMLElement> | null)[] = []; 
+  showActions = false;
 
   ngOnInit() {
     this.cellTemplates = this.cells.map(cell => {
@@ -49,7 +49,8 @@ export class TableComponent {
     }
   }
 
-  isTemplateRef(value: any): value is TemplateRef<any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  isTemplateRef(value: any): value is TemplateRef<HTMLElement> {
     return value instanceof TemplateRef;
   }
 

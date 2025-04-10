@@ -1,3 +1,4 @@
+// eslint-disable-file  @typescript-eslint/no-explicit-any
 import { Quill } from 'quill';
 
 declare module 'quill-image-resize-module' {

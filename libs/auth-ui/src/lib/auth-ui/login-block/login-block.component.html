@@ -1,5 +1,5 @@
 <div class="login-container">
-    <app-card>
+    <otui-card>
         <div class="card-inner">
             <div class="hero">
                 <h1>{{title}}</h1>
@@ -10,9 +10,9 @@
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <lib-text-input formControlName="email" label="Email"></lib-text-input>
                   <lib-text-input formControlName="password" label="Password" type="password"></lib-text-input>
-                  <app-button type="submit">Login</app-button>
+                  <otui-button type="submit">Login</otui-button>
                 </form>
             </div>
         </div>
-    </app-card>
+    </otui-card>
 </div>

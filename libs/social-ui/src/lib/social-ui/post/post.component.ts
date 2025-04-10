@@ -2,9 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -23,8 +21,7 @@ import {
   CreateCommentDto,
 } from '../../models';
 import { ProfilePhotoComponent } from '@optomistic-tanuki/profile-ui';
-import Quill from 'quill';
-import { In } from 'typeorm';
+import { LinkType } from '../link/link.component';
 
 export declare type PostProfileStub = {
   id: string;
@@ -50,7 +47,7 @@ export declare type PostProfileStub = {
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
 })
-export class PostComponent implements OnInit {
+export class PostComponent {
   @Input() profile: PostProfileStub | null = {
     id: '',
     name: 'unknown',
@@ -58,20 +55,20 @@ export class PostComponent implements OnInit {
   };
   @Input() availableProfiles: {[key: string]: PostProfileStub} = {};
   theme: 'light' | 'dark' = 'light';
-  constructor() {}
-  ngOnInit() {}
+  
+
   @Input() content: PostDto;
   @Input() comments: CommentDto[] = [];
   @Input() attachments: AttachmentDto[] = [];
-  @Input() links: any[] = [];
+  @Input() links: LinkType[] = [];
   @Output() newCommentAdded: EventEmitter<CreateCommentDto> =
-    new EventEmitter<CreateCommentDto>();
-
-  downloadAttachment(attachment: any) {
+  new EventEmitter<CreateCommentDto>();
+  
+  downloadAttachment(attachment: AttachmentDto) {
     // Logic to download the attachment
     console.log('Downloading attachment:', attachment);
   }
-  openLink(link: any) {
+  openLink(link: { url: string }) {
     // Logic to open the link
     console.log('Opening link:', link);
   }
@@ -82,7 +79,7 @@ export class PostComponent implements OnInit {
     return Math.ceil(this.attachments.length / 6);
   }
 
-  onCommentReply($event: any) {
+  onCommentReply($event: { content: string; parentId: string }) {
     console.log('🚀 ~ PostComponent ~ onCommentReply ~ $event:', $event);
     const comment: CreateCommentDto = {
       content: $event.content,

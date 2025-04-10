@@ -16,7 +16,7 @@ export class RegisterBlockComponent {
   @Input() registerButtonText = 'Register';
   @Input() callToAction = 'Join us on your journey';
   @Input() heroSource = 'https://source.unsplash.com/random/800x600/?nature,water'; 
-  @Output() submit = new EventEmitter<{email: string; password: string, firstName: string, lastName: string, confirmation: string, bio: string}>();
+  @Output() submitEvent = new EventEmitter<{email: string; password: string, firstName: string, lastName: string, confirmation: string, bio: string}>();
   registerForm: FormGroup;
   constructor(private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -35,6 +35,6 @@ export class RegisterBlockComponent {
 
   onSubmit() {
     console.log(this.registerForm.value);
-    this.submit.emit(this.registerForm.value);
+    this.submitEvent.emit(this.registerForm.value);
   }
 }

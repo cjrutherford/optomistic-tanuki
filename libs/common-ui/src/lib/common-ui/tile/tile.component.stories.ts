@@ -13,7 +13,7 @@ type Story = StoryObj<TileComponent>;
 export const Primary: Story = {
   render: () => ({
     template: `
-      <app-tile>Primary Tile</app-tile>
+      <otui-tile>Primary Tile</otui-tile>
     `,
   }),
 };
@@ -21,7 +21,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
   render: () => ({
     template: `
-      <app-tile>Secondary Tile</app-tile>
+      <otui-tile>Secondary Tile</otui-tile>
     `,
   }),
 };
@@ -29,7 +29,7 @@ export const Secondary: Story = {
 export const Tertiary: Story = {
   render: () => ({
     template: `
-      <app-tile>Tertiary Tile</app-tile>
+      <otui-tile>Tertiary Tile</otui-tile>
     `,
   }),
 };
@@ -37,7 +37,7 @@ export const Tertiary: Story = {
 export const Heading: Story = {
   render: () => ({
     template: `
-      <app-tile>Heading Tile</app-tile>
+      <otui-tile>Heading Tile</otui-tile>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -49,7 +49,7 @@ export const Heading: Story = {
 export const LightMode: Story = {
   render: () => ({
     template: `
-      <app-tile class="light-mode">Light Mode Tile</app-tile>
+      <otui-tile class="light-mode">Light Mode Tile</otui-tile>
     `,
   }),
 };
@@ -57,7 +57,7 @@ export const LightMode: Story = {
 export const DarkMode: Story = {
   render: () => ({
     template: `
-      <app-tile class="dark-mode">Dark Mode Tile</app-tile>
+      <otui-tile class="dark-mode">Dark Mode Tile</otui-tile>
     `,
   }),
 };
@@ -65,7 +65,7 @@ export const DarkMode: Story = {
 export const FastCycleMode: Story = {
   render: () => ({
     template: `
-      <app-tile class="fast-cycle-mode">Fast Cycle Mode Tile</app-tile>
+      <otui-tile class="fast-cycle-mode">Fast Cycle Mode Tile</otui-tile>
     `,
   }),
 };

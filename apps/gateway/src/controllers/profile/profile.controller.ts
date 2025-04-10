@@ -1,12 +1,26 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { GoalCommands, ProfileCommands, ProjectCommands, ServiceTokens, TimelineCommands } from '@optomistic-tanuki/libs/constants';
-import { CreateGoalDto, CreateProfileDto, CreateProjectDto, CreateTimelineDto, UpdateGoalDto, UpdateProfileDto, UpdateProjectDto, UpdateTimelineDto } from '@optomistic-tanuki/libs/models';
+import { 
+    GoalCommands, 
+    ProfileCommands, 
+    ProjectCommands, 
+    ServiceTokens,
+    TimelineCommands
+} from '@optomistic-tanuki/libs/constants';
+import { 
+    CreateGoalDto, 
+    CreateProfileDto, 
+    CreateProjectDto, 
+    CreateTimelineDto, 
+    UpdateGoalDto, 
+    UpdateProfileDto, 
+    UpdateProjectDto, 
+    UpdateTimelineDto,
+    ProfileDto,
+} from '@optomistic-tanuki/libs/models';
 import { AuthGuard } from '../../auth/auth.guard';
 import { User, UserDetails } from '../../decorators/user.decorator';
-import { FindManyOptions } from 'typeorm';
-import { ProfileDto } from 'libs/profile-ui/src/lib/models';
 
 @ApiTags('profile')
 @Controller('profile')

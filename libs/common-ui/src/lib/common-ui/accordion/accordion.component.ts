@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AccordionComponent {
   @Input() sections: { heading: string, content: string, subItems?: { heading: string, content: string }[] }[] = [];
-  expandedIndex: number = 0;
+  expandedIndex = 0;
 
   toggleSection(index: number) {
     if (this.expandedIndex === index && this.sections.length > 1) {

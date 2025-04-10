@@ -21,7 +21,7 @@ export class AuthStateService {
   private _isAuthenticated = false;
 
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
-  decodedToken$: Observable<any> = this.decodedTokenSubject.asObservable();
+  decodedToken$: Observable<UserData| null> = this.decodedTokenSubject.asObservable();
 
   constructor(private authService: AuthenticationService, private http: HttpClient) {
     const token = localStorage.getItem('authToken');
@@ -34,7 +34,7 @@ export class AuthStateService {
     return this._isAuthenticated;
   }
 
-  login(loginRequest: LoginRequest): Promise<any> {
+  login(loginRequest: LoginRequest): Promise<{data: { newToken: string }}> {
     return this.authService.login(loginRequest).then(response => {
       const token = response.data.newToken;
       this.setToken(token);

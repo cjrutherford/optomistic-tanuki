@@ -11,7 +11,7 @@ import { TabComponent } from './tab/tab.component';
 })
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;
-  activeTabIndex: number = 0;
+  activeTabIndex = 0;
 
   ngAfterContentInit() {
     if (this.tabs.length) {

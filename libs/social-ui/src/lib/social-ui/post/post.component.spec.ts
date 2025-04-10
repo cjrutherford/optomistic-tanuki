@@ -121,7 +121,14 @@ it('should emit a new comment with parentId when onCommentReply is called', () =
 });
 
 it('should console log when downloadAttachment is called', () => {
-  const attachment = { id: '1', name: 'Test.pdf' };
+  const attachment: AttachmentDto = { 
+    id: '1', 
+    name: 'Test.pdf', 
+    url: 'http://example.com/test.pdf', 
+    type: 'pdf', 
+    postId: '123',
+    userId: '456'
+  };
   const consoleSpy = jest.spyOn(console, 'log');
   component.downloadAttachment(attachment);
   expect(consoleSpy).toHaveBeenCalledWith('Downloading attachment:', attachment);

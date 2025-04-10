@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape */
+ 
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { getRepositoryToken, InjectRepository } from '@nestjs/typeorm';
 import { timingSafeEqual } from 'crypto';

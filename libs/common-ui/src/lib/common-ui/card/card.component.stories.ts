@@ -18,10 +18,10 @@ export const Heading: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card>
+      <otui-card>
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card with a header.</div>
-      </app-card>
+      </otui-card>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -34,10 +34,10 @@ export const WithHeader: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card>
+      <otui-card>
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card with a header.</div>
-      </app-card>
+      </otui-card>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -50,10 +50,10 @@ export const WithFooter: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card>
+      <otui-card>
         <div class="card-body">This is a card with a footer.</div>
         <div class="card-footer">Card Footer</div>
-      </app-card>
+      </otui-card>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -66,11 +66,11 @@ export const WithHeaderAndFooter: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card>
+      <otui-card>
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card with both header and footer.</div>
         <div class="card-footer">Card Footer</div>
-      </app-card>
+      </otui-card>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -84,10 +84,10 @@ export const LightMode: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card class="light-mode">
+      <otui-card class="light-mode">
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card in light mode.</div>
-      </app-card>
+      </otui-card>
     `,
   }),
 };
@@ -96,10 +96,10 @@ export const DarkMode: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card class="dark-mode">
+      <otui-card class="dark-mode">
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card in dark mode.</div>
-      </app-card>
+      </otui-card>
     `,
   }),
 };
@@ -108,10 +108,10 @@ export const FastCycleMode: Story = {
   args: {},
   render: () => ({
     template: `
-      <app-card class="fast-cycle-mode">
+      <otui-card class="fast-cycle-mode">
         <div class="card-header">Card Header</div>
         <div class="card-body">This is a card in fast cycle mode.</div>
-      </app-card>
+      </otui-card>
     `,
   }),
 };

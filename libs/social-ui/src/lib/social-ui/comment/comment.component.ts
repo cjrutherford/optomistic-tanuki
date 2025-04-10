@@ -1,23 +1,22 @@
 import { Component, Output, TemplateRef, ViewChild, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonComponent, CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
-import { TextInputComponent } from '@optomistic-tanuki/form-ui';
-import { QuillEditorComponent, QuillModule, QuillModules } from 'ngx-quill';
+import { MatDialog } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
+import { QuillModule, QuillModules } from 'ngx-quill';
 
 @Component({
   selector: 'lib-comment',
   standalone: true,
-  imports: [CommonModule, FormsModule,CardComponent, TextInputComponent, ButtonComponent, QuillModule],
+  imports: [CommonModule, FormsModule, CardComponent, ButtonComponent, QuillModule],
   providers: [],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
 })
 export class CommentComponent {
   @Output() commentAdded: EventEmitter<string> = new EventEmitter<string>();
-  @ViewChild('commentDialog') commentDialog: TemplateRef<any>;
-  comment: string = '';
+  @ViewChild('commentDialog') commentDialog: TemplateRef<HTMLElement>;
+  comment = '';
 
   constructor(private dialog: MatDialog) {
   }

@@ -16,9 +16,9 @@ export function generateColorShades(color: string): [string, string][] {
     const rgb = hexToRgb(color);
     if (!rgb) return color;
 
-    let r = Math.max(Math.min(255, rgb.r + Math.round(255 * factor)), 0);
-    let g = Math.max(Math.min(255, rgb.g + Math.round(255 * factor)), 0);
-    let b = Math.max(Math.min(255, rgb.b + Math.round(255 * factor)), 0);
+    const r = Math.max(Math.min(255, rgb.r + Math.round(255 * factor)), 0);
+    const g = Math.max(Math.min(255, rgb.g + Math.round(255 * factor)), 0);
+    const b = Math.max(Math.min(255, rgb.b + Math.round(255 * factor)), 0);
 
     return rgbToHex(r, g, b);
   };
@@ -50,7 +50,7 @@ export function generateComplementaryColor(hexColor: string): string {
   return "#" + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 }
 
-export function generateSuccessColor(baseColor: string, saturationFactor: number = 0.3, lightnessFactor: number = 0.2): string {
+export function generateSuccessColor(baseColor: string, saturationFactor = 0.3, lightnessFactor = 0.2): string {
   const hexToRgb = (hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -65,7 +65,8 @@ export function generateSuccessColor(baseColor: string, saturationFactor: number
     g /= 255;
     b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s = 0, l = (max + min) / 2;
+    let h = 0, s = 0
+    const l = (max + min) / 2;
 
     if (max === min) {
       h = s = 0; // achromatic
@@ -129,7 +130,7 @@ export function generateSuccessColor(baseColor: string, saturationFactor: number
   return rgbToHex(r, g, b);
 }
 
-export function generateDangerColor(baseColor: string, saturationFactor: number = 0.3, lightnessFactor: number = 0.2): string {
+export function generateDangerColor(baseColor: string, saturationFactor = 0.3, lightnessFactor = 0.2): string {
   const hexToRgb = (hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -144,7 +145,8 @@ export function generateDangerColor(baseColor: string, saturationFactor: number 
     g /= 255;
     b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s = 0, l = (max + min) / 2;
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
 
     if (max === min) {
       h = s = 0; // achromatic
@@ -208,7 +210,7 @@ export function generateDangerColor(baseColor: string, saturationFactor: number 
   return rgbToHex(r, g, b);
 }
 
-export function generateWarningColor(baseColor: string, saturationFactor: number = 0.3, lightnessFactor: number = 0.2): string {
+export function generateWarningColor(baseColor: string, saturationFactor = 0.3, lightnessFactor = 0.2): string {
   const hexToRgb = (hex: string) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result ? {
@@ -223,7 +225,8 @@ export function generateWarningColor(baseColor: string, saturationFactor: number
     g /= 255;
     b /= 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s = 0, l = (max + min) / 2;
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
 
     if (max === min) {
       h = s = 0; // achromatic

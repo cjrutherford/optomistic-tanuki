@@ -29,11 +29,11 @@
 
   </ng-container>
   <div *ngIf="rowActions" class="table-cell actions-cell">
-    <app-button (click)="toggleActions()">Actions</app-button>
+    <otui-button (click)="toggleActions()">Actions</otui-button>
     <div *ngIf="showActions" class="actions-list popover">
-      <app-button *ngFor="let action of rowActions" (click)="executeAction(action)">
+      <otui-button *ngFor="let action of rowActions" (click)="executeAction(action)">
         {{ action.title }}
-      </app-button>
+      </otui-button>
     </div>
   </div>
 </div>

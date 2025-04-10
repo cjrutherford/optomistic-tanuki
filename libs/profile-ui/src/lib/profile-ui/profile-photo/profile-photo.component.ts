@@ -9,6 +9,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './profile-photo.component.scss',
 })
 export class ProfilePhotoComponent {
-  @Input() src: string = '';
-  @Input() alt: string = '';
+  @Input() src = '';
+  @Input() alt = '';
 }

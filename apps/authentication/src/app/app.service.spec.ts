@@ -9,8 +9,6 @@ import { KeyService } from './key.service';
 import { RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
-import { Repositories } from '../constants';
-import { create } from 'axios';
 import { Logger } from '@nestjs/common';
 
 describe('AppService', () => {

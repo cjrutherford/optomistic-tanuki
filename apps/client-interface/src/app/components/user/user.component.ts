@@ -22,7 +22,8 @@ export class UserComponent implements OnInit, OnDestroy {
     private readonly router: Router
   ) {}
   user: UserData | null = null;
-  isLoggedIn: boolean = false;
+  isLoggedIn = false;
+  showPanel = false;
 
   ngOnInit() {
     this.authState.isAuthenticated$.pipe(takeUntil(this.unsubscribe$)).subscribe((isAuthenticated) => {

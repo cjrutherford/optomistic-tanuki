@@ -1,5 +1,4 @@
 
-import { TaskDto } from "./task.dto";
 
 export enum NoteStatus {
     Draft = 'draft',

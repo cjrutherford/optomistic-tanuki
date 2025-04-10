@@ -203,7 +203,7 @@ export class ThemeService {
     return {
       light: `linear-gradient(135deg, ${shades[0][1]}, ${shades[1][1]}, ${shades[2][1]}, ${shades[3][1]}, ${shades[4][1]})`,
       dark: `linear-gradient(135deg, ${shades[5][1]}, ${shades[6][1]}, ${shades[7][1]}, ${shades[8][1]}, ${shades[9][1]})`,
-      fastCycle: `linear-gradient(45deg, ${cycles.map((_) => shades.map(([_, shade]) => shade)).join(', ')})`,
+      fastCycle: `linear-gradient(45deg, ${cycles.map(() => shades.map(([, shade]) => shade)).join(', ')})`,
     };
   }
 }

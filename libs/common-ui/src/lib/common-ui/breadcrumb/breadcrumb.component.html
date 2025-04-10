@@ -5,7 +5,7 @@
       <span *ngIf="i === nodes.length - 1">{{ node }}</span>
     </li>
     <li *ngIf="nodes.length > 3" class="breadcrumb-item">
-      <span role="button" (click)="togglePopup()">...</span>
+      <span tabIndex="3" role="button" tabindex="3" (click)="togglePopup()" (keypress)="togglePopup()">...</span>
       <div *ngIf="showPopup" class="popup">
         <ul>
           <li *ngFor="let node of nodes.slice(1, nodes.length - 1)">{{ node }}</li>

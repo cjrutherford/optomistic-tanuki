@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class BreadcrumbComponent {
   @Input() nodes: string[] = [];
-  showPopup: boolean = false;
+  showPopup = false;
 
   togglePopup() {
     this.showPopup = !this.showPopup;

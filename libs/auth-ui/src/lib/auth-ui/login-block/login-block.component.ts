@@ -16,7 +16,7 @@ export class LoginBlockComponent {
   @Input()  description = 'login-block works!';
   @Input() heroSrc = 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fGxvZ298ZW58MHx8fHwxNjg3NTY5NzA1&ixlib=rb-4.0.3&q=80&w=1080';
   @Input() heroAlt = 'login-block works!';
-  @Output() submit = new EventEmitter<{email: string; password: string}>();
+  @Output() submitEvent = new EventEmitter<{email: string; password: string}>();
   loginForm: FormGroup;
   constructor(private readonly fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -25,12 +25,12 @@ export class LoginBlockComponent {
     });
   }
 
-  onFormChange(e: string, control: string) {
+  onFormChange(e: string) {
     console.log(e);
   }
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.submit.emit(this.loginForm.value);
+    this.submitEvent.emit(this.loginForm.value);
   }
 }

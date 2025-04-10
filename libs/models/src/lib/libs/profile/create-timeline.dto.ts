@@ -1,4 +1,4 @@
-import { TimelineEventType } from "@optomistic-tanuki/libs/models";
+import { TimelineEventType } from './timeline-event-type';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTimelineDto {

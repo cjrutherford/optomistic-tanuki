@@ -9,12 +9,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./checkbox.component.scss'],
 })
 export class CheckboxComponent {
-  @Input() value: boolean = false;
-  @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() value = false;
+  @Output() changeEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onCheckboxChange(event: Event) {
     const input = event.target as HTMLInputElement;
     this.value = input.checked;
-    this.change.emit(this.value);
+    this.changeEvent.emit(this.value);
   }
 }
