@@ -24,7 +24,7 @@ export class KeyService {
     // RETURN URL FOR PRIVATE KEY.
     return { pubKey, privLocation }
     } catch (e) {
-      this.logger.error(`Unable to generate user keys for ${userId}`)
+      this.logger.error(`Unable to generate user keys for ${userId}: ${e.message}`, e.stack)
       throw new Error('Failed to generate keys.')
     }
   }
