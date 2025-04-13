@@ -18,7 +18,7 @@ services:
       - ot_client_interface
       - ot_gateway
   build_base:
-    image: optomistic_tanuki/base
+    image: optomistic_tanuki_base
     env_file:
       - .env
     build:
@@ -29,7 +29,7 @@ services:
       - ot_network
     restart: "no"
   migration_runner:
-    image: optomistic_tanuki/base
+    image: optomistic_tanuki_base
     depends_on:
       - build_base
       - db
@@ -75,7 +75,7 @@ services:
       - ot_network
   ot_client_interface:
     container_name: ot_client_interface
-    # image: optomistic_tanuki/client_interface
+    # image: optomistic_tanuki_client_interface
     command: ["sh", "-c", "npx nx run client-interface:serve:development --host=0.0.0.0 --port=80"]
     build:
       dockerfile: ./apps/client-interface/dockerfile.dev
@@ -94,7 +94,7 @@ services:
     <<: *x-global-environment
   ot_authentication:
     container_name: ot_authentication
-    # image: optomistic_tanuki/authentication
+    # image: optomistic_tanuki_authentication
     build:
       dockerfile: ./apps/authentication/dockerfile
       context: .
@@ -110,7 +110,7 @@ services:
     <<: *x-global-environment
   ot_gateway:
     container_name: ot_gateway
-    # image: optomistic_tanuki/gateway
+    # image: optomistic_tanuki_gateway
     build:
       dockerfile: ./apps/gateway/dockerfile
       context: .
@@ -132,7 +132,7 @@ services:
     <<: *x-global-environment
   ot_profile:
     container_name: ot_profile
-    # image: optomistic_tanuki/profile
+    # image: optomistic_tanuki_profile
     build:
       dockerfile: ./apps/profile/dockerfile
       context: .
@@ -148,7 +148,7 @@ services:
     <<: *x-global-environment
   ot_social:
     container_name: ot_social
-    # image: optomistic_tanuki/social
+    # image: optomistic_tanuki_social
     build:
       dockerfile: ./apps/social/dockerfile
       context: .
@@ -164,7 +164,7 @@ services:
     <<: *x-global-environment
   ot_tasks:
     container_name: ot_tasks
-    # image: optomistic_tanuki/tasks
+    # image: optomistic_tanuki_tasks
     build:
       dockerfile: ./apps/tasks/dockerfile
       context: .

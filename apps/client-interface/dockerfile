@@ -1,5 +1,7 @@
+ARG DOCKER_HUB_PREFIX=optomistic_tanuki
+ARG BASE_IMAGE_TAG=latest
 # Use the base image
-FROM optomistic_tanuki/base:latest AS build
+FROM ${DOCKER_HUB_PREFIX-}/optomistic_tanuki_base:${BASE_IMAGE_TAG} AS build
 
 # Set the working directory
 WORKDIR /app

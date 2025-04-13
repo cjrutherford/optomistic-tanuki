@@ -1,0 +1,102 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-push-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Log in to DockerHub
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_PREFIX }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Build the Docker image
+      - name: Build base Docker image
+        id: build-base
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_base:latest . \
+          && docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_base:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_base:${{ github.sha }} 
+      - name: Push Base Image
+        id: push-base
+        run: |
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_base:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_base:${{ github.sha }} 
+      - name: Build Authentication docker image
+        id: build-auth
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_authentication:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg BASE_IMAGE_TAG=${{github.sha}} \
+          -f ./apps/authentication/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_authentication:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_authentication:${{ github.sha }} 
+      - name: Build client-interface docker image
+        id: build-client
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_client-interface:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg BASE_IMAGE_TAG=${{github.sha}} \
+          -f ./apps/client-interface/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_client-interface:latest \
+          ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_client-interface:${{ github.sha }} 
+      - name: Build Social docker image
+        id: build-social
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_social:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg BASE_IMAGE_TAG=${{github.sha}} \
+          -f ./apps/social/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_social:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_social:${{ github.sha }} 
+      - name: Build Gateway docker image
+        id: build-gateway
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_gateway:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg BASE_IMAGE_TAG=${{github.sha}} \
+          -f ./apps/gateway/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_gateway:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_gateway:${{ github.sha }} 
+      - name: build profile docker image
+        id: build-profile
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_profile:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg base_image_tag=${{github.sha}} \
+          -f ./apps/profile/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_profile:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_profile:${{ github.sha }} 
+      - name: build Tasks docker image
+        id: build-tasks
+        run: |
+          docker build -t ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_tasks:latest \
+          --build-arg DOCKER_HUB_PREFIX=${{secrets.DOCKER_HUB_PREFIX}} --build-arg base_image_tag=${{github.sha}} \
+          -f ./apps/tasks/dockerfile . && \
+          docker tag ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_tasks:latest \
+            ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_tasks:${{ github.sha }} 
+      # Push the Docker image to DockerHub
+      - name: Push Docker images
+        id: push-all
+        run: |
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_authentication:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_authentication:${{ github.sha }} && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_client-interface:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_client-interface:${{ github.sha }} && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_social:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_social:${{ github.sha }} && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_gateway:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_gateway:${{ github.sha }} && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_profile:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_profile:${{ github.sha }} && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_tasks:latest && \
+          docker push ${{secrets.DOCKER_HUB_PREFIX}}/optomistic_tanuki_tasks:${{ github.sha }} 
