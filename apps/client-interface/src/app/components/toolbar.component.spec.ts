@@ -54,9 +54,9 @@ describe('ToolbarComponent', () => {
     (themeService.themeColors$ as Subject<any>).next(mockColors);
 
     expect(component.themeStyles).toEqual({
-      backgroundColor: 'red',
-      color: 'white',
-      border: '1px solid blue',
+      backgroundColor: '#fff',
+      color: '#333',
+      border: '1px solid #3f51b5',
     });
   });
 
