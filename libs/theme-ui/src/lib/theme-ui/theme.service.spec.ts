@@ -1,23 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { ThemeService } from './theme.service';
 import {
-  loadTheme,
-  saveTheme,
   generateColorShades,
   generateComplementaryColor,
   generateDangerColor,
   generateWarningColor,
   generateSuccessColor,
-} from '@optomistic-tanuki/common-ui';
+} from './color-utils';
 
-jest.mock('@optomistic-tanuki/common-ui', () => ({
-  loadTheme: jest.fn(),
-  saveTheme: jest.fn(),
+import { loadTheme, saveTheme } from './theme-storage';
+import { ThemeColors } from './theme.interface';
+jest.mock('./color-utils', () => ({
   generateColorShades: jest.fn(),
   generateComplementaryColor: jest.fn(),
   generateDangerColor: jest.fn(),
   generateWarningColor: jest.fn(),
   generateSuccessColor: jest.fn(),
+}));
+
+jest.mock('./theme-storage', () => ({
+  loadTheme: jest.fn(),
+  saveTheme: jest.fn(),
 }));
 
 describe('ThemeService', () => {

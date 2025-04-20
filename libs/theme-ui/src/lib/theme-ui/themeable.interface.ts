@@ -6,6 +6,7 @@ import { Subject, takeUntil, filter } from 'rxjs';
 
 @Directive()
 export abstract class Themeable implements OnInit, OnDestroy {
+  theme: 'light' | 'dark' = 'light';
   background: string;
   foreground: string;
   accent: string;

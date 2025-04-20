@@ -1,45 +1,47 @@
 .tile {
-  border: 4px solid var(--accent-shade-lighten-50, #b1baec);
+  border: 4px solid var(--accent, #b1baec);
   padding: 1em;
   border-radius: 8px;
-  box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 6px 10px var(--accent);
   display: flex;
+  color: var(--foreground, #fff);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: box-shadow 0.3s ease;
-  background: var(--accent-gradient-dark, #5969c3);
+  transition: box-shadow 0.3s ease-in-out;
+  background: var(--accent, #5969c3);
 }
 
 .tile:hover {
-  box-shadow: inset 0 0 1em rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 1px 2px 1em var(--accent), 
+  2px 4px 8px 6px var(--complement);
 }
 
 .tile.light-mode {
-  background-color: var(--accent-shade-lighten-50, #b1baec);
-  color: var(--foreground-color, #000);
+  background-color: var(--accent, #b1baec);
+  color: var(--foreground, #000);
 }
 
 .tile.dark-mode {
   background-color: var(--accent-shade-darken-50, #313a6c);
-  color: var(--foreground-color, #fff);
+  color: var(--foreground, #fff);
 }
 
 .tile.fast-cycle-mode {
   background: var(--gradient-fastCycle);
-  color: var(--foreground-color, #fff);
+  color: var(--foreground, #fff);
 }
 
 .tile-title {
   font-size: 1.2em;
   font-weight: bold;
   margin-bottom: 0.5em;
-  color: var(--foreground-color, #fff);
+  color: var(--foreground, #fff);
 }
 
 .tile-content {
   font-size: 1em;
-  color: var(--foreground-color, #fff);
+  color: var(--foreground, #fff);
 }
 
 .grid > .tile {

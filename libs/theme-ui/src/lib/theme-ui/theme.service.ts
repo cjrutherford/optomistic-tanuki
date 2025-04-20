@@ -6,10 +6,9 @@ import {
   generateDangerColor,
   generateWarningColor,
   generateSuccessColor,
-  ThemeColors,
-  loadTheme,
-  saveTheme,
-} from '@optomistic-tanuki/common-ui';
+} from './color-utils';
+import { loadTheme, saveTheme } from './theme-storage';
+import { ThemeColors } from './theme.interface';
 
 @Injectable({
   providedIn: 'root',

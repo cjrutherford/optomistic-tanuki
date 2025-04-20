@@ -9,7 +9,7 @@ import {
   ThemeColors,
   loadTheme,
   saveTheme,
-} from '@optomistic-tanuki/common-ui';
+} from '@optomistic-tanuki/theme-ui';
 
 @Injectable({
   providedIn: 'root',
