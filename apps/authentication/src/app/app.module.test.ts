@@ -10,6 +10,38 @@ import { UserEntity } from '../user/entities/user.entity';
 import { TokenEntity } from '../tokens/entities/token.entity';
 import { KeyDatum } from '../key-data/entities/key-datum.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+
+jest.mock('../config', () => {
+    const mockConfig = {
+        database: {
+            type: 'postgres',
+            host: 'localhost',
+            port: 5432,
+            username: 'testuser',
+            password: 'testpassword',
+            database: 'testdb',
+            synchronize: true,
+            logging: false,
+        },
+        jwt: {
+            secret: 'testsecret',
+            expiresIn: '1h',
+        },
+        bcrypt: {
+            saltRounds: 10,
+        },
+        throttle: {
+            ttl: 60,
+            limit: 20,
+        },
+        port: 3000,
+    };
+    return {
+        __esModule: true, // This is important for ES module mocks
+        default: () => mockConfig,
+    };
+});
+
 describe('AppModule', () => {
     let appModule: TestingModule;
 

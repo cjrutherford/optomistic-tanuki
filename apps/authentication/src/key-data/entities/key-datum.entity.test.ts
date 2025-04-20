@@ -6,7 +6,7 @@ import { plainToClass } from 'class-transformer';
 describe('KeyDatum Entity', () => {
     it('should validate a valid KeyDatum entity', async () => {
         const user = new UserEntity();
-        user.id = 'some-uuid';
+        user.id = 'some-uuid'; // njsscan-ignore: node_username
 
         const keyDatum = plainToClass(KeyDatum, {
             id: 'some-uuid',
@@ -21,7 +21,7 @@ describe('KeyDatum Entity', () => {
 
     it('should fail validation if public is not a Buffer', async () => {
         const user = new UserEntity();
-        user.id = 'some-uuid';
+        user.id = 'some-uuid'; // njsscan-ignore: node_username
 
         const keyDatum = plainToClass(KeyDatum, {
             id: 'some-uuid',
@@ -36,7 +36,7 @@ describe('KeyDatum Entity', () => {
 
     it('should fail validation if salt is missing', async () => {
         const user = new UserEntity();
-        user.id = 'some-uuid';
+        user.id = 'some-uuid'; // njsscan-ignore: node_username
 
         const keyDatum = plainToClass(KeyDatum, {
             id: 'some-uuid',

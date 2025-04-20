@@ -18,12 +18,12 @@ describe('CreateUserDto', () => {
 
     it('should allow setting and getting properties', () => {
         const createUserDto = new CreateUserDto();
-        createUserDto.firstName = 'John';
-        createUserDto.lastName = 'Doe';
-        createUserDto.email = 'john.doe@example.com';
-        createUserDto.password = 'password123';
-        createUserDto.bio = 'A short bio';
-        createUserDto.confirmPassword = 'password123';
+        createUserDto.firstName = 'John'; // njsscan-ignore: node_username
+        createUserDto.lastName = 'Doe'; // njsscan-ignore: node_username
+        createUserDto.email = 'john.doe@example.com'; // njsscan-ignore: node_email,node_username
+        createUserDto.password = 'password123'; // njsscan-ignore: node_password,node_username
+        createUserDto.bio = 'A short bio'; // njsscan-ignore: node_username
+        createUserDto.confirmPassword = 'password123'; // njsscan-ignore: node_password,node_username
 
         expect(createUserDto.firstName).toBe('John');
         expect(createUserDto.lastName).toBe('Doe');

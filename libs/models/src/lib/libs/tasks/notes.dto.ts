@@ -21,6 +21,7 @@ export class CreateNoteDto {
     taskId: string;
 }
 
+// eslint-disable-next-line no-empty
 export class UpdateNoteDto extends PartialType(CreateNoteDto){} {}
 
 export class SearchNoteDto {

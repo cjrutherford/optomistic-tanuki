@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'lib-text-area',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, FormsModule],
   templateUrl: './text-area.component.html',
   styleUrls: ['./text-area.component.scss'],
   providers: [
@@ -17,16 +17,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule, ReactiveFormsModu
   ],
 })
 export class TextAreaComponent implements ControlValueAccessor {
-  @Input() label: string = '';
+  @Input() label = '';
   @Output() valueChange = new EventEmitter<string>();
 
-  value: string = '';
-  onChange = (value: string) => {};
-  onTouched = () => {};
+  value = '';
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onChange?: (value: string) => void = () => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onTouched?: () => void = () => {};
 
   onInput(event: Event): void {
     const input = event.target as HTMLTextAreaElement;
     this.value = input.value;
+    if(this.onChange === undefined) return;
     this.onChange(this.value);
     this.valueChange.emit(this.value);
   }
@@ -43,7 +46,4 @@ export class TextAreaComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    // Implement this method to handle the disabled state
-  }
 }

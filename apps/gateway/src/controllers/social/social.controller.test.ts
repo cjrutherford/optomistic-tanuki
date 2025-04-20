@@ -24,11 +24,24 @@ UpdateAttachmentDto
 describe('SocialController', () => {
 let socialController: SocialController;
 let clientProxy: ClientProxy;
+const mockUser = {
+    id: '1',
+    userId: '1',
+    username: 'test',
+    email: 'someone@somewhere.net',
+    profileId: '1'
+}
 
 beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
         controllers: [SocialController],
         providers: [
+            {
+                provide: 'AUTHENTICATION_SERVICE',
+                useValue: {
+                    send: jest.fn().mockImplementation(() => of({})),
+                }
+            },
             {
                 provide: 'SOCIAL_SERVICE',
                 useValue: {
@@ -46,25 +59,27 @@ it('should create a post', async () => {
     const postDto: CreatePostDto = { 
         title: 'Test Post', 
         content: 'Test Content', 
-        userId: '1',
+        userId: mockUser.id,
+        profileId: mockUser.profileId,
      };
-    await socialController.post(postDto);
+    await socialController.post(mockUser, postDto);
     expect(clientProxy.send).toHaveBeenCalledWith({ cmd: PostCommands.CREATE }, postDto);
 });
 
 it('should create a vote', async () => {
-    const voteDto: CreateVoteDto = { value: 1, postId: '1', userId: '1' };
-    await socialController.vote(voteDto);
+    const voteDto: CreateVoteDto = { value: 1, postId: '1', userId: mockUser.id };
+    await socialController.vote(mockUser, voteDto);
     expect(clientProxy.send).toHaveBeenCalledWith({ cmd: VoteCommands.UPVOTE }, voteDto);
 });
 
 it('should create a comment', async () => {
     const commentDto: CreateCommentDto = { 
         content: 'Test Content', 
-        userId: '1',
+        userId: mockUser.id,
         postId: '1',
+        profileId: mockUser.profileId
      };
-    await socialController.comment(commentDto);
+    await socialController.comment(mockUser, commentDto);
     expect(clientProxy.send).toHaveBeenCalledWith({ cmd: CommentCommands.CREATE }, commentDto);
 });
 
@@ -74,7 +89,7 @@ it('should create an attachment', async () => {
         type: 'image', 
         post: '1',
      };
-    await socialController.attachment(attachmentDto);
+    await socialController.attachment(mockUser, attachmentDto);
     expect(clientProxy.send).toHaveBeenCalledWith({ cmd: AttachmentCommands.CREATE }, attachmentDto);
 });
 
@@ -106,10 +121,13 @@ it('should search posts', async () => {
     const searchCriteria: SearchPostDto = { 
         title: 'Test Post', 
         content: 'Test Content', 
-        userId: '1',
+        userId: mockUser.id,
      };
     await socialController.searchPosts(searchCriteria);
-    expect(clientProxy.send).toHaveBeenCalledWith({ cmd: PostCommands.FIND_MANY }, searchCriteria);
+    expect(clientProxy.send).toHaveBeenCalledWith({ cmd: PostCommands.FIND_MANY }, {
+        criteria: searchCriteria,
+        opts: undefined,
+    });
 });
 
 it('should search comments', async () => {

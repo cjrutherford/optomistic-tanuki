@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, Param, Post, UseGuards } from '@nestjs/c
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ServiceTokens, FollowCommands, ProfileCommands } from '@optomistic-tanuki/libs/constants';
-import { AuthGuard } from 'apps/gateway/src/auth/auth.guard';
+import { AuthGuard } from '../../../auth/auth.guard';
 import { User, UserDetails } from '../../../decorators/user.decorator';
 import { UpdateFollowDto } from '@optomistic-tanuki/libs/models';
 import { firstValueFrom } from 'rxjs';

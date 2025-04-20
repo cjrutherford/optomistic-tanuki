@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnInit, OnDestroy, Renderer2, ElementRef } from "@angular/core";
 import { ThemeService } from "../../../theme/theme.service";
-import { Subscription } from "rxjs";
+import { filter, Subscription } from "rxjs";
 
 @Component({
     standalone: true,
@@ -20,7 +20,7 @@ export class FirstSvgComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.sub = this.theme.themeColors$.subscribe((colors) => {
+        this.sub = this.theme.themeColors$.pipe(filter(x => !!x)).subscribe((colors) => {
             this.renderer.setStyle(this.el.nativeElement, '--fill-color', colors.accent);
         });
     }

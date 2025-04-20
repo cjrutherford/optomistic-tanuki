@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { ThemeService } from '../theme/theme.service';
 import { AuthStateService } from '../state/auth-state.service';
 import { LoginRequest } from '@optomistic-tanuki/libs/models';
@@ -35,7 +35,7 @@ export class LoginComponent implements OnDestroy {
   };
 
   constructor(private fb: FormBuilder, private readonly themeService: ThemeService, private readonly authStateService: AuthStateService, private readonly router: Router) {
-    this.themeSub = this.themeService.themeColors$.subscribe((colors) => {
+    this.themeSub = this.themeService.themeColors$.pipe(filter(x => !!x)).subscribe((colors) => {
       this.themeStyles = {
         backgroundColor: colors.background,
         color: colors.foreground,
@@ -48,10 +48,11 @@ export class LoginComponent implements OnDestroy {
     this.themeSub.unsubscribe();
   }
 
-  onSubmit($event: {email: string; password: string;}) {
+  onSubmit($event: SubmitEvent) {
+    const event = $event as any;
     const loginRequest: LoginRequest = {
-      email: $event.email,
-      password: $event.password,
+      email: event.email,
+      password: event.password,
     }
     this.authStateService.login(loginRequest).then((response) => {
       console.log(response);

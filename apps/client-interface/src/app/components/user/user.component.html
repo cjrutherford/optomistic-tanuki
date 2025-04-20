@@ -1,10 +1,10 @@
 <div *ngIf="isLoggedIn" style="display: flex; justify-content: center; align-items: center;">
-    <app-button variant="secondary" class="button" (click)="showPanel = !showPanel">Hi {{user.name}}</app-button>
+    <otui-button variant="secondary" class="button" (click)="showPanel = !showPanel">Hi {{user?.name || "User"}}</otui-button>
     <!-- <div *ngIf="showPanel" class="panel"> -->
-    <app-button class="button" variant="secondary" (click)="logout()">Logout</app-button>
+    <otui-button class="button" variant="secondary" (click)="logout()">Logout</otui-button>
     <!-- </div> -->
 </div>
 <div *ngIf="!isLoggedIn" style="display: flex; justify-content: center; align-items: center">
-    <app-button class="button" variant="secondary" (click)="login()">Login</app-button>
-    <app-button class="button" variant="secondary" (click)="register()">Register</app-button>
+    <otui-button class="button" variant="secondary" (click)="login()">Login</otui-button>
+    <otui-button class="button" variant="secondary" (click)="register()">Register</otui-button>
 </div>

@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AttachmentComponent } from '../attachment/attachment.component';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LinkComponent } from '../link/link.component';
-import { GridComponent } from "@optomistic-tanuki/common-ui";
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatePostDto, UpdatePostDto, CreateAttachmentDto, AttachmentDto } from '../../models';
 import { QuillEditorComponent, QuillModule, QuillModules } from 'ngx-quill';
 import { TextInputComponent } from '@optomistic-tanuki/form-ui';
@@ -32,27 +29,26 @@ export declare type ComposeCompleteEvent = {
     CommonModule,
     CardComponent,
     ButtonComponent,
-    AttachmentComponent,
     ReactiveFormsModule,
-    LinkComponent,
-    GridComponent,
     QuillEditorComponent,
     TextInputComponent,
+    QuillModule,
   ],
   templateUrl: './compose.component.html',
   styleUrls: ['./compose.component.scss'],
   // encapsulation: ViewEncapsulation.Emulated,
 })
 export class ComposeComponent {
-  @ViewChild('quillEditor') quillEditor: any;
-  isDragOver: boolean = false;
-  composeForm: FormGroup;
+  @ViewChild('quillEditor') quillEditor: QuillEditorComponent | undefined;
   @Output() postSubmitted: EventEmitter<ComposeCompleteEvent> = new EventEmitter<ComposeCompleteEvent>();
-  title: string = '';
-  content:string = ''
+
+
+  isDragOver = false;
+  composeForm: FormGroup;
+  title = '';
+  content = ''
   links: Array<{ url: string }> = [];
   attachments: AttachmentDto[] = [];
-  constructor() {}
 
   modules: QuillModules = {
     toolbar: [
@@ -145,10 +141,7 @@ export class ComposeComponent {
     },
   }
 
-  ngOnInit() {
-  }
-
-    onDragOver(event: DragEvent) {
+  onDragOver(event: DragEvent) {
     event.preventDefault();
     this.isDragOver = true;
   }
@@ -166,6 +159,7 @@ export class ComposeComponent {
       const fileArray = Array.from(files);
       fileArray.forEach((file) => {
         const reader = new FileReader();
+         
         reader.onload = (e: any) => {
           const quill = this.quillEditor?.quillEditor as Quill;
           if (file.type.startsWith('image/')) {
@@ -248,12 +242,17 @@ export class ComposeComponent {
     this.links = [];
   }
 
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   onContentChange(event: any) {
     console.log('Content changed:', event);
     const doc = new DOMParser().parseFromString(event.html, 'text/html');
     const images = doc.querySelectorAll('img');
-    images.forEach((image) => {
+    const imageSources = [];
+    images.forEach((image: HTMLElement) => {
       const src = image.getAttribute('src');
+      if (src) {
+        imageSources.push(src);
+      }
     });
     this.content = event.html;
     console.log('Content changed:', this.content);

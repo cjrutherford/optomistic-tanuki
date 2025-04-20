@@ -11,31 +11,31 @@ describe('UserEntity', () => {
 
     it('should have an email column', () => {
         const user = new UserEntity();
-        user.email = 'test@example.com';
+        user.email = 'test@example.com'; // njsscan-ignore: node_username,node_email
         expect(user.email).toBe('test@example.com');
     });
 
     it('should have a firstName column', () => {
         const user = new UserEntity();
-        user.firstName = 'John';
+        user.firstName = 'John'; // njsscan-ignore: node_username
         expect(user.firstName).toBe('John');
     });
 
     it('should have a lastName column', () => {
         const user = new UserEntity();
-        user.lastName = 'Doe';
+        user.lastName = 'Doe'; // njsscan-ignore: node_username
         expect(user.lastName).toBe('Doe');
     });
 
     it('should have a password column', () => {
         const user = new UserEntity();
-        user.password = 'password123';
+        user.password = 'password123'; // njsscan-ignore: node_password,node_username
         expect(user.password).toBe('password123');
     });
 
     it('should have a bio column of type text', () => {
         const user = new UserEntity();
-        user.bio = 'This is a bio';
+        user.bio = 'This is a bio'; // njsscan-ignore: node_username
         expect(user.bio).toBe('This is a bio');
     });
 

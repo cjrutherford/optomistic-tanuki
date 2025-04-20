@@ -4,7 +4,7 @@ import { CardComponent, GridComponent } from '@optomistic-tanuki/common-ui';
 import { CommentDto } from '../../../models';
 import { CommentComponent } from '../comment.component';
 import { PostProfileStub } from '../../post/post.component';
-import { ProfilePhotoComponent } from "../../../../../../profile-ui/src/lib/profile-ui/profile-photo/profile-photo.component";
+import { ProfilePhotoComponent } from '@optomistic-tanuki/profile-ui';
 
 export declare type CommentReply = {
   content: string;

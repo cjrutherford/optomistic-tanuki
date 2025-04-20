@@ -1,5 +1,4 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { FindOptionsWhere } from 'typeorm';
 
 export class SearchPostDto {
     @ApiPropertyOptional()

@@ -6,6 +6,7 @@ import { PostService } from './services/post.service';
 import { VoteService } from './services/vote.service';
 import { AttachmentService } from './services/attachment.service';
 import { CommentService } from './services/comment.service';
+import FollowService from './services/follow.service';
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -19,6 +20,7 @@ describe('AppController', () => {
     app = await Test.createTestingModule({
       controllers: [AppController],
       providers: [
+        FollowService,
         { provide: PostService, useValue: postService },
         { provide: VoteService, useValue: voteService },
         { provide: AttachmentService, useValue: attachmentService },
@@ -54,6 +56,15 @@ describe('AppController', () => {
       findOne: jest.fn(),
       update: jest.fn(),
       remove: jest.fn(),
+    })
+    .overrideProvider(FollowService)
+    .useValue({
+      follow: jest.fn(),
+      unfollow: jest.fn(),
+      getFollowers: jest.fn(),
+      getFollowing: jest.fn(),
+      getMutuals: jest.fn(),
+      getFollowerCount: jest.fn(),
     })
     .compile();
   });

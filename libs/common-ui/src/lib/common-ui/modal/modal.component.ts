@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
-  @Input() heading: string = '';
+  @Input() heading = '';
   @Input() mode: 'sidebar' | 'trough' | 'standard-modal' | 'captive-modal' = 'standard-modal';
   @Output() close = new EventEmitter<void>();
 

@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, Query, Inject } from "@nestjs/common";
-import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
+import { ClientProxy } from "@nestjs/microservices";
 import { CreateTaskDto, SearchTaskDto, UpdateTaskDto } from "@optomistic-tanuki/libs/models";
 import { ServiceTokens, TasksCommands } from "@optomistic-tanuki/libs/constants";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiParam, ApiQuery } from "@nestjs/swagger";

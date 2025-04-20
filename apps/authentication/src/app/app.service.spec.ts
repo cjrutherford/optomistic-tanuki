@@ -9,8 +9,7 @@ import { KeyService } from './key.service';
 import { RpcException } from '@nestjs/microservices';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
-import { Repositories } from '../constants';
-import { create } from 'axios';
+import { Logger } from '@nestjs/common';
 
 describe('AppService', () => {
   let service: AppService;
@@ -24,6 +23,7 @@ describe('AppService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
+        Logger,
         AppService,
         {
           provide: getRepositoryToken(UserEntity),
@@ -196,7 +196,7 @@ describe('AppService', () => {
   });
   describe('App Service Register User Success', () => {
     it('should successfully register a user', async () => {
-      (userRepo.findOne as jest.Mock).mockResolvedValue(null);
+      (userRepo.findOne as jest.Mock).mockResolvedValueOnce(null);
       (saltedHashService.createNewHash as jest.Mock).mockResolvedValue({
         hash: 'hashedPassword',
         salt: 'salt',
@@ -205,7 +205,7 @@ describe('AppService', () => {
         pubKey: 'publicKey',
         privLocation: 'private',
       });
-      (userRepo.findOne as jest.Mock).mockResolvedValue({ id: 'user-id', keyData: { salt: 'salt' } });
+      (userRepo.findOne as jest.Mock).mockResolvedValueOnce({ id: 'user-id', keyData: { salt: 'salt' } });
       (userRepo.insert as jest.Mock).mockResolvedValue({ identifiers: [{ id: 'user-id' }] });
 
       const result = await service.registerUser(

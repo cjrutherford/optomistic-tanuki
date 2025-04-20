@@ -16,5 +16,5 @@ export class TokenEntity {
   user: UserEntity;
 
   @Column({type: 'boolean', default: false })
-  revoked: boolean = false;
+  revoked = false;
 }

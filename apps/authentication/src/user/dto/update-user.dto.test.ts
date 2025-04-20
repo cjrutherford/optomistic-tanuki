@@ -12,9 +12,9 @@ describe('UpdateUserDto', () => {
         dto.lastName = 'Doe';
         dto.email = 'john.doe@example.com';
         dto.bio = 'A short bio';
-        dto.oldPassword = 'oldPassword123';
-        dto.newPassword = 'newPassword123';
-        dto.confirmPassword = 'newPassword123';
+        dto.oldPassword = 'oldPassword123'; // njsscan-ignore: node_password
+        dto.newPassword = 'newPassword123'; // njsscan-ignore: node_password
+        dto.confirmPassword = 'newPassword123'; // njsscan-ignore: node_password
 
         expect(dto.firstName).toBe('John');
         expect(dto.lastName).toBe('Doe');

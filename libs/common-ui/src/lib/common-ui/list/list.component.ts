@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'ot-list',
+  selector: 'otui-list',
   standalone: true,
   imports: [CommonModule],
   template: `

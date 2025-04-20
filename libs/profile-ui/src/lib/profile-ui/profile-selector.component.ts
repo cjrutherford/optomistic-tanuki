@@ -83,14 +83,7 @@ export class ProfileSelectorComponent {
         interests: '',
         skills: '',
       };
-      const createdProfile: ProfileDto = {
-        ...newProfile,
-        profileName: newProfile.name,
-        id: Math.random().toString(36).substring(2, 15), // Mock ID generation
-        created_at: new Date(),
-      };
       this.profileCreated.emit(newProfile);
-      this.profiles.push(createdProfile);
       this.profileForm.reset();
       this.dialog.closeAll();
     }

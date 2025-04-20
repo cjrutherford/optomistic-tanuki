@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import {
-  CommentDto,
   PostDto,
   ComposeComponent,
   PostComponent,
@@ -13,17 +12,13 @@ import {
   CreateCommentDto,
 } from '@optomistic-tanuki/social-ui';
 import { ThemeService } from '../../theme/theme.service';
-import { PatternComponent } from '../Svg/pattern.component';
-import { CardComponent } from '@optomistic-tanuki/common-ui';
 import { PostService } from '../../post.service';
-import { ComposeCompleteEvent } from 'libs/social-ui/src/lib/social-ui/compose/compose.component';
 import { AttachmentService } from '../../attachment.service';
-import { firstValueFrom } from 'rxjs';
+import { filter, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { CommentService } from '../../comment.service';
 import { ProfileService } from '../../profile.service';
 import { Router } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.component';
+import { PostProfileStub, ComposeCompleteEvent } from '@optomistic-tanuki/social-ui';
 
 @Component({
   selector: 'app-feed',
@@ -36,19 +31,19 @@ import { PostProfileStub } from 'libs/social-ui/src/lib/social-ui/post/post.comp
     MatIconModule,
     ComposeComponent,
     PostComponent,
-    PatternComponent,
-    CardComponent,
   ],
   providers: [ThemeService, PostService, AttachmentService, CommentService],
   templateUrl: './feed.component.html',
   styleUrls: ['./feed.component.scss'],
 })
-export class FeedComponent {
+export class FeedComponent implements OnInit, OnDestroy {
   themeStyles: {
     backgroundColor: string;
     color: string;
     border: string;
   };
+
+  destroy$ = new Subject<void>();
 
   constructor(
     private readonly themeService: ThemeService,
@@ -58,19 +53,28 @@ export class FeedComponent {
     private readonly profileService: ProfileService,
     private readonly router: Router,
   ) {
-    this.themeService.themeColors$.subscribe((colors) => {
+  }
+  
+  ngOnInit() {
+    this.themeService.themeColors$
+    .pipe(
+      filter(d => !!d),
+      takeUntil(this.destroy$)
+    )
+    .subscribe((colors) => {
       this.themeStyles = {
         backgroundColor: colors.background,
         color: colors.foreground,
         border: `1px solid ${colors.accent}`,
       };
     });
-  }
-
-  ngOnInit() {
     const currentProfile = this.profileService.currentUserProfile();
     if(currentProfile){
-      this.postService.searchPosts({ profileId: currentProfile.id }, {orderBy: 'createdAt', orderDirection: 'desc'}).subscribe((posts) => {
+      this.postService.searchPosts(
+        { profileId: currentProfile.id }, {orderBy: 'createdAt', orderDirection: 'desc'}
+      ).pipe(
+        takeUntil(this.destroy$)
+      ).subscribe((posts) => {
         this.posts = posts;
         this.loadProfiles(posts);
       });
@@ -131,6 +135,11 @@ export class FeedComponent {
         }
         this.posts.unshift(newPost);
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 

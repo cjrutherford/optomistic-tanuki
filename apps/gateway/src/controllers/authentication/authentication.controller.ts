@@ -8,7 +8,7 @@ import {
   ResetPasswordRequest,
   ValidateTokenRequest,
 } from '@optomistic-tanuki/libs/models';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { AuthCommands, ServiceTokens } from '@optomistic-tanuki/libs/constants';
 
 @ApiTags('authentication')

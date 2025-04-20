@@ -19,7 +19,7 @@ interface Notification {
 })
 export class NotificationComponent {
   @Input() notifications: Notification[] = [];
-  menuVisible: boolean = false;
+  menuVisible = false;
 
   get unreadCount(): number {
     return this.notifications.filter(n => !n.read).length;

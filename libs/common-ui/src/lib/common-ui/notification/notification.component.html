@@ -1,5 +1,5 @@
-<div class="notification-icon" (click)="toggleMenu()">
-  <app-button class="unread-count">{{ unreadCount }}</app-button>
+<div class="notification-icon" tabindex="0" (keypress)="toggleMenu()" (click)="toggleMenu()">
+  <otui-button tabIndex="1" class="unread-count">{{ unreadCount }}</otui-button>
 </div>
 <div class="notification-menu" *ngIf="menuVisible">
   <ul>

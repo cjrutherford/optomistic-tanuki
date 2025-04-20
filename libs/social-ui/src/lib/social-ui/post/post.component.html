@@ -1,4 +1,4 @@
-<app-card class="post-container" [ngClass]="'background-gradient-' + theme">
+<otui-card class="post-container" [ngClass]="'background-gradient-' + theme">
   <div class="post-header">
     @if (profile) {
       <div class="post-profile">
@@ -13,26 +13,26 @@
     <div class="post-content" [innerHTML]="content.content"></div>
     <div class="post-attachment" *ngIf="attachments.length > 0">
       <h3>Attachments</h3>
-      <app-grid [columns]="6" [rows]="attachmentRows"  class="attachment">
+      <otui-grid [columns]="6" [rows]="attachmentRows"  class="attachment">
         <!-- Display attachment details here -->
-        <app-tile *ngFor="let attachment of attachments" (click)="downloadAttachment(attachment.url)" target="_blank">{{ attachment.name }}</app-tile>
-      </app-grid>
+        <otui-tile *ngFor="let attachment of attachments" (click)="downloadAttachment(attachment)" target="_blank">{{ attachment.name }}</otui-tile>
+      </otui-grid>
     </div>
     <div class="post-link" *ngIf="links.length > 0">
       <h3>Links</h3>
-      <app-grid [columns]="1" [rows]="links.length">
-          <app-tile *ngFor="let link of links" class="link">
+      <otui-grid [columns]="1" [rows]="links.length">
+          <otui-tile *ngFor="let link of links" class="link">
             <!-- Display link details here -->
             <a [href]="link.url" target="_blank">{{ link.title }}</a>
-          </app-tile>
-      </app-grid>
+          </otui-tile>
+      </otui-grid>
     </div>
     <div class="actions">
-      <app-button variant="success">Like</app-button>
-      <app-button variant="success">Share</app-button>
+      <otui-button variant="success">Like</otui-button>
+      <otui-button variant="success">Share</otui-button>
       <lib-vote></lib-vote>
       <lib-comment (commentAdded)="onCommentAdd($event)"></lib-comment>
     </div>
   </div>
   <lib-comment-list [availableProfiles]="availableProfiles" (commentAdded)="onCommentReply($event)" [comments]="comments"></lib-comment-list>
-</app-card>
+</otui-card>

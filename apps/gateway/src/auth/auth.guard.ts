@@ -1,18 +1,20 @@
-import { CanActivate, ExecutionContext, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
 import { AuthCommands } from '@optomistic-tanuki/libs/constants';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(@Inject('AUTHENTICATION_SERVICE') private authService: ClientProxy, private reflector: Reflector) {}
 
   private async introspectToken(token: string) {
-      return firstValueFrom(this.authService.send({ cmd: AuthCommands.Validate }, { token }));
+      const response = await firstValueFrom(this.authService.send({ cmd: AuthCommands.Validate }, { token }));
+      // Assuming the response contains a field `isValid` to indicate token validity
+      return response && response.isValid;
   }
 
-  private parseToken(token: string) {
+  parseToken(token: string) {
       // Assuming the token is a JWT token
       const payload = Buffer.from(token.split('.')[1], 'base64').toString('utf-8');
       return JSON.parse(payload);
@@ -25,19 +27,19 @@ export class AuthGuard implements CanActivate {
       const authHeader = request.headers['authorization'];
       if (!authHeader) {
           console.log("😵 No Auth Header Provided")
-          throw new HttpException('Unauthorized: No Authorization Header', HttpStatus.UNAUTHORIZED);
+          throw new UnauthorizedException('Unauthorized: No Auth Header Provided.');
       }
 
       const token = authHeader.split(' ')[1];
       if (!token) {
             console.log("😵 No Token Found");
-          throw new HttpException('Unauthorized: No Token Found.', HttpStatus.UNAUTHORIZED);
+          throw new UnauthorizedException('Unauthorized: No Token Found.');
       }
       const isAuthenticated = await this.introspectToken(token);
 
       if (!isAuthenticated) {
             console.log("😵 Token Invalid");
-          throw new HttpException('Unauthorized: Token Invalid.', HttpStatus.UNAUTHORIZED);
+          throw new UnauthorizedException('Unauthorized: Token Invalid.');
       }
 
       const user = this.parseToken(token);

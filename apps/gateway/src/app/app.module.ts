@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { AuthenticationController } from "../controllers/authentication/authentication.controller";
-import { Client, ClientProxyFactory, ClientsModule, Transport } from "@nestjs/microservices";
+import { ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { ProfileController } from "../controllers/profile/profile.controller";
 import { SocialController } from "../controllers/social/social.controller";
 import { AuthGuard } from "../auth/auth.guard";

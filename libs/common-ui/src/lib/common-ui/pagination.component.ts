@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { signal } from '@angular/core';
+import { signal, OnInit } from '@angular/core';
 
 @Component({
   selector: 'otui-pagination',
@@ -9,10 +9,10 @@ import { signal } from '@angular/core';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
-export class PaginationComponent {
-  @Input() totalPages: number = 1;
-  @Input() currentPage: number = 1;
-  @Input() maxVisiblePages: number = 5;
+export class PaginationComponent implements OnInit {
+  @Input() totalPages = 1;
+  @Input() currentPage = 1;
+  @Input() maxVisiblePages = 5;
 
   readonly pages = signal<number[]>([]);
   readonly showStartEllipsis = signal<boolean>(false);

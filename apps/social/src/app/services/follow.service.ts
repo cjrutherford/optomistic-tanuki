@@ -1,4 +1,4 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import FollowEntity from "../../entities/Follow.entity";
 import { Repository } from "typeorm";
@@ -6,6 +6,7 @@ import { RpcException } from "@nestjs/microservices";
 
 @Injectable()
 export default class FollowService {
+    private readonly logger = new Logger('Social Service | Follow Service')
     constructor(@InjectRepository(FollowEntity) private readonly followRepo: Repository<FollowEntity>) {}
 
     async follow(followerId: string, followeeId: string) {
@@ -23,7 +24,8 @@ export default class FollowService {
             }
             return await this.followRepo.save(newFollow);
         } catch (error) {
-            console.error(error);
+            this.logger.error(`Unable to create follow: ${error.message}`)
+            throw new Error(`Unable to create follow: ${error.message}`)
         }
     }
 
@@ -40,7 +42,8 @@ export default class FollowService {
             }
             return await this.followRepo.remove(currentFollow);
         } catch (error) {
-            console.error(error);
+            this.logger.error(`Unable to unfollow: ${error.message}`)
+            throw new Error(`Unable to Unfollow: ${error.message}`)
         }
     }
 

@@ -17,7 +17,7 @@
     </mat-sidenav>
     <mat-sidenav-content style="overflow: hidden;">
         <app-toolbar (navToggle)="toggleNav()"></app-toolbar>
-        <app-grid [columns]="12" [rows]="1">
+        <otui-grid [columns]="12" [rows]="1">
             <div class="left" style="grid-column: 1 / 3;">
             @if(authState.isAuthenticated) {
                 <lib-profile-selector
@@ -32,11 +32,11 @@
                 <router-outlet></router-outlet>
             </div>
             <div class="right" style="grid-column: 11 / 13;">
-                <!-- <app-card>
+                <!-- <otui-card>
                     Hello Right
-                </app-card> -->
+                </otui-card> -->
             </div>
-        </app-grid>
+        </otui-grid>
     </mat-sidenav-content>
 </mat-sidenav-container>
 

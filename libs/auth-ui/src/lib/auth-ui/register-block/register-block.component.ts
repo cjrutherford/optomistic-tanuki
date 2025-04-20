@@ -12,11 +12,11 @@ import { TextAreaComponent, TextInputComponent } from '@optomistic-tanuki/form-u
   styleUrl: './register-block.component.scss',
 })
 export class RegisterBlockComponent {
-  @Input() registerHeader: string = 'Register';
-  @Input() registerButtonText: string = 'Register';
-  @Input() callToAction: string = 'Join us on your journey';
-  @Input() heroSource: string = 'https://source.unsplash.com/random/800x600/?nature,water'; 
-  @Output() submit = new EventEmitter<{email: string; password: string, firstName: string, lastName: string, confirmation: string, bio: string}>();
+  @Input() registerHeader = 'Register';
+  @Input() registerButtonText = 'Register';
+  @Input() callToAction = 'Join us on your journey';
+  @Input() heroSource = 'https://source.unsplash.com/random/800x600/?nature,water'; 
+  @Output() submitEvent = new EventEmitter<{email: string; password: string, firstName: string, lastName: string, confirmation: string, bio: string}>();
   registerForm: FormGroup;
   constructor(private readonly fb: FormBuilder) {
     this.registerForm = this.fb.group({
@@ -29,12 +29,12 @@ export class RegisterBlockComponent {
     });
   }
 
-  onFormChange(e: string, control: string) {
+  onFormChange(e: string) {
     console.log(e);
   }
 
   onSubmit() {
     console.log(this.registerForm.value);
-    this.submit.emit(this.registerForm.value);
+    this.submitEvent.emit(this.registerForm.value);
   }
 }

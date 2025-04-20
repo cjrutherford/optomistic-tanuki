@@ -1,3 +1,5 @@
 {
-    "nxConsole.nxWorkspacePath": ""
+    "nxConsole.nxWorkspacePath": "${WorkspaceRoot}",
+    "jest.pathToJest": "node_modules/.bin/jest",
+    "jest.rootPath": "${workspaceFolder}"
 }

@@ -11,7 +11,7 @@ import { CardComponent } from '@optomistic-tanuki/common-ui';
   styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent {
-  @Input() profileName: string = '';
-  @Input() profileImage: string = '';
-  @Input() backgroundImage: string = '';
+  @Input() profileName = '';
+  @Input() profileImage = '';
+  @Input() backgroundImage = '';
 }

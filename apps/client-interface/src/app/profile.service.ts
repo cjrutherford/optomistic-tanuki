@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { ProfileDto, CreateProfileDto, UpdateProfileDto } from '@optomistic-tanuki/profile-ui';
-import { firstValueFrom, map, Observable, switchMap, forkJoin } from 'rxjs';
+import { firstValueFrom, map, switchMap, forkJoin } from 'rxjs';
 import { AuthStateService } from './state/auth-state.service';
 
 @Injectable({
@@ -56,19 +56,16 @@ export class ProfileService {
     const originalCoverPic = profile.coverPic;
     profile.profilePic = '';
     profile.coverPic = '';
-    profile.userId = this.authState.getDecodedTokenValue()?.userId;
+    const tokenValue = this.authState.getDecodedTokenValue();
+    if (tokenValue) {
+      profile.userId = tokenValue.userId;
+    }
     const newProfile = await firstValueFrom(this.http.post<ProfileDto>('/api/profile', profile));
     const picUpdate = await firstValueFrom(this.http.put<ProfileDto>(
       `/api/profile/${newProfile.id}`, 
       { profilePic: originalProfilePic },
     ));
-    const coverUpdate = await firstValueFrom(this.http.put<ProfileDto>(`/api/profile/${picUpdate.id}`, { coverPic: originalCoverPic }));
-    // this.currentUserProfiles.update(profiles => {
-    //   const updatedProfiles = [...profiles, coverUpdate];
-    //   return updatedProfiles.filter((profile, index, self) => 
-    //   index === self.findIndex(p => p.id === profile.id)
-    //   );
-    // });
+    await firstValueFrom(this.http.put<ProfileDto>(`/api/profile/${picUpdate.id}`, { coverPic: originalCoverPic }));
     localStorage.setItem('profiles', JSON.stringify(this.currentUserProfiles()));
   }
 

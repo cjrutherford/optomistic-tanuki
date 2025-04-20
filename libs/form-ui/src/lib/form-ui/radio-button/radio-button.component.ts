@@ -10,12 +10,12 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./radio-button.component.scss'],
 })
 export class RadioButtonComponent {
-  @Input() options: { label: string, value: any }[] = [];
+  @Input() options: { label: string, value: number | string }[] = [];
   @Input() layout: 'vertical' | 'horizontal' | 'grid' = 'vertical';
-  @Output() selectedValue = new EventEmitter<any>();
-  selected: any;
+  @Output() selectedValue = new EventEmitter<number|string>();
+  selected: number | string;
 
-  onSelect(value: any) {
+  onSelect(value: number | string) {
     this.selected = value;
     this.selectedValue.emit(this.selected);
   }

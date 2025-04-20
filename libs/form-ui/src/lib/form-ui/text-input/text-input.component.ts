@@ -18,17 +18,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class TextInputComponent implements ControlValueAccessor {
   @Input() type: 'text' | 'password' | 'obscured' = 'text';
-  @Input() label: string = '';  
+  @Input() label = '';  
   @Input() labelPosition: 'top' | 'left' | 'right' | 'bottom' = 'top';
   @Output() valueChange = new EventEmitter<string>();
 
-  value: string = '';
-  onChange = (value: string) => {};
-  onTouched = () => {};
+  value = '';
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onChange?:(value: string) => void = (value: string) => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onTouched?:(value: string) => void = () => {};
 
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.value = input.value;
+    if( this.onChange === undefined) return;
     this.onChange(this.value);
     this.valueChange.emit(this.value);
   }

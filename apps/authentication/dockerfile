@@ -1,5 +1,7 @@
+ARG DOCKER_HUB_PREFIX=optomistic_tanuki
+ARG BASE_IMAGE_TAG=latest
 # Use the base Dockerfile from the root of the project
-FROM optomistic_tanuki/base:latest AS builder
+FROM ${DOCKER_HUB_PREFIX-}/optomistic_tanuki_base:${BASE_IMAGE_TAG} AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -12,6 +14,7 @@ COPY . .
 RUN npx nx build authentication
 
 FROM node:lts-alpine
+
 WORKDIR /app
 
 COPY --from=builder /app/dist/apps/authentication /app/dist/apps/authentication

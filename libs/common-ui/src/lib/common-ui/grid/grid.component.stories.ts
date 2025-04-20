@@ -24,14 +24,14 @@ export const Primary: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="3" [rows]="2">
-        <app-tile>Tile 1</app-tile>
-        <app-tile>Tile 2</app-tile>
-        <app-tile>Tile 3</app-tile>
-        <app-tile>Tile 4</app-tile>
-        <app-tile>Tile 5</app-tile>
-        <app-tile>Tile 6</app-tile>
-      </app-grid>
+      <otui-grid [columns]="3" [rows]="2">
+        <otui-tile>Tile 1</otui-tile>
+        <otui-tile>Tile 2</otui-tile>
+        <otui-tile>Tile 3</otui-tile>
+        <otui-tile>Tile 4</otui-tile>
+        <otui-tile>Tile 5</otui-tile>
+        <otui-tile>Tile 6</otui-tile>
+      </otui-grid>
     `,
   }),
 };
@@ -43,12 +43,12 @@ export const Secondary: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="4" [rows]="1">
-        <app-tile>Tile A</app-tile>
-        <app-tile>Tile B</app-tile>
-        <app-tile>Tile C</app-tile>
-        <app-tile>Tile D</app-tile>
-      </app-grid>
+      <otui-grid [columns]="4" [rows]="1">
+        <otui-tile>Tile A</otui-tile>
+        <otui-tile>Tile B</otui-tile>
+        <otui-tile>Tile C</otui-tile>
+        <otui-tile>Tile D</otui-tile>
+      </otui-grid>
     `,
   }),
 };
@@ -60,14 +60,14 @@ export const Tertiary: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="2" [rows]="3">
-        <app-tile>Tile X</app-tile>
-        <app-tile>Tile Y</app-tile>
-        <app-tile>Tile Z</app-tile>
-        <app-tile>Tile W</app-tile>
-        <app-tile>Tile V</app-tile>
-        <app-tile>Tile U</app-tile>
-      </app-grid>
+      <otui-grid [columns]="2" [rows]="3">
+        <otui-tile>Tile X</otui-tile>
+        <otui-tile>Tile Y</otui-tile>
+        <otui-tile>Tile Z</otui-tile>
+        <otui-tile>Tile W</otui-tile>
+        <otui-tile>Tile V</otui-tile>
+        <otui-tile>Tile U</otui-tile>
+      </otui-grid>
     `,
   }),
 };
@@ -79,14 +79,14 @@ export const Heading: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="3" [rows]="2">
-        <app-tile>Tile 1</app-tile>
-        <app-tile>Tile 2</app-tile>
-        <app-tile>Tile 3</app-tile>
-        <app-tile>Tile 4</app-tile>
-        <app-tile>Tile 5</app-tile>
-        <app-tile>Tile 6</app-tile>
-      </app-grid>
+      <otui-grid [columns]="3" [rows]="2">
+        <otui-tile>Tile 1</otui-tile>
+        <otui-tile>Tile 2</otui-tile>
+        <otui-tile>Tile 3</otui-tile>
+        <otui-tile>Tile 4</otui-tile>
+        <otui-tile>Tile 5</otui-tile>
+        <otui-tile>Tile 6</otui-tile>
+      </otui-grid>
     `,
   }),
   play: async ({ canvasElement }) => {
@@ -102,14 +102,14 @@ export const LightMode: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="3" [rows]="2" class="light-mode">
-        <app-tile>Tile 1</app-tile>
-        <app-tile>Tile 2</app-tile>
-        <app-tile>Tile 3</app-tile>
-        <app-tile>Tile 4</app-tile>
-        <app-tile>Tile 5</app-tile>
-        <app-tile>Tile 6</app-tile>
-      </app-grid>
+      <otui-grid [columns]="3" [rows]="2" class="light-mode">
+        <otui-tile>Tile 1</otui-tile>
+        <otui-tile>Tile 2</otui-tile>
+        <otui-tile>Tile 3</otui-tile>
+        <otui-tile>Tile 4</otui-tile>
+        <otui-tile>Tile 5</otui-tile>
+        <otui-tile>Tile 6</otui-tile>
+      </otui-grid>
     `,
   }),
 };
@@ -121,14 +121,14 @@ export const DarkMode: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="3" [rows]="2" class="dark-mode">
-        <app-tile>Tile 1</app-tile>
-        <app-tile>Tile 2</app-tile>
-        <app-tile>Tile 3</app-tile>
-        <app-tile>Tile 4</app-tile>
-        <app-tile>Tile 5</app-tile>
-        <app-tile>Tile 6</app-tile>
-      </app-grid>
+      <otui-grid [columns]="3" [rows]="2" class="dark-mode">
+        <otui-tile>Tile 1</otui-tile>
+        <otui-tile>Tile 2</otui-tile>
+        <otui-tile>Tile 3</otui-tile>
+        <otui-tile>Tile 4</otui-tile>
+        <otui-tile>Tile 5</otui-tile>
+        <otui-tile>Tile 6</otui-tile>
+      </otui-grid>
     `,
   }),
 };
@@ -140,14 +140,14 @@ export const FastCycleMode: Story = {
   },
   render: () => ({
     template: `
-      <app-grid [columns]="3" [rows]="2" class="fast-cycle-mode">
-        <app-tile>Tile 1</app-tile>
-        <app-tile>Tile 2</app-tile>
-        <app-tile>Tile 3</app-tile>
-        <app-tile>Tile 4</app-tile>
-        <app-tile>Tile 5</app-tile>
-        <app-tile>Tile 6</app-tile>
-      </app-grid>
+      <otui-grid [columns]="3" [rows]="2" class="fast-cycle-mode">
+        <otui-tile>Tile 1</otui-tile>
+        <otui-tile>Tile 2</otui-tile>
+        <otui-tile>Tile 3</otui-tile>
+        <otui-tile>Tile 4</otui-tile>
+        <otui-tile>Tile 5</otui-tile>
+        <otui-tile>Tile 6</otui-tile>
+      </otui-grid>
     `,
   }),
 };

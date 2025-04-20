@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'ot-heading',
+  selector: 'otui-heading',
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -11,6 +11,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./heading.component.scss']
 })
 export class HeadingComponent {
-  @Input() text: string = '';
-  @Input() size: string = '1em';
+  @Input() text = '';
+  @Input() size = '1em';
 }

@@ -1,4 +1,4 @@
-import { createParamDecorator, ExecutionContext, Injectable, Inject } from '@nestjs/common';
+import { createParamDecorator, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

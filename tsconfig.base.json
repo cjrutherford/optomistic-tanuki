@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "NodeNext",
@@ -26,7 +27,8 @@
       "@optomistic-tanuki/libs/models": ["libs/models/src/index.ts"],
       "@optomistic-tanuki/logger": ["libs/logger/src/index.ts"],
       "@optomistic-tanuki/profile-ui": ["libs/profile-ui/src/index.ts"],
-      "@optomistic-tanuki/social-ui": ["libs/social-ui/src/index.ts"]
+      "@optomistic-tanuki/social-ui": ["libs/social-ui/src/index.ts"],
+      "@optomistic-tanuki/theme-ui": ["libs/theme-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

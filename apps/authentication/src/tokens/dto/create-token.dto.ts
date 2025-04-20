@@ -2,5 +2,5 @@
 export class CreateTokenDto {
     email: string;
     bio: string;
-    session_key: String;
+    session_key: string;
 }

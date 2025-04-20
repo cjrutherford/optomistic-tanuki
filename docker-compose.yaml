@@ -26,7 +26,7 @@ services:
       - ot_gateway
     restart: always
   build_base:
-    image: optomistic_tanuki/base
+    image: optomistic_tanuki_base
     env_file:
       - .env
     build:
@@ -37,7 +37,7 @@ services:
       - ot_network
     restart: "no"
   migration_runner:
-    image: optomistic_tanuki/base
+    image: optomistic_tanuki_base
     depends_on:
       - build_base
       - db
@@ -82,7 +82,7 @@ services:
     networks:
       - ot_network
   ot_client_interface:
-    image: optomistic_tanuki/client_interface
+    image: optomistic_tanuki_client_interface
     container_name: ot_client_interface
     build:
       dockerfile: ./apps/client-interface/dockerfile
@@ -96,7 +96,7 @@ services:
     volumes:
       - ./apps/client-interface/src/assets/config.yaml:/app/dist/apps/client-interface/assets/config.yaml
   ot_authentication:
-    image: optomistic_tanuki/authentication
+    image: optomistic_tanuki_authentication
     container_name: ot_authentication
     build:
       dockerfile: ./apps/authentication/dockerfile
@@ -110,7 +110,7 @@ services:
     volumes:
       - ./apps/authentication/src/assets/config.yaml:/app/dist/apps/authentication/assets/config.yaml
   ot_gateway:
-    image: optomistic_tanuki/gateway
+    image: optomistic_tanuki_gateway
     container_name: ot_gateway
     build:
       dockerfile: ./apps/gateway/dockerfile
@@ -128,7 +128,7 @@ services:
     volumes:
       - ./apps/gateway/src/assets/config.yaml:/app/dist/apps/gateway/assets/config.yaml
   ot_profile:
-    image: optomistic_tanuki/profile
+    image: optomistic_tanuki_profile
     container_name: ot_profile
     build:
       dockerfile: ./apps/profile/dockerfile
@@ -142,7 +142,7 @@ services:
     volumes:
       - ./apps/profile/src/assets/config.yaml:/app/dist/apps/profile/assets/config.yaml
   ot_social:
-    image: optomistic_tanuki/social
+    image: optomistic_tanuki_social
     container_name: ot_social
     build:
       dockerfile: ./apps/social/dockerfile
@@ -156,7 +156,7 @@ services:
     volumes:
       - ./apps/social/src/assets/config.yaml:/app/dist/apps/social/assets/config.yaml
   ot_tasks:
-    image: optomistic_tanuki/tasks
+    image: optomistic_tanuki_tasks
     container_name: ot_tasks
     build:
       dockerfile: ./apps/tasks/dockerfile

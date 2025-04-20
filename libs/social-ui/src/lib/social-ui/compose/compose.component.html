@@ -1,4 +1,4 @@
-<app-card>
+<otui-card>
   <form>
     <lib-text-input
       type="text"
@@ -26,19 +26,19 @@
         (onContentChanged)="onContentChange($event)"
       ></quill-editor>
     </div>
-    <!-- <app-grid
+    <!-- <otui-grid
         [columns]="2"
         [rows]="1"
         [style]="{ 'margin-top': '1em' }"> -->
     <!-- <lib-attachment (attachmentsChange)="onAttachmentChange($event)"></lib-attachment> -->
     <!-- <lib-link [links]="links" (linksChange)="onLinksChange($event)"></lib-link> -->
-    <!-- </app-grid> -->
-    <app-button
+    <!-- </otui-grid> -->
+    <otui-button
       style="margin-top: 1em; margin-left: 15px"
       (click)="onPostSubmit()"
       label="Post"
       variant="success"
       >Post!
-    </app-button>
+    </otui-button>
   </form>
-</app-card>
+</otui-card>

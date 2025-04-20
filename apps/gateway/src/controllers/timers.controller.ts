@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Put, Delete, Body, Param, Inject } from "@nestjs/common";
-import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
+import { ClientProxy } from "@nestjs/microservices";
 import { CreateTimerDto, UpdateTimerDto } from "@optomistic-tanuki/libs/models";
 import { ServiceTokens, TimersCommands } from "@optomistic-tanuki/libs/constants";
 import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from "@nestjs/swagger";

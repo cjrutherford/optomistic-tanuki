@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileUiComponent } from './profile-selector.component';
+import { ProfileSelectorComponent } from './profile-selector.component';
 
 describe('ProfileUiComponent', () => {
-  let component: ProfileUiComponent;
-  let fixture: ComponentFixture<ProfileUiComponent>;
+  let component: ProfileSelectorComponent;
+  let fixture: ComponentFixture<ProfileSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProfileUiComponent],
+      imports: [ProfileSelectorComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ProfileUiComponent);
+    fixture = TestBed.createComponent(ProfileSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
