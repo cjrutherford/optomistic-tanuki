@@ -31,5 +31,9 @@
       "@optomistic-tanuki/theme-ui": ["libs/theme-ui/src/index.ts"]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules", 
+    "tmp",
+    "**/.storybook/**/*"
+  ]
 }
