@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Themeable, ThemeColors } from '@optomistic-tanuki/theme-ui';
 
 @Component({
   selector: 'lib-text-input',
@@ -15,8 +16,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       multi: true,
     },
   ],
+  host: {
+    '[style.--background]': 'background',
+    '[style.--foreground]': 'foreground',
+    '[style.--accent]': 'accent',
+    '[style.--complement]': 'complement',
+    '[style.--border-color]': 'borderColor',
+    '[style.--border-gradient]': 'borderGradient',
+    '[style.--transition-duration]': 'transitionDuration',
+  },
 })
-export class TextInputComponent implements ControlValueAccessor {
+export class TextInputComponent extends Themeable implements ControlValueAccessor {
   @Input() type: 'text' | 'password' | 'obscured' = 'text';
   @Input() label = '';  
   @Input() labelPosition: 'top' | 'left' | 'right' | 'bottom' = 'top';
@@ -34,6 +44,19 @@ export class TextInputComponent implements ControlValueAccessor {
     if( this.onChange === undefined) return;
     this.onChange(this.value);
     this.valueChange.emit(this.value);
+  }
+
+  override applyTheme(colors: ThemeColors): void {
+    this.background = `linear-gradient(to bottom, ${colors.background}, ${colors.accent})`;
+    this.accent = colors.accent;
+    this.foreground = colors.foreground;
+    this.borderColor = colors.complementary;
+    this.complement = colors.complementary;
+    if (this.theme === 'dark') {
+      this.borderColor = colors.complementaryShades[6][1];
+    } else {
+      this.borderColor = colors.complementaryShades[2][1];
+    }
   }
 
   writeValue(value: string): void {

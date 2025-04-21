@@ -1,5 +1,5 @@
 .card {
-    border: 4px solid var(--accent, #b1baec);
+    border: 4px solid var(--border-color, #b1baec);
     border-radius: 4px;
     margin: 10px;
     padding: 20px;
@@ -24,8 +24,8 @@
 }
 
 .card.fast-cycle-mode {
-    background: var(--gradient-fastCycle);
-    color: var(--foreground-color, #fff);
+    background: var(--border-gradient);
+    color: var(--foreground, #fff);
 }
 
 .card-header {

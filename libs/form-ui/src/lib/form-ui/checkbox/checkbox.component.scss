@@ -17,14 +17,14 @@
   position: relative;
   height: 20px;
   width: 20px;
-  background-color: var(--accent-shade-lighten-30);
-  border: 1px solid #ccc;
+  background-color: var(--accent);
+  border: 1px solid var(--border-color);
   margin-right: 10px;
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: var(--accent-shade-darken-10);
-  box-shadow: 0 0 5px 8px var(--accent-shade-darken-30);
+  background-color: var(--accent);
+  box-shadow: 0 0 5px 8px var(--accent);
 }
 
 .checkmark:after {

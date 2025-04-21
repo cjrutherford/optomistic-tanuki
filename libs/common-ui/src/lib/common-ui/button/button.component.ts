@@ -31,7 +31,7 @@ export class ButtonComponent extends Themeable {
   @Output() action = new EventEmitter<void>();
 
   override applyTheme(colors: ThemeColors): void {
-    this.background = `linear-gradient(to bottom, ${colors.background}, ${colors.accent}`;
+    this.background = `linear-gradient(to bottom, ${colors.background}, ${colors.accent})`;
     this.foreground = colors.foreground;
     this.accent = colors.accent;
     this.complement = colors.complementary;

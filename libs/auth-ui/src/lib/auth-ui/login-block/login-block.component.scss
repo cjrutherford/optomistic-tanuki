@@ -6,15 +6,21 @@
     justify-content: center;
     height: 100vh; /* Full viewport height */
 }
+.card-outer {
+    background: var(--border-gradient);
+    padding: 6px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--complement);
+}
 .card-inner  {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: var(--accent-shade-darken-30);
+    background: var(--background);
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px var(--complement);
     .hero {
         display: flex;
         flex-direction: column;
