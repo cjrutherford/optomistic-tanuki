@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent, CardComponent } from '@optomistic-tanuki/common-ui';
 import { QuillModule, QuillModules } from 'ngx-quill';
+import { Themeable, ThemeColors, ThemeService } from '@optomistic-tanuki/theme-ui';
 
 @Component({
   selector: 'lib-comment',
@@ -12,13 +13,41 @@ import { QuillModule, QuillModules } from 'ngx-quill';
   providers: [],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
+  host: {
+    '[style.--background]': 'background',
+    '[style.--foreground]': 'foreground',
+    '[style.--accent]': 'accent',
+    '[style.--complement]': 'complement',
+    '[style.--border-color]': 'borderColor',
+    '[style.--border-gradient]': 'borderGradient',
+    '[style.--transition-duration]': 'transitionDuration',
+    '[style.--accent-shade]': 'accentShade',
+  }
 })
-export class CommentComponent {
+export class CommentComponent extends Themeable {
   @Output() commentAdded: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild('commentDialog') commentDialog: TemplateRef<HTMLElement>;
   comment = '';
+  accentShade: string;
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, themeService: ThemeService) {
+    super(themeService)
+  }
+
+  override applyTheme(colors: ThemeColors) {
+    this.background = `linear-gradient(30deg, ${colors.accent}, ${colors.background})`;
+    this.accent = colors.accent;
+    this.borderColor = colors.complementary;
+    if (this.theme === 'dark') {
+      this.borderGradient = colors.complementaryGradients['dark'];
+      this.accentShade = colors.accentShades[6][1]
+    } else {
+      this.borderGradient = colors.complementaryGradients['light'];
+      this.accentShade = colors.accentShades[2][1]
+    }
+    this.foreground = colors.foreground;
+    this.complement = colors.complementary;
+    this.transitionDuration = '0.5s';
   }
 
   modules: QuillModules = {

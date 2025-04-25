@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ThemeService } from './theme.service';
 import { FormsModule } from '@angular/forms';
 import { Subscription, filter } from 'rxjs';
-import { ThemeColors } from '@optomistic-tanuki/common-ui';
+import { ThemeColors } from './theme.interface';
 
 @Component({
   selector: 'lib-theme-toggle',

@@ -1,6 +1,6 @@
 <otui-card style="overflow-x: scroll; overflow-y: none;">
-    <h6>Your Profiles:</h6>
-    <otui-grid [columns]="10" style="overflow-x: scroll; overflow-y: none;">
+    <h2>Your Profiles:</h2>
+    <otui-grid [columns]="10" style="overflow-x: scroll; overflow-y: none; padding-bottom: 10px;">
     @for (p of profiles; track p.id) {
             <otui-tile class="real-profile" [class.active]="p.id === internalSelectedProfile()?.id">
                 <h2>{{p.profileName}}</h2>

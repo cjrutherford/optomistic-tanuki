@@ -1,15 +1,41 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { signal, OnInit } from '@angular/core';
+import { Themeable, ThemeColors } from '@optomistic-tanuki/theme-ui';
+import { ButtonComponent } from './button/button.component';
 
 @Component({
   selector: 'otui-pagination',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
+  host: {
+    'class.theme': 'theme',
+    '[style.--background]': 'background',
+    '[style.--foreground]': 'foreground',
+    '[style.--accent]': 'accent',
+    '[style.--complement]': 'complement',
+    '[style.--border-color]': 'borderColor',
+    '[style.--border-gradient]': 'borderGradient',
+    '[style.--transition-duration]': 'transitionDuration',
+  }
 })
-export class PaginationComponent implements OnInit {
+export class PaginationComponent extends Themeable implements OnInit {
+  override applyTheme(colors: ThemeColors): void {
+    this.background = `linear-gradient(to bottom, ${colors.background}, ${colors.accent})`;
+    this.foreground = colors.foreground;
+    this.accent = colors.accent;
+    this.complement = colors.complementary;
+    if (this.theme === 'dark') {
+      this.borderGradient = colors.complementaryGradients['dark']
+      this.borderColor = colors.complementaryShades[6][1];
+    } else {
+      this.borderGradient = colors.accentGradients['light']
+      this.borderColor = colors.complementaryShades[2][1];
+    }
+    this.transitionDuration = '0.3s';
+  }
   @Input() totalPages = 1;
   @Input() currentPage = 1;
   @Input() maxVisiblePages = 5;
@@ -20,7 +46,7 @@ export class PaginationComponent implements OnInit {
   readonly firstPage = signal<number>(1);
   readonly lastPage = signal<number>(this.pages.length);
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.updatePageList();  
   }
 

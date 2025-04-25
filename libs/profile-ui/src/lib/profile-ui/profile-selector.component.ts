@@ -7,6 +7,7 @@ import { ProfileDto } from '../models';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
 import { CreateProfileDto } from '@optomistic-tanuki/libs/models';
+import { Themeable, ThemeColors, ThemeService } from '@optomistic-tanuki/theme-ui';
 
 @Component({
   selector: 'lib-profile-selector',
@@ -18,7 +19,6 @@ import { CreateProfileDto } from '@optomistic-tanuki/libs/models';
     TileComponent,
     GridComponent,
     TextInputComponent,
-    TextAreaComponent,
     ButtonComponent,
     MatDialogModule,
     ProfilePhotoComponent,
@@ -26,8 +26,18 @@ import { CreateProfileDto } from '@optomistic-tanuki/libs/models';
   ],
   templateUrl: './profile-selector.component.html',
   styleUrl: './profile-selector.component.scss',
+  host: {
+    'class.theme': 'theme',
+    '[style.--background]': 'background',
+    '[style.--foreground]': 'foreground',
+    '[style.--accent]': 'accent',
+    '[style.--complement]': 'complement',
+    '[style.--border-color]': 'borderColor',
+    '[style.--border-gradient]': 'borderGradient',
+    '[style.--transition-duration]': 'transitionDuration',
+  }
 })
-export class ProfileSelectorComponent {
+export class ProfileSelectorComponent extends Themeable{
   @Input() profiles: ProfileDto[] = [];
   @Input() currentSelectedProfile: ProfileDto | null = null;
   @Output() selectedProfile: EventEmitter<ProfileDto> = new EventEmitter<ProfileDto>();
@@ -38,7 +48,8 @@ export class ProfileSelectorComponent {
   showCreateProfile = false;
   profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, themeService: ThemeService) {
+    super(themeService);
     this.profileForm = this.fb.group({
       profileName: this.fb.control(''),
       description: this.fb.control(''),
@@ -46,6 +57,20 @@ export class ProfileSelectorComponent {
       coverPic: this.fb.control(''),
       bio: this.fb.control('')
     });
+  }
+  override applyTheme(colors: ThemeColors): void {
+    this.background = `linear-gradient(to bottom, ${colors.background}, ${colors.accent})`;
+    this.accent = colors.accent;
+    this.foreground = colors.foreground;
+    this.complement = colors.complementary;
+    if(this.theme === 'dark') {
+      this.borderGradient = colors.accentGradients['dark'];
+      this.borderColor = colors.complementaryShades[2][0];
+    } else {
+      this.borderGradient = colors.accentGradients['light'];
+      this.borderColor = colors.complementaryShades[2][1];
+    }
+    this.transitionDuration = '0.3s';
   }
 
   selectProfile(profile: string) {

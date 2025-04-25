@@ -1,16 +1,16 @@
 <div class="pagination">
-  <button (click)="onFirstPageClick()">First</button>
-  <button (click)="onPreviousPageClick()">Previous</button>
-  <button *ngIf="showStartEllipsis()" disabled>...</button>
+  <otui-button (click)="onFirstPageClick()">First</otui-button>
+  <otui-button (click)="onPreviousPageClick()">Previous</otui-button>
+  <otui-button *ngIf="showStartEllipsis()" [disabled]="true">...</otui-button>
 <ng-container *ngFor="let page of pages()">
-    <button
+    <otui-button
         [class.active]="page === currentPage"
         (click)="onPageClick(page)"
     >
         {{ page }}
-    </button>
+    </otui-button>
 </ng-container>
-<button *ngIf="showEndEllipsis()" disabled>...</button>
-  <button (click)="onNextPageClick()">Next</button>
-  <button (click)="onLastPageClick()">Last</button>
+<otui-button *ngIf="showEndEllipsis()" [disabled]="true">...</otui-button>
+  <otui-button (click)="onNextPageClick()">Next</otui-button>
+  <otui-button (click)="onLastPageClick()">Last</otui-button>
 </div>

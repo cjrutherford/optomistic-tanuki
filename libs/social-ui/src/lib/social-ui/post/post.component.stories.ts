@@ -17,9 +17,16 @@ const samplePost: PostDto = {
   title: 'Sample Post',
   content: 'This is a sample post content.',
   attachments: [],
+  profileId: '',
   comments: [
-    { userId: 'User1', content: 'Great post!', id: '1', postId: '1' },
-    { userId: 'User2', content: 'Thanks for sharing.', id: '2', postId: '1' },
+    {
+      userId: 'User1', content: 'Great post!', id: '1', postId: '1',
+      profileId: ''
+    },
+    {
+      userId: 'User2', content: 'Thanks for sharing.', id: '2', postId: '1',
+      profileId: ''
+    },
   ],
   createdAt: new Date(),
 };
