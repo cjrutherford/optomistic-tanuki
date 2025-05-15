@@ -8,7 +8,7 @@ dcd-reload() {
   dcd down -v --remove-orphans
   docker system prune -f
   dcd pull
-  DOCKER_HUB_PREIFX=${DOCKER_HUB_PREFIX} COMPOSE_BAKE=true dcd build build_base
+  DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX} COMPOSE_BAKE=true dcd build build_base
   DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX} BASE_IMAGE_TAG=${BASE_IMAGE_TAG} COMPOSE_BAKE=true dcd build
   dcd up -d
 }
