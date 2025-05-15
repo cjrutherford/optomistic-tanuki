@@ -26,7 +26,7 @@ services:
       - ot_gateway
     restart: always
   build_base:
-    image: optomistic_tanuki_base
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_base:${BASE_IMAGE_TAG:-dev}
     env_file:
       - .env
     build:
@@ -37,7 +37,8 @@ services:
       - ot_network
     restart: "no"
   migration_runner:
-    image: optomistic_tanuki_base
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_base:${BASE_IMAGE_TAG:-dev}
+    tag: development
     depends_on:
       - build_base
       - db
@@ -82,11 +83,14 @@ services:
     networks:
       - ot_network
   ot_client_interface:
-    image: optomistic_tanuki_client_interface
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_client_interface:${BASE_IMAGE_TAG:-dev}
     container_name: ot_client_interface
     build:
       dockerfile: ./apps/client-interface/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
@@ -96,11 +100,14 @@ services:
     volumes:
       - ./apps/client-interface/src/assets/config.yaml:/app/dist/apps/client-interface/assets/config.yaml
   ot_authentication:
-    image: optomistic_tanuki_authentication
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_authentication:${BASE_IMAGE_TAG:-dev}
     container_name: ot_authentication
     build:
       dockerfile: ./apps/authentication/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
@@ -110,11 +117,14 @@ services:
     volumes:
       - ./apps/authentication/src/assets/config.yaml:/app/dist/apps/authentication/assets/config.yaml
   ot_gateway:
-    image: optomistic_tanuki_gateway
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_gateway:${BASE_IMAGE_TAG:-dev}
     container_name: ot_gateway
     build:
       dockerfile: ./apps/gateway/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
@@ -128,11 +138,14 @@ services:
     volumes:
       - ./apps/gateway/src/assets/config.yaml:/app/dist/apps/gateway/assets/config.yaml
   ot_profile:
-    image: optomistic_tanuki_profile
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_profile:${BASE_IMAGE_TAG:-dev}
     container_name: ot_profile
     build:
       dockerfile: ./apps/profile/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
@@ -142,11 +155,14 @@ services:
     volumes:
       - ./apps/profile/src/assets/config.yaml:/app/dist/apps/profile/assets/config.yaml
   ot_social:
-    image: optomistic_tanuki_social
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_social:${BASE_IMAGE_TAG:-dev}
     container_name: ot_social
     build:
       dockerfile: ./apps/social/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
@@ -156,11 +172,14 @@ services:
     volumes:
       - ./apps/social/src/assets/config.yaml:/app/dist/apps/social/assets/config.yaml
   ot_tasks:
-    image: optomistic_tanuki_tasks
+    image: ${DOCKER_HUB_PREFIX:-cjrutherford}/optomistic_tanuki_tasks:${BASE_IMAGE_TAG:-dev}
     container_name: ot_tasks
     build:
       dockerfile: ./apps/tasks/dockerfile
       context: .
+      args:
+        - BASE_IMAGE=${BASE_IMAGE:-dev}
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
     depends_on:
       - build_base
       - db
