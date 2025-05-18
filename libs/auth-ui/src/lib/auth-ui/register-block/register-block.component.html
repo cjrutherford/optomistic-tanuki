@@ -10,7 +10,6 @@
         <div class="form">
           <form
             [formGroup]="registerForm"
-            (ngSubmit)="onSubmit()"
           >
             <lib-text-input
               formControlName="email"
@@ -28,7 +27,7 @@
               [type]="'password'"
             ></lib-text-input>
             <div class="actions">
-              <otui-button mat-raised-button color="primary" type="submit">
+              <otui-button mat-raised-button color="primary" type="submit" (action)="onSubmit()">
                 {{ registerButtonText }}
               </otui-button>
             </div>

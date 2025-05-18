@@ -28,9 +28,8 @@ export class RegisterComponent {
     });
   }
 
-  onSubmit($event: SubmitEvent) {
-    console.log("🚀 ~ RegisterComponent ~ onSubmit ~ event:", event)
-    const formValue = $event as any;
+  onSubmit($event: any) {
+    const formValue = $event;
     const registerRequest: RegisterRequest = {
       email: formValue.email,
       password: formValue.password,

@@ -206,9 +206,13 @@ export class AppService {
       if (!storedToken || storedToken.revoked) {
         throw new RpcException('Token is invalid or revoked');
       }
-      return { message: 'Token is valid', code: 0, data: decoded };
+      const tokenValieResponse = { message: 'Token is valid', code: 0, isValid: true, data: decoded };
+      return tokenValieResponse
     } catch (e) {
-      throw new RpcException('Invalid token');
+      if (e instanceof jwt.TokenExpiredError) {
+        return { message: 'Token expired', code: 1, isValid: false };
+      }
+      throw new RpcException('Invalid token: e: ' + e);
     }
   }
 

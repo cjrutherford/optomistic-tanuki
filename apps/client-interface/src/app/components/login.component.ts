@@ -48,8 +48,8 @@ export class LoginComponent implements OnDestroy {
     this.themeSub.unsubscribe();
   }
 
-  onSubmit($event: SubmitEvent) {
-    const event = $event as any;
+  onSubmit($event: any) {
+    const event = $event;
     const loginRequest: LoginRequest = {
       email: event.email,
       password: event.password,
