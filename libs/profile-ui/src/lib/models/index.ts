@@ -9,6 +9,7 @@ export declare type ProfileDto = {
     occupation: string;
     interests: string;
     skills: string;
+    description: string;
     created_at: Date;
   }
   

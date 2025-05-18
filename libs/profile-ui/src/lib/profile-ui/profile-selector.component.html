@@ -3,18 +3,23 @@
     <otui-grid [columns]="10" style="overflow-x: scroll; overflow-y: none; padding-bottom: 10px;">
     @for (p of profiles; track p.id) {
             <otui-tile class="real-profile" [class.active]="p.id === internalSelectedProfile()?.id">
+                <div style="position: relative; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                  <lib-profile-photo [src]="p.profilePic" [alt]="p.profileName + ' picture'" class="profile-photo" />
+                  @if (p.id === currentSelectedProfile?.id) {
+                    <span class="active-badge">Active</span>
+                  }
+                </div>
                 <h2>{{p.profileName}}</h2>
-                <lib-profile-photo src="{{p.profilePic}}" alt="{{p.profileName}}'s picture" />
+                <otui-button variant="secondary" (click)="editProfile(p)" style="width: 100%; margin-top: 0.25rem;">Edit</otui-button>
                 @if (p.id === currentSelectedProfile?.id) {
-                    <otui-button variant="warning" (click)="selectProfile(p.id)">Selected</otui-button>
+                    <otui-button variant="warning" (click)="selectProfile(p.id)" style="width: 100%;">Selected</otui-button>
                 } 
                 @else {
-                    <otui-button variant="outlined" (click)="selectProfile(p.id)">Select</otui-button>
+                    <otui-button variant="outlined" (click)="selectProfile(p.id)" style="width: 100%;">Select</otui-button>
                 }
             </otui-tile>
         }
         <otui-tile class="add-profile">
-            <h2>New Profile</h2>
             <lib-profile-photo src="https://placehold.co/100x100" alt="Add new profile" />
             <otui-button (click)="addNewProfile()">+</otui-button>
         </otui-tile>

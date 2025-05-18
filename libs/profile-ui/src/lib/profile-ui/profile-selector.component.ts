@@ -94,6 +94,18 @@ export class ProfileSelectorComponent extends Themeable{
     this.dialog.open(this.profileDialog);
   }
 
+  editProfile(profile: ProfileDto) {
+    // Open the profile dialog pre-filled for editing (implementation can be expanded)
+    this.profileForm.patchValue({
+      profileName: profile.profileName,
+      bio: profile.bio,
+      profilePic: profile.profilePic,
+      coverPic: profile.coverPic,
+      description: profile.description || ''
+    });
+    this.dialog.open(this.profileDialog);
+  }
+
   onSubmit() {
     if (this.profileForm.valid) {
       const newProfile: CreateProfileDto = {

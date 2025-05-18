@@ -16,22 +16,24 @@ import { Component, EventEmitter, Output, HostListener } from '@angular/core';
   `,
   styles: [`
     .upload-container {
-      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: 5px;
       border: 2px dashed #ccc;
-      padding: 1rem;
+      padding: 10px;
       position: relative;
+      margin-bottom: 10px;
+      input {
+        margin: 0 !important;
+      }
     }
     .upload-container.dragover {
       border-color: #000;
     }
     .drop-target {
-      width: 100%;
-      height: 150px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -39,7 +41,7 @@ import { Component, EventEmitter, Output, HostListener } from '@angular/core';
       cursor: pointer;
     }
     .image-preview {
-      max-width: 300px;
+      max-width: 150px;
      margin-top: 1rem;
     }
   `]

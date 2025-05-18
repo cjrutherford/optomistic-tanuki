@@ -2,31 +2,101 @@
     box-shadow: 2px 2px 5px var(--complement);
 }
 
+.otui-card {
+  padding: 0.5rem 0.5rem 0 0.5rem !important;
+}
+
+h2 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+otui-grid {
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  max-height: 160px;
+  padding-bottom: 0.5rem !important;
+  gap: 0.5rem !important;
+}
+
 .real-profile {
-    max-height: 200px;
-    overflow: none;
-    h2 {
-        font-size: 12px;
-        margin: 0;
-    }
-    button {
-        font-size: 10px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 110px;
+  max-width: 120px;
+  min-height: 120px;
+  max-height: 140px;
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.25rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  background: var(--background, #fff);
+  overflow: hidden;
+  position: relative;
+  order: 1;
+  h2 {
+    font-size: 0.9rem;
+    margin: 0 0 0.25rem 0;
+    text-align: center;
+    word-break: break-word;
+  }
+  .profile-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 0.25rem;
+  }
+  button {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    padding: 0.2rem 0.5rem;
+  }
 }
 
 .add-profile {
-    max-height: 300px;
-    overflow: none;
-    h2 {
-        font-size: 15px;
-        margin: 0;
-    }
+  min-width: 110px;
+  max-width: 120px;
+  min-height: 120px;
+  max-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 8px;
+  background: var(--background, #f7f7f7);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  margin: 0 0.25rem;
+  padding: 0.5rem 0.25rem;
+  order: 99;
+  h2 {
+    font-size: 1rem;
+    margin: 0 0 0.25rem 0;
+  }
+  button {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
 
-    p {
-        font-size: 8px;
-    }
+// Always show horizontal scroll if overflow
+.otui-card, otui-grid {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent, #888) var(--background, #f7f7f7);
+}
 
-    button {
-        font-size: 10px;
-    }
+.active-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent, #1976d2);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border-radius: 8px 0 8px 0;
+  padding: 2px 8px;
+  z-index: 2;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
 }
