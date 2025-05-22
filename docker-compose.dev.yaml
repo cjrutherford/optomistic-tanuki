@@ -80,6 +80,7 @@ services:
     build:
       dockerfile: ./apps/client-interface/dockerfile.dev
       context: .
+      args: *x-build-args
     depends_on:
       - build_base
       - db
@@ -98,6 +99,9 @@ services:
     build:
       dockerfile: ./apps/authentication/dockerfile
       context: .
+      args:
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
+        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
     depends_on:
       - build_base
       - db
@@ -114,6 +118,9 @@ services:
     build:
       dockerfile: ./apps/gateway/dockerfile
       context: .
+      args:
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
+        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
     depends_on:
       - build_base
       - db
@@ -136,6 +143,9 @@ services:
     build:
       dockerfile: ./apps/profile/dockerfile
       context: .
+      args:
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
+        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
     depends_on:
       - build_base
       - db
@@ -152,6 +162,9 @@ services:
     build:
       dockerfile: ./apps/social/dockerfile
       context: .
+      args:
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
+        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
     depends_on:
       - build_base
       - db
@@ -168,6 +181,9 @@ services:
     build:
       dockerfile: ./apps/tasks/dockerfile
       context: .
+      args:
+        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
+        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
     depends_on:
       - build_base
       - db
