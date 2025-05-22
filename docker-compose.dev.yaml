@@ -80,9 +80,7 @@ services:
     build:
       dockerfile: ./apps/client-interface/dockerfile.dev
       context: .
-      args:
-        - DOCKER_HUB_PREFIX=${DOCKER_HUB_PREFIX:-cjrutherford}
-        - BASE_IMAGE_TAG=${BASE_IMAGE_TAG:-dev}
+      args: *x-build-args
     depends_on:
       - build_base
       - db
