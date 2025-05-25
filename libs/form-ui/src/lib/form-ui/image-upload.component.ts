@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, EventEmitter, Output, HostListener, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'lib-image-upload',
@@ -44,8 +44,9 @@ import { Component, EventEmitter, Output, HostListener } from '@angular/core';
     }
   `]
 })
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnInit {
   @Output() imageUpload = new EventEmitter<string>();
+  @Input() currentImage: string | null = null;
   image: string | null = null;
   isDragOver = false;
 
@@ -54,6 +55,12 @@ export class ImageUploadComponent {
     const file = input.files?.[0];
     if (file) {
       this.readFile(file);
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.currentImage) {
+      this.image = this.currentImage;
     }
   }
 

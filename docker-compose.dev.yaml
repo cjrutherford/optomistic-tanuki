@@ -1,6 +1,9 @@
 networks:
   ot_network:
     driver: bridge
+x-build-args: &x-build-args
+  DOCKER_HUB_PREFIX: ${DOCKER_HUB_PREFIX:-cjrutherford}
+  BASE_IMAGE_TAG: ${BASE_IMAGE_TAG:-development}
 x-global-environment: &x-global-environment
   environment:
     NX_DAEMON_DISABLE: true

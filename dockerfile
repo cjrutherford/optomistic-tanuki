@@ -3,7 +3,7 @@ USER 1000:1000
 
 WORKDIR /app
 
-COPY package.json ./package.json
+COPY package.json ./
 COPY ./apps ./apps
 COPY ./libs ./libs
 COPY nx.json ./nx.json

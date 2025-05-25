@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './grid.component.html',
   styleUrl: './grid.component.scss',
 })
-export class GridComponent implements OnInit {
+export class GridComponent implements OnInit, OnChanges {
   @Input() columns?: number;
   @Input() rows?: number;
 
@@ -17,6 +17,10 @@ export class GridComponent implements OnInit {
   renderEmpty = false;
 
   ngOnInit() {
+    this.setGridDimensions();
+  }
+
+  private setGridDimensions() {
     if (this.columns === 0 || this.rows === 0) {
       this.renderEmpty = true;
       return;
@@ -29,5 +33,8 @@ export class GridComponent implements OnInit {
     if (this.rows) {
       this.gridTemplateRows = `repeat(${this.rows}, 1fr)`;
     }
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    this.setGridDimensions();
   }
 }
